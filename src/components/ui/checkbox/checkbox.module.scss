@@ -1,0 +1,73 @@
+button {
+  all: unset;
+}
+
+.CheckboxRoot {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 18px;
+  height: 18px;
+
+  background-color: black;
+  border-radius: 2px;
+  box-shadow: 0 0 0 2px var(--color-light-900) inset;
+
+  &[data-disabled] {
+    box-shadow: 0 0 0 2px var(--color-dark-100) inset;
+
+    &:focus-visible::before,
+    &:active::before,
+    &:hover::before {
+      display: none;
+    }
+  }
+
+  &:hover::before {
+    content: '';
+
+    position: absolute;
+    z-index: -1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 36px;
+    height: 36px;
+
+    background-color: var(--color-dark-500);
+    border: none;
+    border-radius: 50%;
+    outline: none;
+  }
+
+  &:focus-visible::before,
+  &:active::before {
+    background-color: var(--color-dark-100);
+  }
+}
+
+.CheckboxIndicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.disabledIndicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Label {
+  font-size: 15px;
+  line-height: 1;
+  color: white;
+}
+
+.labelDisabled {
+  color: var(--color-dark-100);
+}

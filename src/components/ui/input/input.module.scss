@@ -1,0 +1,92 @@
+.inputHeaders {
+  position: relative;
+
+  width: max-content;
+  height: 60px;
+
+  font-size: 14px;
+  line-height: 24px;
+  color: var(--color-dark-100);
+}
+
+.input {
+  display: flex;
+  gap: 10px;
+
+  min-width: 284px;
+  height: 36px;
+  padding-left: 10px;
+
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-dark-100);
+
+  background-color: transparent;
+  border: 1px solid var(--color-dark-100);
+  border-radius: 2px;
+
+  &:active {
+    color: var(--color-light-100);
+    border: 1px solid var(--color-light-100);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-info-700);
+  }
+}
+
+.error {
+  color: var(--color-danger-300);
+  border: 1px solid var(--color-danger-300);
+
+  &::placeholder {
+    color: var(--color-danger-300);
+  }
+}
+
+.errorMessage {
+  font-size: 12px;
+  color: var(--color-danger-300);
+}
+
+.disabled {
+  color: var(--color-dark-300);
+
+  &::placeholder {
+    color: var(--color-dark-300);
+  }
+
+  input {
+    border: 1px solid var(--color-dark-300);
+  }
+}
+
+.search {
+  &::placeholder {
+    padding-left: 30px;
+  }
+}
+
+.passwordIcon {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+
+  width: 20px;
+  height: 20px; /* Путь к изображению иконки */
+
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.searchIcon {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+
+  width: 20px;
+  height: 20px; /* Путь к изображению иконки */
+
+  background-repeat: no-repeat;
+  background-size: contain;
+}
