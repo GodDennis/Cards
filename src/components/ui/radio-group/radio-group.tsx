@@ -20,7 +20,11 @@ type RadioGroupProps = {
 
 export const RadioGroup = (props: RadioGroupProps) => {
   const { changeHandler, defaultValue, disabled, name, options } = props
-  const defaultOption = options.find(o => o.default)?.value
+  let defaultOption
+
+  if (!defaultValue) {
+    defaultOption = options.find(o => o.default)?.value
+  }
   const classNames = {
     radioGroupIndicator: s.radioGroupIndicator,
     radioGroupItem: s.radioGroupItem,
