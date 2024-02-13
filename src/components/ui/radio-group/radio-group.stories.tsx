@@ -11,9 +11,9 @@ const meta = {
   args: {
     name: 'radio',
     options: [
-      { default: true, value: 'a' },
-      { default: false, value: 'b' },
-      { default: false, value: 'c' },
+      { default: true, value: 'RadioGroup-1' },
+      { default: false, value: 'RadioGroup-2' },
+      { default: false, value: 'RadioGroup-3' },
     ],
   },
   component: RadioGroup,
