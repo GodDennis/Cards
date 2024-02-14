@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  max-width: 1280px;
+  height: 60px;
+  padding: 12px, 136px;
+}
+
+.userBar {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.userName {
+  border-bottom: 1px solid #fff;
+}
+
+.avatar {
+  overflow: hidden;
+  border-radius: 50%;
+
+  img {
+    width: 36px;
+    height: 36px;
+  }
+}
