@@ -1,4 +1,4 @@
-import { ComponentProps } from 'react'
+import { ComponentProps, useState } from 'react'
 
 import * as RadioGr from '@radix-ui/react-radio-group'
 import { clsx } from 'clsx'
@@ -8,7 +8,6 @@ import s from './radio-group.module.scss'
 import { Typography } from '../typography'
 
 type Option = {
-  default: boolean
   value: string
 }
 
@@ -23,11 +22,19 @@ type RadioGroupProps = {
 
 export const RadioGroup = (props: RadioGroupProps) => {
   const { changeHandler, className, defaultValue, disabled, name, options } = props
-  let defaultOption
 
-  if (!defaultValue) {
-    defaultOption = options.find(o => o.default)?.value
+  const defaultOption = options[0].value
+  const [radioGroupValue, setRadioGroupValue] = useState<string | undefined>(
+    defaultValue || defaultOption
+  )
+
+  const changeValueHandler = (value: string) => {
+    setRadioGroupValue(value)
+    if (radioGroupValue) {
+      changeHandler(radioGroupValue)
+    }
   }
+
   const classNames = {
     radioGroupIndicator: s.radioGroupIndicator,
     radioGroupItem: s.radioGroupItem,
@@ -38,10 +45,10 @@ export const RadioGroup = (props: RadioGroupProps) => {
   return (
     <RadioGr.Root
       className={classNames.radioGroupRoot}
-      defaultValue={defaultValue || defaultOption}
       disabled={disabled}
       name={name}
-      onValueChange={changeHandler}
+      onValueChange={changeValueHandler}
+      value={radioGroupValue}
     >
       {options.map((o, i) => {
         return (

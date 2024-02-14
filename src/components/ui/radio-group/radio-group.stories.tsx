@@ -10,11 +10,7 @@ const meta = {
   },
   args: {
     name: 'radio',
-    options: [
-      { default: true, value: 'RadioGroup-1' },
-      { default: false, value: 'RadioGroup-2' },
-      { default: false, value: 'RadioGroup-3' },
-    ],
+    options: [{ value: 'RadioGroup-1' }, { value: 'RadioGroup-2' }, { value: 'RadioGroup-3' }],
   },
   component: RadioGroup,
   tags: ['autodocs'],
