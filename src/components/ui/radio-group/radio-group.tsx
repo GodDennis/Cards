@@ -1,4 +1,7 @@
+import { ComponentProps } from 'react'
+
 import * as RadioGr from '@radix-ui/react-radio-group'
+import { clsx } from 'clsx'
 
 import s from './radio-group.module.scss'
 
@@ -16,10 +19,10 @@ type RadioGroupProps = {
   name: string
   options: Option[]
   required?: boolean
-}
+} & ComponentProps<'div'>
 
 export const RadioGroup = (props: RadioGroupProps) => {
-  const { changeHandler, defaultValue, disabled, name, options } = props
+  const { changeHandler, className, defaultValue, disabled, name, options } = props
   let defaultOption
 
   if (!defaultValue) {
@@ -28,7 +31,7 @@ export const RadioGroup = (props: RadioGroupProps) => {
   const classNames = {
     radioGroupIndicator: s.radioGroupIndicator,
     radioGroupItem: s.radioGroupItem,
-    radioGroupRoot: s.radioGroupRoot,
+    radioGroupRoot: clsx(s.radioGroupRoot, className),
     radioWrapper: s.radioWrapper,
   }
 
