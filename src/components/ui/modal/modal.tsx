@@ -35,7 +35,6 @@ export const Modal = (props: ModalProps) => {
         <Dialog.Overlay className={classNames.dialogOverlay} />
         <Dialog.Content className={classNames.dialogContent}>
           <header className={classNames.header}>
-            {/* tipogr! */}
             <Dialog.Title className={classNames.dialogTitle}>
               <Typography as={'span'} variant={'h2'}>
                 {title}
