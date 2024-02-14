@@ -1,0 +1,147 @@
+/* reset */
+button,
+fieldset,
+input {
+  all: unset;
+}
+
+.dialogOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: #44444481;
+  animation: overlay-show 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dialogContent {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  overflow-y: auto;
+
+  width: 90vw;
+  max-width: 450px;
+  max-height: 85vh;
+
+  background-color: var(--color-dark-700);
+  border: 1px solid var(--color-dark-500);
+  border-radius: 2px;
+
+  animation: content-show 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dialogContent:focus {
+  outline: none;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  height: 60px;
+  padding: 0 25px;
+
+  border-bottom: 1px solid var(--color-dark-500);
+}
+
+.dialogTitle {
+  margin: 0;
+}
+
+.iconButton {
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 25px;
+  height: 25px;
+
+  color: transparent;
+
+  border: none;
+  border-radius: 100%;
+
+  transition: 0.2s;
+}
+
+.iconButton:hover {
+  background: var(--color-dark-500);
+  box-shadow: 0 0 0 5px var(--color-dark-500);
+}
+
+.iconButton:focus {
+  background: var(--color-dark-700);
+  box-shadow: 0 0 0 5px var(--color-dark-700);
+}
+
+.contentWtapper {
+  width: 100%;
+  min-height: 100px;
+  padding: 20px 25px 36px;
+}
+
+@keyframes overlay-show {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes content-show {
+  from {
+    transform: translate(-50%, -48%) scale(0.96);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Firefox (uncomment to work in Firefox, although other properties will not work!)  */
+
+/** {
+  scrollbar-width: thin;
+  scrollbar-color: #75256A #BDBDBD;
+} */
+
+/* Chrome, Edge and Safari */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: var(--color-light-500);
+  border-radius: 5px;
+}
+
+*::-webkit-scrollbar-track:hover {
+  background-color: var(--color-light-700);
+}
+
+*::-webkit-scrollbar-track:active {
+  background-color: var(--color-light-900);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--color-accent-300);
+  border-radius: 5px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-accent-500);
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background-color: var(--color-accent-700);
+}
