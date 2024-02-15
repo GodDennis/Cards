@@ -8,32 +8,21 @@ import s from './radio-group.module.scss'
 import { Typography } from '../typography'
 
 type Option = {
+  name: string
   value: string
 }
 
 type RadioGroupProps = {
   changeHandler: (value: string) => void
-  defaultValue?: string
   disabled?: boolean
   name: string
   options: Option[]
   required?: boolean
+  value: string
 } & ComponentProps<'div'>
 
 export const RadioGroup = (props: RadioGroupProps) => {
-  const { changeHandler, className, defaultValue, disabled, name, options } = props
-
-  const defaultOption = options[0].value
-  const [radioGroupValue, setRadioGroupValue] = useState<string | undefined>(
-    defaultValue || defaultOption
-  )
-
-  const changeValueHandler = (value: string) => {
-    setRadioGroupValue(value)
-    if (radioGroupValue) {
-      changeHandler(radioGroupValue)
-    }
-  }
+  const { changeHandler, className, disabled, name, options, value } = props
 
   const classNames = {
     radioGroupIndicator: s.radioGroupIndicator,
@@ -47,8 +36,8 @@ export const RadioGroup = (props: RadioGroupProps) => {
       className={classNames.radioGroupRoot}
       disabled={disabled}
       name={name}
-      onValueChange={changeValueHandler}
-      value={radioGroupValue}
+      onValueChange={changeHandler}
+      value={value}
     >
       {options.map((o, i) => {
         return (
@@ -58,7 +47,7 @@ export const RadioGroup = (props: RadioGroupProps) => {
             </RadioGr.Item>
             <label htmlFor={i + o.value}>
               <Typography as={'span'} variant={'body2'}>
-                {o.value}
+                {o.name}
               </Typography>
             </label>
           </div>
