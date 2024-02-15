@@ -1,0 +1,42 @@
+.item {
+  display: flex;
+  gap: 6px;
+
+  padding-top: 12px;
+  padding-bottom: 12px;
+
+  border-top: 1px solid var(--Dark-500, #333);
+}
+
+.modefiedItem {
+  padding-top: 0;
+  border: none;
+}
+
+.menu {
+  padding: 12px;
+  padding-bottom: 0;
+
+  background: var(--Dark-700, #171717);
+  border: 1px solid var(--Dark-500, #333);
+  border-radius: 4px;
+}
+
+.colorDark {
+  color: var(--Dark-100, #808080);
+}
+
+.avatar {
+  overflow: hidden;
+
+  width: 36px;
+  height: 36px;
+
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.flexContainer {
+  display: flex;
+  flex-direction: column;
+}
