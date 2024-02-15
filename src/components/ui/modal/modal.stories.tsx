@@ -12,7 +12,6 @@ const meta = {
     // },
   },
   args: {
-    // open: false,
     title: 'Test Modal',
   },
   component: Modal,
