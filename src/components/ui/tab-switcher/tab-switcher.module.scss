@@ -1,0 +1,67 @@
+/* reset */
+button,
+fieldset,
+input {
+  all: unset;
+}
+
+.tabsRoot {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+}
+
+.tabsList {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.tabsTrigger {
+  cursor: pointer;
+  user-select: none;
+
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+
+  padding: 6px 24px;
+
+  background-color: var(--color-dark-900);
+  border: 1px solid var(--color-dark-300);
+  border-right: none;
+
+  transition: 0.2s;
+
+  &:last-of-type {
+    border-right: 1px solid var(--color-dark-300);
+  }
+}
+
+.tabsTrigger:hover {
+  color: var(--color-light-900);
+  background: var(--color-dark-100);
+}
+
+.tabsTrigger[data-state='active'] {
+  background: var(--color-accent-500);
+
+  &:not(:disabled) {
+    border: none;
+  }
+}
+
+.tabsTrigger:disabled {
+  color: var(--color-dark-300);
+  background: var(--color-dark-700);
+}
+
+.tabsContent {
+  padding: 20px;
+  outline: none;
+}
+
+.title {
+  display: block;
+  height: 30px;
+}
