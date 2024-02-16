@@ -1,0 +1,115 @@
+/* reset */
+button {
+  all: unset;
+}
+
+.label {
+  margin: 0;
+  color: var(--color-dark-100);
+
+}
+
+.labelDisabled {
+  margin: 0;
+  color: var(--color-dark-300);
+}
+
+.SelectTrigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 2px;
+  padding: 0 15px;
+  font-size: 13px;
+  line-height: 1;
+  max-width: 210px;
+  width: max-content;
+  height: 36px;
+  gap: 5px;
+  background-color: var(--color-dark-500);
+  color: white;
+  border: 1px solid var(--color-dark-300);
+  position: relative;
+}
+
+.SelectTrigger:hover {
+  background-color: var(--color-dark-100);
+}
+
+
+.SelectTrigger:disabled{
+  border: 1px solid var(--color-dark-300);
+}
+
+.SelectTrigger:active {
+  border: 1px solid var(--color-dark-100);
+}
+
+.SelectTrigger:focus {
+  box-shadow: 0 0 0 2px var(--color-info-700);
+}
+
+.SelectTrigger[data-placeholder] {
+  color: white;
+
+  &[data-disabled] {
+    color: var(--color-dark-300);
+  }
+}
+
+.SelectTrigger[data-state='open'] {
+  border: 1px solid var(--color-dark-100);
+  border-radius: 2px 2px 0 0;
+}
+
+
+
+.SelectIcon {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.SelectContent {
+  overflow: hidden;
+  background-color: var(--color-dark-500);
+  border-radius: 0 0 2px 2px;
+  border: 1px solid var(--color-dark-100);
+  width: var(--radix-select-trigger-width);
+}
+
+
+.SelectItem {
+  line-height: 1;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 15px;
+  user-select: none;
+}
+
+.SelectItem[data-highlighted] {
+  outline: none;
+  border: none;
+}
+
+
+.SelectItem[data-disabled] {
+  color: var(--mauve-8);
+  pointer-events: none;
+}
+
+
+.SelectItem:hover {
+  background-color: var(--color-accent-900);
+  color: var(--color-accent-300);
+}
+
+
+.SelectItemText {
+  position: absolute;
+}
