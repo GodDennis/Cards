@@ -32,7 +32,7 @@ const SelectDemo = (props: SelectProps) => {
         disabled = false,
         label,
         className,
-        defaultValue,
+        defaultValue = options[0].value,
         onValueChange,
         onOpenChange,
         dir,
