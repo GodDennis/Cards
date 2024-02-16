@@ -4,11 +4,18 @@ import { Typography } from '@/components/ui/typography'
 import * as Slider from '@radix-ui/react-slider'
 
 import s from './slider.module.scss'
-// import {Slider, SliderThumb} from '@radix-ui/react-slider';
 
-const SliderDemo = () => {
-  const [value1, setValue1] = useState<number>(0)
-  const [value2, setValue2] = useState<number>(10)
+type Props = {
+    minValue?: number
+    maxValue?: number
+}
+
+const SliderDemo = (props: Props) => {
+
+   const {minValue = 0, maxValue = 10} = props
+
+  const [value1, setValue1] = useState<number>(minValue)
+  const [value2, setValue2] = useState<number>(maxValue)
 
   const handleValue1Change = (value: number[]) => {
     setValue1(value[0])
@@ -23,7 +30,7 @@ const SliderDemo = () => {
       <Slider.Root
         className={s.SliderRoot}
         defaultValue={[value1, value2]}
-        max={10}
+        max={maxValue}
         onValueChange={handleValue1Change}
         step={1}
       >
