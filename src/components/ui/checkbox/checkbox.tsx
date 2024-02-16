@@ -15,8 +15,7 @@ export const CheckboxComponent = (props: InputProps) => {
   const { disabled = false, text } = props
 
   return (
-    <form>
-      <div style={{ alignItems: 'center', display: 'flex', gap: '10px' }}>
+      <div className={s.rootDiv}>
         <Checkbox.Root className={s.CheckboxRoot} disabled={disabled} id={'c1'}>
           <Checkbox.Indicator className={disabled ? s.disabledIndicator : s.CheckboxIndicator}>
             <CheckboxIcon
@@ -29,6 +28,5 @@ export const CheckboxComponent = (props: InputProps) => {
           <Typography variant={'body2'}>{text && text}</Typography>
         </label>
       </div>
-    </form>
   )
 }

@@ -2,6 +2,12 @@ button {
   all: unset;
 }
 
+.rootDiv {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .CheckboxRoot {
   position: relative;
 
