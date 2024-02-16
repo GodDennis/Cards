@@ -21,10 +21,20 @@ li {
     background-color: var(--color-dark-500);
     border-radius: 3px;
   }
+
 }
 
 li.active {
   background-color: white;
   border-radius: 3px;
   color: black;
+}
+.pagination {
+  display: flex;
+}
+.countPicker {
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px
 }

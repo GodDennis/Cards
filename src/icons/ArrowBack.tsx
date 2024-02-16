@@ -1,4 +1,4 @@
-import {IconProps} from "@/icons/log-out-outline";
+import {IconProps} from "@/icons/LogOutOutline";
 
 const ArrowBack = (props: IconProps) => {
     const {fill = 'white'} = props

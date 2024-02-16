@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef } from 'react'
 
-import { EyeOutline } from '@/icons/eye-outline'
-import { SearchOutline } from '@/icons/search-outline'
+import { EyeOutline } from '@/icons/EyeOutline'
+import { SearchOutline } from '@/icons/SearchOutline'
 
 import s from '@/components/ui/input/input.module.scss'
 

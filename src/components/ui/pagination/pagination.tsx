@@ -2,20 +2,38 @@ import {useState} from 'react';
 import s from './pagination.module.scss'
 import ArrowBack from "@/icons/ArrowBack";
 import ArrowForward from "@/icons/ArrowForward";
+import Select from "@/components/ui/select/select";
 
 type Props = {
     totalCount?: number
-    pageSize?: number
+    // pageSize?: number
 }
 
 const Pagination = (props: Props) => {
-    const {totalCount = 1000, pageSize = 10} = props
+    const {
+        totalCount = 1000,
+        // pageSize = 10
+    } = props
+
+    const [pageSize, setPageSize] = useState(100)
     const [currentPage, setCurrentPage] = useState(1);
     const totalPages = Math.ceil(totalCount / pageSize);
 
     const handlePageChange = (pageNumber: number) => {
         setCurrentPage(pageNumber);
     };
+
+    const options = [
+        {value: '10', label: '10'},
+        {value: '20', label: '20'},
+        {value: '30', label: '30'},
+        {value: '50', label: '50'},
+        {value: '100', label: '100'},
+    ]
+
+    const changePageSize = (value: string) => {
+        setPageSize(+value)
+    }
 
     const renderPageNumbers = () => {
         const pageNumbers = [];
@@ -26,8 +44,7 @@ const Pagination = (props: Props) => {
         if (totalPages > 5) {
             if (currentPage <= 4) {
                 endPage = 5;
-            }
-            else if (currentPage >= totalPages - 3) {
+            } else if (currentPage >= totalPages - 3) {
                 startPage = totalPages - 4;
             } else {
                 startPage = currentPage - 1;
@@ -83,7 +100,7 @@ const Pagination = (props: Props) => {
     };
 
     return (
-        <div>
+        <div className={s.pagination}>
             <ul>
                 <li
                     onClick={() => handlePageChange(currentPage - 1)}
@@ -97,6 +114,12 @@ const Pagination = (props: Props) => {
                     <ArrowForward fill={`${currentPage === totalPages ? 'var(--color-dark-100)' : 'white'}`}/>
                 </li>
             </ul>
+
+            <div className={s.countPicker}>
+                Показать
+                <Select options={options} defaultValue={pageSize.toString()} onValueChange={changePageSize}/>
+                на странице
+            </div>
         </div>
     );
 };
