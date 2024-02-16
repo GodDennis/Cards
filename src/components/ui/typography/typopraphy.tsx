@@ -18,7 +18,7 @@ export type TypographyProps<T extends ElementType> = {
     | 'overline'
     | 'subtitle1'
     | 'subtitle2'
-} & ComponentPropsWithoutRef<'p'>
+} & ComponentPropsWithoutRef<T>
 
 export const Typography = <T extends ElementType>(props: TypographyProps<T>) => {
   const { as: Component = 'p', className, variant = 'body1', ...rest } = props

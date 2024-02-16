@@ -1,4 +1,4 @@
-import { IconProps } from './log-out-outline'
+import { IconProps } from './LogOutOutline'
 
 export const SearchOutline = ({ fill = 'black' }: IconProps) => {
   return (

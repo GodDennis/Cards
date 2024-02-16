@@ -15,7 +15,7 @@ export const CheckboxComponent = (props: InputProps) => {
   const { disabled = false, text } = props
 
   return (
-    <form className={s.checkboxContainer}>
+    <form>
       <div style={{ alignItems: 'center', display: 'flex', gap: '10px' }}>
         <Checkbox.Root className={s.CheckboxRoot} disabled={disabled} id={'c1'}>
           <Checkbox.Indicator className={disabled ? s.disabledIndicator : s.CheckboxIndicator}>
