@@ -6,7 +6,6 @@ button {
 .label {
   margin: 0;
   color: var(--color-dark-100);
-
 }
 
 .labelDisabled {
@@ -30,48 +29,41 @@ button {
   color: white;
   border: 1px solid var(--color-dark-300);
   position: relative;
-}
 
-.SelectTrigger:hover {
-  background-color: var(--color-dark-100);
-}
+  &:hover {
+    background-color: var(--color-dark-100);
+  }
 
+  &:active {
+    border: 1px solid var(--color-dark-100);
+  }
 
-.SelectTrigger:disabled{
-  border: 1px solid var(--color-dark-300);
-}
+  &:focus {
+    box-shadow: 0 0 0 2px var(--color-info-700);
+  }
 
-.SelectTrigger:active {
-  border: 1px solid var(--color-dark-100);
-}
-
-.SelectTrigger:focus {
-  box-shadow: 0 0 0 2px var(--color-info-700);
-}
-
-.SelectTrigger[data-placeholder] {
-  color: white;
+  &[data-placeholder] {
+    color: white;
+  }
 
   &[data-disabled] {
+    border: 1px solid var(--color-dark-300);
     color: var(--color-dark-300);
   }
+
+  &[data-state='open'] {
+    border: 1px solid var(--color-dark-100);
+    border-radius: 2px 2px 0 0;
+  }
+
+  .SelectIcon {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
-
-.SelectTrigger[data-state='open'] {
-  border: 1px solid var(--color-dark-100);
-  border-radius: 2px 2px 0 0;
-}
-
-
-
-.SelectIcon {
-  width: 16px;
-  height: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 
 .SelectContent {
   overflow: hidden;
@@ -81,7 +73,6 @@ button {
   width: var(--radix-select-trigger-width);
 }
 
-
 .SelectItem {
   line-height: 1;
   border-radius: 3px;
@@ -90,26 +81,18 @@ button {
   height: 36px;
   padding: 0 15px;
   user-select: none;
-}
 
-.SelectItem[data-highlighted] {
-  outline: none;
-  border: none;
-}
+  &[data-highlighted] {
+    outline: none;
+    border: none;
+  }
 
+  &:hover {
+    background-color: var(--color-accent-900);
+    color: var(--color-accent-300);
+  }
 
-.SelectItem[data-disabled] {
-  color: var(--mauve-8);
-  pointer-events: none;
-}
-
-
-.SelectItem:hover {
-  background-color: var(--color-accent-900);
-  color: var(--color-accent-300);
-}
-
-
-.SelectItemText {
-  position: absolute;
+  .SelectItemText {
+    position: absolute;
+  }
 }
