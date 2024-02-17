@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 
@@ -12,15 +12,19 @@ type Props = {
 }
 
 export const DropDownList = ({ list }: Props) => {
-  const dropDownList = list.map(el => {
+  const dropDownList = list.map((el, i) => {
     return (
-      <DropdownMenu.Item key={el.id}>
-        <NavLink className={s.item} style={{ textDecoration: 'none' }} to={el.redirect}>
+      <DropdownMenu.Item className={s.menuItem} key={i}>
+        <Typography
+          as={Link}
+          className={s.item}
+          style={{ textDecoration: 'none' }}
+          to={el.redirect}
+          variant={'caption'}
+        >
           {el.src && <img alt={''} src={el.src} />}
-          <Typography as={'span'} variant={'caption'}>
-            {el.title}
-          </Typography>
-        </NavLink>
+          {el.title}
+        </Typography>
       </DropdownMenu.Item>
     )
   })

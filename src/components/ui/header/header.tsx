@@ -1,6 +1,6 @@
 import s from './header.module.scss'
 
-import nullphoto from '../../../assets/Images/nullPhoto.svg'
+import { Avatar } from '../avatar/Avatar'
 import { Button } from '../button'
 import { Logo } from '../logo'
 import { Typography } from '../typography'
@@ -12,7 +12,6 @@ type HeaderProps = {
 
 export const Header = (props: HeaderProps) => {
   const { isLoggedIn, user } = props
-  const avatar = user?.avatar ? user?.avatar : nullphoto
 
   return (
     <header className={s.container}>
@@ -24,9 +23,7 @@ export const Header = (props: HeaderProps) => {
           <Typography as={'span'} className={s.userName} variant={'body1'}>
             {user?.name}
           </Typography>
-          <span className={s.avatar}>
-            <img alt={''} src={avatar} />
-          </span>
+          <Avatar src={user?.avatar} />
         </div>
       )}
     </header>

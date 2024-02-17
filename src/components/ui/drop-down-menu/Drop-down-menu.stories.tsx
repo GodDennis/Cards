@@ -34,6 +34,7 @@ export const WithUser: Story = {
       id: 1,
       userName: 'Ivan',
     },
+    variant: 'avatar',
   },
 }
 export const Simple: Story = {
@@ -43,5 +44,6 @@ export const Simple: Story = {
       { redirect: '#', src: edit, title: 'Edit' },
       { redirect: '#', src: trash, title: 'Delete' },
     ],
+    variant: 'contextMenu',
   },
 }
