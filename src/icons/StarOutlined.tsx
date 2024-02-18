@@ -1,4 +1,4 @@
-const StarOutlined = () => {
+export const StarOutlined = () => {
   return (
     <svg
       fill={'none'}
@@ -24,4 +24,3 @@ const StarOutlined = () => {
   )
 }
 
-export default StarOutlined

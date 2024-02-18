@@ -2,7 +2,7 @@ export type IconProps = {
   fill?: string
 }
 
-const ContextMenu = (props: IconProps) => {
+export const ContextMenu = (props: IconProps) => {
   const { fill = 'white' } = props
 
   return (
@@ -38,4 +38,4 @@ const ContextMenu = (props: IconProps) => {
   )
 }
 
-export default ContextMenu
+

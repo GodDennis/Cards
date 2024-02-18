@@ -20,27 +20,29 @@ export const Input = forwardRef<ElementRef<'input'>, InputProps>((props, ref) =>
     <div className={`${s.inputHeaders} ${disabled ? s.disabled : ''}`}>
       {' '}
       {label}
-      <input
-        className={`${s.input} ${s[variant]} ${error ? s.error : ''} ${
-          disabled ? s.disabled : ''
-        } ${className}`}
-        ref={ref}
-        type={variant === 'password' ? 'password' : 'text'}
-        {...rest}
+      <div className={s.inputContainer}>
+        <input
+          className={`${s.input} ${s[variant]} ${error ? s.error : ''} ${
+              disabled ? s.disabled : ''
+          } ${className}`}
+          ref={ref}
+          type={variant === 'password' ? 'password' : 'text'}
+          {...rest}
       />
-      {error && <div className={s.errorMessage}>{error}</div>}
-      {variant === 'password' && (
-        <span className={s.passwordIcon}>
+        {error && <div className={s.errorMessage}>{error}</div>}
+        {variant === 'password' && (
+            <span className={s.passwordIcon}>
           {' '}
-          <EyeOutline fill={'white'} />
+              <EyeOutline fill={'white'}/>
         </span>
-      )}
-      {variant === 'search' && (
-        <span className={s.searchIcon}>
+        )}
+        {variant === 'search' && (
+            <span className={s.searchIcon}>
           {' '}
-          <SearchOutline fill={'white'} />
+              <SearchOutline fill={'white'}/>
         </span>
-      )}
+        )}
+      </div>
     </div>
   )
 })

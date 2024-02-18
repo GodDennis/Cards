@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import ContextMenu from '@/icons/contextMenu'
+import {ContextMenu} from '@/icons/contextMenu'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 
 import s from './drop-down-menu.module.scss'

@@ -1,7 +1,7 @@
 export type IconProps = {
   fill?: string
 }
-const LogOutOutline = ({ fill = 'black' }: IconProps) => {
+export const LogOutOutline = ({ fill = 'black' }: IconProps) => {
   return (
     <svg
       fill={'none'}
@@ -33,4 +33,4 @@ const LogOutOutline = ({ fill = 'black' }: IconProps) => {
   )
 }
 
-export default LogOutOutline
+

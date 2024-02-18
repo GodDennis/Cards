@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import SliderDemo from '@/components/ui/slider/slider'
+import { Slider } from '@/components/ui/slider'
 
 function App() {
   return (
@@ -7,7 +7,7 @@ function App() {
       <Button as={'a'} href={'https://google.com'}>
         hello
       </Button>
-      <SliderDemo maxValue={100} />
+      <Slider maxValue={100} />
     </div>
   )
 }
