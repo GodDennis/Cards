@@ -36,6 +36,7 @@ export const SelectDemo = (props: SelectProps) => {
     onOpenChange,
     onValueChange,
     options = defaultOptions,
+
     placeholder,
     value,
     ...rest
