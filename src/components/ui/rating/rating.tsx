@@ -1,6 +1,5 @@
 import { useState } from 'react'
 
-
 import StarFilled from '@/icons/StarFilled'
 import StarOutlined from '@/icons/StarOutlined'
 
@@ -24,4 +23,3 @@ export const Rating = () => {
     </div>
   )
 }
-
