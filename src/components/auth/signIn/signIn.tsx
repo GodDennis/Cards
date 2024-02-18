@@ -32,12 +32,13 @@ export const SignIn = () => {
         </Typography>
         <form className={s.formContainer} onSubmit={handleSubmit(onSubmit)}>
           <div className={s.inputContainer}>
-            <Input {...register('email')} error={errors.email?.message} label={'Email'} />
+            <Input {...register('email')} error={errors.email?.message} label={'Email'} className={s.input}/>
             <Input
               {...register('password')}
               error={errors.password?.message}
               label={'Password'}
               variant={'password'}
+              className={s.input}
             />
           </div>
           <div className={s.linkCheckbox}>
@@ -53,7 +54,7 @@ export const SignIn = () => {
           </div>
 
           <Button fullWidth type={'submit'}>
-            Login
+            Sign in
           </Button>
         </form>
         <Typography variant={'body2'}>Don't have an account?</Typography>

@@ -5,6 +5,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 36px
 }
 
 
@@ -12,24 +13,30 @@
   display: flex;
   box-sizing: border-box;
   flex-direction: column;
-  padding: 32px 29px;
+  padding: 33px 36px 25px 35px;
   justify-content: center;
   align-items: center;
+  width: 420px;
 
   .formContainer {
-    padding-bottom: 7px;
+    width: 100%;
+    padding-bottom: 10px;
 
     .inputContainer {
       display: flex;
       flex-direction: column;
       gap: 25px;
-      padding-bottom: 15px;
+      padding-bottom: 12px;
+
+      .input {
+        width: 348px;
+      }
     }
 
     .linkCheckbox {
       display: flex;
       flex-direction: column;
-      padding-bottom: 50px;
+      padding-bottom: 60px;
 
       .forgotPassword {
         text-decoration: none;
