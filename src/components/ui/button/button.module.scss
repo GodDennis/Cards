@@ -1,5 +1,6 @@
 .button {
   all: unset;
+  box-sizing: border-box;
 
   cursor: pointer;
 
@@ -57,8 +58,6 @@
     background-color: var(--color-dark-300);
   }
 }
-
-
 
 .tertiary {
   background-color: blue;

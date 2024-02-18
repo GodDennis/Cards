@@ -1,5 +1,4 @@
-import {IconProps} from "@/icons/LogOutOutline";
-
+import { IconProps } from '@/icons/LogOutOutline'
 
 export const CloseCrossOutline = ({ fill = 'black' }: IconProps) => {
   return (

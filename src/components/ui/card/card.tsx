@@ -10,7 +10,7 @@ export const Card = <T extends ElementType>(props: CardProps<T>) => {
   const { as: Component = 'article', children, className, ...restProps } = props
 
   return (
-    <Component className={`${s.card}`} {...restProps}>
+    <Component className={`${className} ${s.card}`} {...restProps}>
       {children}
     </Component>
   )
