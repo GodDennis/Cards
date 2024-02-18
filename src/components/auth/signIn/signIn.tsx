@@ -9,7 +9,7 @@ import { Typography } from '@/components/ui/typography'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import s from './signIn.module.scss'
-import {Header} from "@/components/ui/header";
+import { Header } from '@/components/ui/header'
 
 export const SignIn = () => {
   const {
@@ -25,14 +25,19 @@ export const SignIn = () => {
 
   return (
     <div className={s.container}>
-      <Header isLoggedIn={false}/>
+      <Header isLoggedIn={false} />
       <Card as={'div'} className={s.cardContainer}>
         <Typography as={'h1'} variant={'h1'}>
           Sign in
         </Typography>
         <form className={s.formContainer} onSubmit={handleSubmit(onSubmit)}>
           <div className={s.inputContainer}>
-            <Input {...register('email')} error={errors.email?.message} label={'Email'} className={s.input}/>
+            <Input
+              {...register('email')}
+              error={errors.email?.message}
+              label={'Email'}
+              className={s.input}
+            />
             <Input
               {...register('password')}
               error={errors.password?.message}

@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
 import { Select } from '@/components/ui/select'
-import {ArrowBack} from '@/icons/ArrowBack'
-import {ArrowForward} from '@/icons/ArrowForward'
+import { ArrowBack } from '@/icons/ArrowBack'
+import { ArrowForward } from '@/icons/ArrowForward'
 
 import s from './pagination.module.scss'
 

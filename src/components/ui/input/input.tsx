@@ -1,9 +1,10 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
+import {ComponentPropsWithoutRef, ElementRef, forwardRef, useState} from 'react'
 
 import { EyeOutline } from '@/icons/EyeOutline'
 import { SearchOutline } from '@/icons/SearchOutline'
 
 import s from '@/components/ui/input/input.module.scss'
+import { EyeOffOutline } from '@/icons/EyeOffOutline'
 
 export type InputProps = {
   disabled?: boolean
@@ -16,6 +17,8 @@ export type InputProps = {
 export const Input = forwardRef<ElementRef<'input'>, InputProps>((props, ref) => {
   const { className, disabled = false, error = null, label, variant = 'simple', ...rest } = props
 
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
     <div className={`${s.inputHeaders} ${disabled ? s.disabled : ''}`}>
       {' '}
@@ -23,24 +26,24 @@ export const Input = forwardRef<ElementRef<'input'>, InputProps>((props, ref) =>
       <div className={s.inputContainer}>
         <input
           className={`${s.input} ${s[variant]} ${error ? s.error : ''} ${
-              disabled ? s.disabled : ''
+            disabled ? s.disabled : ''
           } ${className}`}
           ref={ref}
-          type={variant === 'password' ? 'password' : 'text'}
+          type={showPassword ? 'text' : variant === 'password' ? 'password' : 'text'}
           {...rest}
-      />
+        />
         {error && <div className={s.errorMessage}>{error}</div>}
         {variant === 'password' && (
-            <span className={s.passwordIcon}>
-          {' '}
-              <EyeOutline fill={'white'}/>
-        </span>
+          <span className={s.passwordIcon} onClick={() => setShowPassword(!showPassword)}>
+            {' '}
+            {showPassword ? <EyeOffOutline fill={'white'} /> : <EyeOutline fill={'white'} />}
+          </span>
         )}
         {variant === 'search' && (
-            <span className={s.searchIcon}>
-          {' '}
-              <SearchOutline fill={'white'}/>
-        </span>
+          <span className={s.searchIcon}>
+            {' '}
+            <SearchOutline fill={'white'} />
+          </span>
         )}
       </div>
     </div>
