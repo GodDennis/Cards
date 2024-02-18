@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
+import ivan from '@/assets/Images/ivan.jpeg'
+
 import { Header } from '.'
 
 const meta = {
@@ -12,7 +14,7 @@ const meta = {
 
   component: Header,
   parameters: {
-    layout: 'centered',
+    layout: 'full',
   },
   tags: ['autodocs'],
   title: 'Components/Header',
@@ -28,7 +30,7 @@ export const Logged: Story = {
   args: {
     isLoggedIn: false,
     user: {
-      avatar: null,
+      avatar: ivan,
       name: 'Ivan',
     },
   },
