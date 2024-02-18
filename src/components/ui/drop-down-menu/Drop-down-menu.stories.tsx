@@ -8,6 +8,10 @@ import play from '@/assets/Images/play-circle-outline.svg'
 import trash from '@/assets/Images/trash-outline.svg'
 import { DropDownMenu } from '@/components/ui/drop-down-menu'
 import { withRouter } from 'storybook-addon-react-router-v6'
+
+import { Avatar } from '../avatar/Avatar'
+import { DropDownList } from './Drop-down-list'
+import { UserBarDropDown } from './Drop-down-user-bar'
 const meta = {
   argTypes: {},
   component: DropDownMenu,
@@ -19,31 +23,39 @@ const meta = {
   title: 'Components/Drop-down-menu',
 } satisfies Meta<typeof DropDownMenu>
 
+const list = [
+  { redirect: '#', src: play, title: 'Learn' },
+  { redirect: '#', src: edit, title: 'Edit' },
+  { redirect: '#', src: trash, title: 'Delete' },
+]
+
+const userList = [
+  { redirect: '#', src: person, title: 'My Profile' },
+  { redirect: '#', src: logOut, title: 'Sign Out' },
+]
+const userBarInfo = {
+  avatar: ivan,
+  email: 'j&johnson@gmail.com',
+  id: 1,
+  userName: 'Ivan',
+}
+
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const WithUser: Story = {
   args: {
-    list: [
-      { redirect: '#', src: person, title: 'My Profile' },
-      { redirect: '#', src: logOut, title: 'Sign Out' },
-    ],
-    userBarInfo: {
-      avatar: ivan,
-      email: 'j&johnson@gmail.com',
-      id: 1,
-      userName: 'Ivan',
-    },
-    variant: 'avatar',
+    children: (
+      <>
+        <UserBarDropDown userBarInfo={userBarInfo} />
+        <DropDownList list={userList} />
+      </>
+    ),
+    trigger: <Avatar src={userBarInfo?.avatar} />,
   },
 }
 export const Simple: Story = {
   args: {
-    list: [
-      { redirect: '#', src: play, title: 'Learn' },
-      { redirect: '#', src: edit, title: 'Edit' },
-      { redirect: '#', src: trash, title: 'Delete' },
-    ],
-    variant: 'contextMenu',
+    children: <DropDownList list={list} />,
   },
 }

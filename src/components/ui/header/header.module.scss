@@ -6,7 +6,9 @@
   width: 100%;
   max-width: 1280px;
   height: 60px;
-  padding: 12px, 136px;
+  padding: 12px 136px;
+
+  background-color: var(--color-dark-700, #171717);
 }
 
 .userBar {

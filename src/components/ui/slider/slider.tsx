@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react'
 
-import * as Slider from '@radix-ui/react-slider'
+import * as SliderRadix from '@radix-ui/react-slider'
 
 import s from './slider.module.scss'
 
@@ -9,7 +9,7 @@ type Props = {
   minValue?: number
 }
 
-const SliderDemo = (props: Props) => {
+export const Slider = (props: Props) => {
   const { maxValue = 10, minValue = 0 } = props
 
   const [value1, setValue1] = useState<number>(minValue)
@@ -35,20 +35,20 @@ const SliderDemo = (props: Props) => {
         type={'number'}
         value={value1}
       />
-      <Slider.Root
+      <SliderRadix.Root
         className={s.SliderRoot}
         max={maxValue}
         onValueChange={handleValueChange}
         step={1}
         value={[value1, value2]}
       >
-        <Slider.Track className={s.SliderTrack}>
-          <Slider.Range className={s.SliderRange} />
-          <Slider.Range className={s.SliderRange} />
-        </Slider.Track>
-        <Slider.Thumb aria-label={'Volume'} className={s.SliderThumb} defaultValue={value1} />
-        <Slider.Thumb aria-label={'Volume'} className={s.SliderThumb} defaultValue={value2} />
-      </Slider.Root>
+        <SliderRadix.Track className={s.SliderTrack}>
+          <SliderRadix.Range className={s.SliderRange} />
+          <SliderRadix.Range className={s.SliderRange} />
+        </SliderRadix.Track>
+        <SliderRadix.Thumb aria-label={'Volume'} className={s.SliderThumb} defaultValue={value1} />
+        <SliderRadix.Thumb aria-label={'Volume'} className={s.SliderThumb} defaultValue={value2} />
+      </SliderRadix.Root>
       <input
         className={s.value}
         onChange={e => setValue2(Number(e.target.value))}
@@ -58,5 +58,3 @@ const SliderDemo = (props: Props) => {
     </form>
   )
 }
-
-export default SliderDemo

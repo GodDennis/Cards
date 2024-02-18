@@ -1,8 +1,7 @@
 import { useState } from 'react'
 
-
-import StarFilled from '@/icons/StarFilled'
-import StarOutlined from '@/icons/StarOutlined'
+import {StarFilled} from '@/icons/StarFilled'
+import {StarOutlined} from '@/icons/StarOutlined'
 
 import s from './rating.module.scss'
 
@@ -24,4 +23,3 @@ export const Rating = () => {
     </div>
   )
 }
-

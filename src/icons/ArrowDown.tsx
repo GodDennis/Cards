@@ -1,6 +1,6 @@
 import { IconProps } from '@/icons/LogOutOutline'
 
-const ArrowDown = (props: IconProps) => {
+export const ArrowDown = (props: IconProps) => {
   const { fill = 'white' } = props
 
   return (
@@ -27,5 +27,3 @@ const ArrowDown = (props: IconProps) => {
     </svg>
   )
 }
-
-export default ArrowDown

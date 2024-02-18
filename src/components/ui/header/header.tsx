@@ -17,14 +17,14 @@ export const Header = (props: HeaderProps) => {
     <header className={s.container}>
       <Logo />
       {isLoggedIn ? (
-        <Button variant={'secondary'}>Sign in</Button>
-      ) : (
         <div className={s.userBar}>
           <Typography as={'span'} className={s.userName} variant={'body1'}>
             {user?.name}
           </Typography>
           <Avatar src={user?.avatar} />
         </div>
+      ) : (
+        <Button variant={'secondary'}>Sign in</Button>
       )}
     </header>
   )

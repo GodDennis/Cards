@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
-import { SelectDemo } from '@/components/ui/select'
-import ArrowBack from '@/icons/ArrowBack'
-import ArrowForward from '@/icons/ArrowForward'
+import { Select } from '@/components/ui/select'
+import {ArrowBack} from '@/icons/ArrowBack'
+import {ArrowForward} from '@/icons/ArrowForward'
 
 import s from './pagination.module.scss'
 
@@ -108,7 +108,7 @@ export const Pagination = (props: Props) => {
 
       <div className={s.countPicker}>
         Показать
-        <SelectDemo
+        <Select
           defaultValue={pageSize.toString()}
           onValueChange={changePageSize}
           options={options}

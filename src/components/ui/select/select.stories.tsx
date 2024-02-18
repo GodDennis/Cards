@@ -1,16 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { SelectDemo } from '@/components/ui/select'
-
+import { Select } from '@/components/ui/select'
 
 const meta = {
   argTypes: {},
-  component: SelectDemo,
+  component: Select,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  title: 'Components/SelectDemo',
-} satisfies Meta<typeof SelectDemo>
+  title: 'Components/Select',
+} satisfies Meta<typeof Select>
 
 export default meta
 type Story = StoryObj<typeof meta>

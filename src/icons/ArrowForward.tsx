@@ -1,6 +1,6 @@
 import { IconProps } from '@/icons/LogOutOutline'
 
-const ArrowForward = (props: IconProps) => {
+export const ArrowForward = (props: IconProps) => {
   const { fill = 'white' } = props
 
   return (
@@ -28,4 +28,3 @@ const ArrowForward = (props: IconProps) => {
   )
 }
 
-export default ArrowForward

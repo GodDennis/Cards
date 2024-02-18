@@ -1,8 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Rating } from '@/components/ui/rating'
 
-
-
 const meta = {
   argTypes: {},
   component: Rating,
