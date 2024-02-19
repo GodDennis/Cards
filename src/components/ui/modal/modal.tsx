@@ -1,4 +1,4 @@
-import { ComponentProps } from 'react'
+import { ComponentProps, ComponentRef, forwardRef } from 'react'
 
 import { CloseCrossOutline } from '@/icons/close-cross-outline'
 import * as Dialog from '@radix-ui/react-dialog'
@@ -15,7 +15,7 @@ type ModalProps = {
   withCloseBtn?: boolean
 } & ComponentProps<'div'>
 
-export const Modal = (props: ModalProps) => {
+export const Modal = forwardRef<ComponentRef<'div'>, ModalProps>(props => {
   const { children, className, closeHandler, open = false, title, withCloseBtn = true } = props
   const clickHandler = () => {
     closeHandler(false)
@@ -58,4 +58,4 @@ export const Modal = (props: ModalProps) => {
       </Dialog.Portal>
     </Dialog.Root>
   )
-}
+})
