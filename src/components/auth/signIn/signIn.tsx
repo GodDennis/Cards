@@ -28,7 +28,7 @@ export const SignIn = () => {
       <Header isLoggedIn={false} />
       <Card as={'div'} className={s.cardContainer}>
         <Typography as={'h1'} variant={'h1'}>
-          Sign in
+          Sign In
         </Typography>
         <form className={s.formContainer} onSubmit={handleSubmit(onSubmit)}>
           <div className={s.inputContainer}>
@@ -59,7 +59,7 @@ export const SignIn = () => {
           </div>
 
           <Button fullWidth type={'submit'}>
-            Sign in
+            Sign In
           </Button>
         </form>
         <Typography variant={'body2'}>Don't have an account?</Typography>
