@@ -12,10 +12,11 @@ type ModalProps = {
   closeHandler: (isOpen: boolean) => void
   open?: boolean
   title: string
+  withCloseBtn?: boolean
 } & ComponentProps<'div'>
 
 export const Modal = (props: ModalProps) => {
-  const { children, className, closeHandler, open = false, title } = props
+  const { children, className, closeHandler, open = false, title, withCloseBtn = true } = props
   const clickHandler = () => {
     closeHandler(false)
   }
@@ -40,11 +41,17 @@ export const Modal = (props: ModalProps) => {
                 {title}
               </Typography>
             </Dialog.Title>
-            <Dialog.Close asChild>
-              <button aria-label={'Close'} className={classNames.iconButton} onClick={clickHandler}>
-                <CloseCrossOutline fill={'#fff'} />
-              </button>
-            </Dialog.Close>
+            {withCloseBtn && (
+              <Dialog.Close asChild>
+                <button
+                  aria-label={'Close'}
+                  className={classNames.iconButton}
+                  onClick={clickHandler}
+                >
+                  <CloseCrossOutline fill={'#fff'} />
+                </button>
+              </Dialog.Close>
+            )}
           </header>
           <div className={classNames.contentWtapper}>{children}</div>
         </Dialog.Content>
