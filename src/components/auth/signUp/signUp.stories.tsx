@@ -3,10 +3,10 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { SignUp } from './'
 
 const meta = {
-    argTypes: {},
-    component: SignUp,
-    tags: ['autodocs'],
-    title: 'Auth/SignUp',
+  argTypes: {},
+  component: SignUp,
+  tags: ['autodocs'],
+  title: 'Auth/SignUp',
 } satisfies Meta<typeof SignUp>
 
 export default meta

@@ -62,7 +62,9 @@ export const SignIn = () => {
             Sign In
           </Button>
         </form>
-        <Typography variant={'body2'} className={s.haveAnAccount}>Don't have an account?</Typography>
+        <Typography variant={'body2'} className={s.haveAnAccount}>
+          Don't have an account?
+        </Typography>
         <Typography as={'a'} className={s.signIn} href={'#'}>
           Sign Up
         </Typography>
