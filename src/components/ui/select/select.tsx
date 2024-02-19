@@ -1,8 +1,8 @@
 import { ComponentPropsWithoutRef, ReactNode, Ref, forwardRef, useState } from 'react'
 
 import { Typography } from '@/components/ui/typography'
-import {ArrowDown} from '@/icons/ArrowDown'
-import {ArrowUp} from '@/icons/ArrowUp'
+import { ArrowDown } from '@/icons/ArrowDown'
+import { ArrowUp } from '@/icons/ArrowUp'
 import * as SelectRadix from '@radix-ui/react-select'
 import { Direction } from '@radix-ui/react-select'
 

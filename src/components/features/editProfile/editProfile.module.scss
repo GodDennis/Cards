@@ -1,0 +1,45 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .modalTitle {
+    margin-top: 33px;
+    margin-bottom: 27px;
+  }
+
+  .avatar {
+    margin-bottom: 6px;
+  }
+
+  .flexContainer {
+    display: flex;
+    gap: 9px;
+    align-items: center;
+
+    .editNameButton {
+      width: 16px;
+      height: 16px;
+      padding: 0;
+      background-color: inherit;
+    }
+  }
+
+  .email {
+    margin-bottom: 13px;
+    color: var(--color-dark-100);
+  }
+
+  .formNikname {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+
+    margin-top: 7px;
+    margin-bottom: 84px;
+  }
+
+  .logOut {
+    margin-bottom: 41px;
+  }
+}

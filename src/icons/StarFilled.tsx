@@ -23,5 +23,3 @@ export const StarFilled = () => {
     </svg>
   )
 }
-
-

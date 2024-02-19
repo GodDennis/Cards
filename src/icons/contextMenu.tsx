@@ -37,5 +37,3 @@ export const ContextMenu = (props: IconProps) => {
     </svg>
   )
 }
-
-
