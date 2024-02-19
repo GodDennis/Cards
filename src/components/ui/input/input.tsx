@@ -23,24 +23,24 @@ export const Input = forwardRef<ElementRef<'input'>, InputProps>((props, ref) =>
       <div className={s.inputContainer}>
         <input
           className={`${s.input} ${s[variant]} ${error ? s.error : ''} ${
-              disabled ? s.disabled : ''
+            disabled ? s.disabled : ''
           } ${className}`}
           ref={ref}
           type={variant === 'password' ? 'password' : 'text'}
           {...rest}
-      />
+        />
         {error && <div className={s.errorMessage}>{error}</div>}
         {variant === 'password' && (
-            <span className={s.passwordIcon}>
-          {' '}
-              <EyeOutline fill={'white'}/>
-        </span>
+          <span className={s.passwordIcon}>
+            {' '}
+            <EyeOutline fill={'white'} />
+          </span>
         )}
         {variant === 'search' && (
-            <span className={s.searchIcon}>
-          {' '}
-              <SearchOutline fill={'white'}/>
-        </span>
+          <span className={s.searchIcon}>
+            {' '}
+            <SearchOutline fill={'white'} />
+          </span>
         )}
       </div>
     </div>

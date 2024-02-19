@@ -27,5 +27,3 @@ export const ArrowBack = (props: IconProps) => {
     </svg>
   )
 }
-
-
