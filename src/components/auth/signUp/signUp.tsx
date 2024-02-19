@@ -1,5 +1,5 @@
 import {useForm} from "react-hook-form";
-import {FormValues, loginSchema} from "@/components/auth/helpers/loginValidationSchema";
+import {RegisterFormValues, registerSchema} from "@/components/auth/helpers/loginValidationSchema";
 import {zodResolver} from "@hookform/resolvers/zod";
 import s from "@/components/auth/signIn/signIn.module.scss";
 import {Header} from "@/components/ui/header";
@@ -14,11 +14,13 @@ export const SignUp = () => {
         formState: { errors },
         handleSubmit,
         register,
-    } = useForm<FormValues>({ resolver: zodResolver(loginSchema) })
+    } = useForm<RegisterFormValues>({ resolver: zodResolver(registerSchema) })
 
-    const onSubmit = (values: FormValues) => {
+    const onSubmit = (values: RegisterFormValues) => {
         console.log(values)
     }
+
+
 
     return (
         <div className={s.container}>
@@ -43,15 +45,13 @@ export const SignUp = () => {
                             className={s.input}
                         />
                         <Input
-                            {...register('password')}
-                            error={errors.password?.message}
+                            {...register('confirmPassword')}
+                            error={errors.confirmPassword?.message}
                             label={'Confirm Password'}
                             variant={'password'}
                             className={s.input}
                         />
                     </div>
-
-
                     <Button fullWidth type={'submit'}>
                         Sign Up
                     </Button>
