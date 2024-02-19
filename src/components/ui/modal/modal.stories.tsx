@@ -4,6 +4,7 @@ import { useState } from 'react'
 
 import { Button } from '../button'
 import { Modal } from './modal'
+import { ModalFooter } from './modal-footer'
 
 const meta = {
   argTypes: {
@@ -37,8 +38,31 @@ const ServiceModalComponent = () => {
   )
 }
 
+const ServiceModalComponentWithFooter = () => {
+  const [isOpen, setIsOpen] = useState(false)
+
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>Trigger</Button>
+      {isOpen && (
+        <Modal closeHandler={setIsOpen} open={isOpen} title={'Test Modal'}>
+          <div>hello world!</div>
+          <ModalFooter>
+            <Button variant={'secondary'}>Secondary</Button>
+            <Button variant={'primary'}>Primary</Button>
+          </ModalFooter>
+        </Modal>
+      )}
+    </>
+  )
+}
+
 export const Primary: Story = {
   render: () => <ServiceModalComponent />,
+}
+
+export const WithFooter: Story = {
+  render: () => <ServiceModalComponentWithFooter />,
 }
 
 const ServiceModalOverflow = () => {

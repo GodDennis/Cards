@@ -6,7 +6,7 @@ import s from './modal-footer.module.scss'
 
 type Props = {
   children: ReactNode
-  className: string
+  className?: string
 } & ComponentProps<'footer'>
 
 export const ModalFooter = forwardRef<ComponentRef<'footer'>, Props>(
