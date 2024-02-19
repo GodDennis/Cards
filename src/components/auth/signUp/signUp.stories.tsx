@@ -6,7 +6,7 @@ const meta = {
     argTypes: {},
     component: SignUp,
     tags: ['autodocs'],
-    title: 'Auth/SignIn',
+    title: 'Auth/SignUp',
 } satisfies Meta<typeof SignUp>
 
 export default meta

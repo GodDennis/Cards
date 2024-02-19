@@ -24,7 +24,7 @@ export const SignUp = () => {
         <div className={s.container}>
             <Header isLoggedIn={false} />
             <Card as={'div'} className={s.cardContainer}>
-                <Typography as={'h1'} variant={'h1'}>
+                <Typography as={'h1'} variant={'h1'} className={s.title}>
                     Sign Up
                 </Typography>
                 <form className={s.formContainer} onSubmit={handleSubmit(onSubmit)}>
@@ -51,11 +51,12 @@ export const SignUp = () => {
                         />
                     </div>
 
+
                     <Button fullWidth type={'submit'}>
                         Sign Up
                     </Button>
                 </form>
-                <Typography variant={'body2'}>Already have an account?</Typography>
+                <Typography variant={'body2'} className={s.haveAnAccount}>Already have an account?</Typography>
                 <Typography as={'a'} className={s.signIn} href={'#'}>
                     Sign In
                 </Typography>
