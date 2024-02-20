@@ -12,17 +12,21 @@ type Option = {
   value: string
 }
 
-type RadioGroupProps = {
+export type RadioGroupProps = {
+  //use only when component controlled
   changeHandler: (value: string) => void
+  //use only when component uncontrolled
+  defaultValue?: string
   disabled?: boolean
   name: string
   options: Option[]
   required?: boolean
+  //use only when component controlled
   value: string
 } & ComponentProps<'div'>
 
 export const RadioGroup = (props: RadioGroupProps) => {
-  const { changeHandler, className, disabled, name, options, value } = props
+  const { changeHandler, className, defaultValue, disabled, name, options, value } = props
 
   const classNames = {
     radioGroupIndicator: s.radioGroupIndicator,
@@ -34,6 +38,7 @@ export const RadioGroup = (props: RadioGroupProps) => {
   return (
     <RadioGr.Root
       className={classNames.radioGroupRoot}
+      defaultValue={defaultValue}
       disabled={disabled}
       name={name}
       onValueChange={changeHandler}
