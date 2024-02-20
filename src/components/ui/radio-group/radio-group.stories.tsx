@@ -54,7 +54,9 @@ export const Disabled: Story = {
 }
 export const WithError: Story = {
   args: {
+    changeHandler: undefined,
     defaultValue: 'RadioGroup-2',
     error: 'Some error occured',
+    value: undefined,
   },
 }
