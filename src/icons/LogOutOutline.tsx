@@ -5,9 +5,9 @@ export const LogOutOutline = ({ fill = 'black' }: IconProps) => {
   return (
     <svg
       fill={'none'}
-      height={'24'}
+      height={'16'}
       viewBox={'0 0 24 24'}
-      width={'24'}
+      width={'16'}
       xmlns={'http://www.w3.org/2000/svg'}
     >
       <g clipPath={'url(#clip0_5661_1705)'}>
