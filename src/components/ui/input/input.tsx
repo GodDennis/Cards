@@ -28,9 +28,10 @@ export const Input = forwardRef<ElementRef<'input'>, InputProps>((props, ref) =>
           className={`${s.input} ${s[variant]} ${error ? s.error : ''} ${
             disabled ? s.disabled : ''
           } ${className}`}
+          {...rest}
           ref={ref}
           type={showPassword ? 'text' : variant === 'password' ? 'password' : 'text'}
-          {...rest}
+
         />
         {error && <div className={s.errorMessage}>{error}</div>}
         {variant === 'password' && (

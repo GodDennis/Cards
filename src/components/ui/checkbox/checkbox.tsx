@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef } from 'react'
+import {ComponentPropsWithoutRef, ElementRef, forwardRef} from 'react'
 
 import { Typography } from '@/components/ui/typography'
 import { CheckboxIcon } from '@/icons/CheckboxIcon'
@@ -11,12 +11,12 @@ export type CheckboxProps = {
   text?: string
 } & ComponentPropsWithoutRef<typeof RadixCheckbox.Root>
 
-export const Checkbox = (props: CheckboxProps) => {
+export const Checkbox = forwardRef<ElementRef<typeof RadixCheckbox.Root>, CheckboxProps>((props, ref) => {
   const { className, disabled = false, text, ...rest } = props
 
   return (
     <div className={`${s.rootDiv} ${className}`}>
-      <RadixCheckbox.Root className={`${s.CheckboxRoot}`} {...rest} disabled={disabled} id={'1'}>
+      <RadixCheckbox.Root className={`${s.CheckboxRoot}`} {...rest} disabled={disabled} id={'1'} ref={ref}>
         <RadixCheckbox.Indicator className={disabled ? s.disabledIndicator : s.CheckboxIndicator}>
           <CheckboxIcon
             bcgFill={disabled ? `var(--color-dark-100)` : 'white'}
@@ -29,4 +29,4 @@ export const Checkbox = (props: CheckboxProps) => {
       </label>
     </div>
   )
-}
+})
