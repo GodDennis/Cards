@@ -10,7 +10,6 @@ type ControlledInputProps<T extends FieldValues> = Omit<
 
 export const ControlledInput = <T extends FieldValues>({
   control,
-  name,
   shouldUnregister,
   ...rest
 }: ControlledInputProps<T>) => {
@@ -19,7 +18,7 @@ export const ControlledInput = <T extends FieldValues>({
   } = useController({
     control,
     disabled: rest.disabled,
-    name,
+    name: rest.name,
     shouldUnregister,
   })
 
