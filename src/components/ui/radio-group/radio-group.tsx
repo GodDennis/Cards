@@ -14,21 +14,24 @@ type Option = {
 
 export type RadioGroupProps = {
   //use only when component controlled
-  changeHandler: (value: string) => void
+  changeHandler?: (value: string) => void
   //use only when component uncontrolled
   defaultValue?: string
   disabled?: boolean
+  error?: string
   name: string
   options: Option[]
   required?: boolean
   //use only when component controlled
-  value: string
-} & ComponentProps<'div'>
+  value?: string
+} & Omit<ComponentProps<'div'>, 'dir' | 'ref'>
 
 export const RadioGroup = (props: RadioGroupProps) => {
-  const { changeHandler, className, defaultValue, disabled, name, options, value } = props
+  const { changeHandler, className, defaultValue, disabled, error, name, options, value, ...rest } =
+    props
 
   const classNames = {
+    error: s.errorMessage,
     radioGroupIndicator: s.radioGroupIndicator,
     radioGroupItem: s.radioGroupItem,
     radioGroupRoot: clsx(s.radioGroupRoot, className),
@@ -43,6 +46,7 @@ export const RadioGroup = (props: RadioGroupProps) => {
       name={name}
       onValueChange={changeHandler}
       value={value}
+      {...rest}
     >
       {options.map((o, i) => {
         return (
@@ -58,6 +62,11 @@ export const RadioGroup = (props: RadioGroupProps) => {
           </div>
         )
       })}
+      {error && (
+        <Typography as={'span'} className={classNames.error} variant={'body2'}>
+          {error}
+        </Typography>
+      )}
     </RadioGr.Root>
   )
 }
