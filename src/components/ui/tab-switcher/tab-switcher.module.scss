@@ -3,6 +3,7 @@ button,
 fieldset,
 input {
   all: unset;
+  box-sizing: border-box;
 }
 
 .tabsRoot {

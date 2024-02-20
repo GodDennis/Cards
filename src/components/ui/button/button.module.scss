@@ -1,6 +1,5 @@
 .button {
   all: unset;
-  box-sizing: border-box;
 
   cursor: pointer;
 
@@ -9,6 +8,7 @@
   align-items: center;
   justify-content: center;
 
+  box-sizing: border-box;
   width: max-content;
   padding: 6px 28px;
 
