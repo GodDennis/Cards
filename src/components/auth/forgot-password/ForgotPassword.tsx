@@ -27,6 +27,7 @@ export const ForgotPassword = () => {
         </Typography>
         <div className={s.inputWrapper}>
           <ControlledInput
+            className={s.input}
             control={control}
             error={errors.email?.message}
             label={'Email'}
