@@ -5,8 +5,16 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { ControlledInput } from '@/components/ui/input/ControlledInput'
 import { Typography } from '@/components/ui/typography'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 export const ForgotPassword = () => {
+  const {
+    control,
+    formState: { errors },
+  } = useForm({
+    // resolver: zodResolver()
+  })
+
   return (
     <Card>
       <form className={'form'}>
