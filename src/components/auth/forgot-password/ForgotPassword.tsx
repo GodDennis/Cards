@@ -6,25 +6,17 @@ import { Card } from '@/components/ui/card'
 import { ControlledInput } from '@/components/ui/input/ControlledInput'
 import { Typography } from '@/components/ui/typography'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
 
 import s from './fogotPassword.module.scss'
 
-import { emailZodCheck } from '../helpers/loginValidationSchema'
+import { EmailFormValue, emailFormSchema } from '../helpers/loginValidationSchema'
 
 export const ForgotPassword = () => {
   const {
     control,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      email: '',
-    },
-    resolver: zodResolver(
-      z.object({
-        email: emailZodCheck,
-      })
-    ),
+  } = useForm<EmailFormValue>({
+    resolver: zodResolver(emailFormSchema),
   })
 
   return (
