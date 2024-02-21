@@ -8,6 +8,8 @@ import { Typography } from '@/components/ui/typography'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
+import s from './fogotPassword.module.scss'
+
 import { emailZodCheck } from '../helpers/loginValidationSchema'
 
 export const ForgotPassword = () => {
@@ -27,11 +29,11 @@ export const ForgotPassword = () => {
 
   return (
     <Card>
-      <form className={'form'}>
-        <Typography as={'h1'} variant={'h1'}>
+      <form className={s.form}>
+        <Typography as={'h1'} className={s.title} variant={'h1'}>
           Forgot your password?
         </Typography>
-        <div className={'inputWrapper'}>
+        <div className={s.inputWrapper}>
           <ControlledInput
             control={control}
             error={errors.email?.message}
@@ -40,19 +42,19 @@ export const ForgotPassword = () => {
             type={'email'}
             variant={'simple'}
           />
-          <Typography as={'p'} className={'inputDescr'} variant={'body2'}>
+          <Typography as={'p'} className={s.inputDescr} variant={'body2'}>
             Enter your email address and we will send you further instructions
           </Typography>
         </div>
-        <Button className={'button'} fullWidth>
+        <Button className={s.button} fullWidth>
           <Typography as={'span'} variant={'subtitle2'}>
             Send Instructions
           </Typography>
         </Button>
-        <Typography as={'span'} className={'question'} variant={'body2'}>
+        <Typography as={'span'} className={s.question} variant={'body2'}>
           Did you remember your password?
         </Typography>
-        <Typography as={Link} className={'toLogInLink'} to={'/login'} variant={'subtitle2'}>
+        <Typography as={Link} className={s.toLogInLink} to={'/login'} variant={'subtitle2'}>
           Try logging in
         </Typography>
       </form>
