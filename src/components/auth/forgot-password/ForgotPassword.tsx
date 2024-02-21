@@ -6,13 +6,23 @@ import { Card } from '@/components/ui/card'
 import { ControlledInput } from '@/components/ui/input/ControlledInput'
 import { Typography } from '@/components/ui/typography'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+
+import { emailZodCheck } from '../helpers/loginValidationSchema'
 
 export const ForgotPassword = () => {
   const {
     control,
     formState: { errors },
   } = useForm({
-    // resolver: zodResolver()
+    defaultValues: {
+      email: '',
+    },
+    resolver: zodResolver(
+      z.object({
+        email: emailZodCheck,
+      })
+    ),
   })
 
   return (
@@ -24,8 +34,9 @@ export const ForgotPassword = () => {
         <div className={'inputWrapper'}>
           <ControlledInput
             control={control}
+            error={errors.email?.message}
             label={'Email'}
-            name={'userEmail'}
+            name={'email'}
             type={'email'}
             variant={'simple'}
           />
@@ -41,7 +52,7 @@ export const ForgotPassword = () => {
         <Typography as={'span'} className={'question'} variant={'body2'}>
           Did you remember your password?
         </Typography>
-        <Typography as={Link} className={'toLogInLink'} to={'/'} variant={'subtitle2'}>
+        <Typography as={Link} className={'toLogInLink'} to={'/login'} variant={'subtitle2'}>
           Try logging in
         </Typography>
       </form>
