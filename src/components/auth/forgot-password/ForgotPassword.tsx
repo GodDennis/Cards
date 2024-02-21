@@ -21,7 +21,7 @@ export const ForgotPassword = () => {
   })
 
   const onSubmit = (value: EmailFormValue) => {
-    console.log(value)
+    return value
   }
 
   return (

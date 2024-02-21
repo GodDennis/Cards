@@ -20,7 +20,7 @@ export const CreateNewPassword = () => {
   })
 
   const onSubmit = (value: PasswordFormValue) => {
-    console.log(value)
+    return value
   }
 
   return (
