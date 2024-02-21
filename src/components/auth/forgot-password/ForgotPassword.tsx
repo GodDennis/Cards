@@ -15,13 +15,18 @@ export const ForgotPassword = () => {
   const {
     control,
     formState: { errors },
+    handleSubmit,
   } = useForm<EmailFormValue>({
     resolver: zodResolver(emailFormSchema),
   })
 
+  const onSubmit = (value: EmailFormValue) => {
+    console.log(value)
+  }
+
   return (
     <Card>
-      <form className={s.form}>
+      <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
         <Typography as={'h1'} className={s.title} variant={'h1'}>
           Forgot your password?
         </Typography>
