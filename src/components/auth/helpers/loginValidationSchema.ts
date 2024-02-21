@@ -10,4 +10,4 @@ export const loginSchema = z.object({
   rememberMe: rememberMeZodCheck,
 })
 
-export type FormValues = z.infer<typeof loginSchema>
+export type LoginFormValues = z.infer<typeof loginSchema>
