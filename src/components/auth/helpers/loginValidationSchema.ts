@@ -1,9 +1,13 @@
 import { z } from 'zod'
 
+export const emailZodCheck = z.string().email()
+export const passwordZodCheck = z.string().email()
+export const rememberMeZodCheck = z.string().email()
+
 export const loginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(3).max(30),
-  rememberMe: z.boolean().optional(),
+  email: emailZodCheck,
+  password: passwordZodCheck,
+  rememberMe: rememberMeZodCheck,
 })
 
 export type FormValues = z.infer<typeof loginSchema>
