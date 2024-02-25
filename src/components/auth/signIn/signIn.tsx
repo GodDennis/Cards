@@ -1,8 +1,7 @@
 import {useForm} from 'react-hook-form'
-
-import {FormValues, loginSchema} from '@/components/auth/helpers/loginValidationSchema'
-import {Button} from '@/components/ui/button'
-import {Card} from '@/components/ui/card'
+import { LoginFormValues, loginSchema } from '@/components/auth/helpers/loginValidationSchema'
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
 import ControlledCheckbox from '@/components/ui/checkbox/controlledCheckbox'
 import {Typography} from '@/components/ui/typography'
 import {zodResolver} from '@hookform/resolvers/zod'
@@ -16,9 +15,9 @@ export const SignIn = () => {
         control,
         formState: {errors},
         handleSubmit,
-    } = useForm<FormValues>({resolver: zodResolver(loginSchema)})
+    } = useForm<LoginFormValues>({resolver: zodResolver(loginSchema)})
 
-    const onSubmit = (values: FormValues) => {
+    const onSubmit = (values: LoginFormValues) => {
         console.log(values)
     }
 

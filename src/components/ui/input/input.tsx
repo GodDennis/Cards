@@ -1,4 +1,4 @@
-import {ComponentPropsWithoutRef, ElementRef, forwardRef, useState} from 'react'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef, useState } from 'react'
 
 import { EyeOutline } from '@/icons/EyeOutline'
 import { SearchOutline } from '@/icons/SearchOutline'
@@ -17,7 +17,7 @@ export type InputProps = {
 export const Input = forwardRef<ElementRef<'input'>, InputProps>((props, ref) => {
   const { className, disabled = false, error = null, label, variant = 'simple', ...rest } = props
 
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false)
 
   return (
     <div className={`${s.inputHeaders} ${disabled ? s.disabled : ''}`}>
