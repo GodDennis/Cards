@@ -2,6 +2,7 @@ import image from '@/assets/Images/ivan.jpeg'
 import { Delete } from '@/icons/Delete'
 import { EditPen } from '@/icons/EditPen'
 import { Play } from '@/icons/Play'
+import clsx from 'clsx'
 
 import s from './descTable.module.scss'
 
@@ -12,39 +13,44 @@ import { THeader } from '../THeader'
 type HeadCellProps = {
   [key: string]: string
 }
-type DescTableProps = {
-  head: HeadCellProps[]
-  items: any[]
+type Deck = {
+  cardsCount: number
+  createdBy: string
+  id: string
+  lastUpdated: string
+  name: string
 }
 
-export const DescTable = ({ head, items }: DescTableProps) => {
-  const { Body, Cell, Root, Row } = Table
+type DescTableProps = {
+  decks: Deck[]
+  head: HeadCellProps[]
+}
 
+export const DescTable = ({ decks, head }: DescTableProps) => {
   const playHandler = () => {}
   const editHandler = () => {}
   const deleteHandler = () => {}
 
   return (
-    <Root className={s.root}>
+    <Table.Root className={s.root}>
       <THeader head={head} />
-      <Body>
-        {' '}
-        {items.map(item => {
+      <Table.Body>
+        {decks.map(deck => {
           return (
-            <Row key={item}>
-              <Cell>
+            <Table.Row key={deck.id}>
+              <Table.Cell>
                 <div className={s.flexContainer}>
                   <img alt={'Desc Preview'} className={s.deckPreview} src={image} />
-                  {item.title}
+                  {deck.name}
                 </div>
-              </Cell>
-              <Cell>{item.count}</Cell>
-              <Cell>{item.lastUpdate}</Cell>
-              <Cell>
-                <span>{item.author}</span>
-              </Cell>
-              <Cell>
-                <div className={`${s.flexContainer} ${s.buttonsBlock}`}>
+              </Table.Cell>
+              <Table.Cell>{deck.cardsCount}</Table.Cell>
+              <Table.Cell>{deck.lastUpdated}</Table.Cell>
+              <Table.Cell>
+                <span>{deck.createdBy}</span>
+              </Table.Cell>
+              <Table.Cell>
+                <div className={clsx(s.flexContainer, s.buttonsBlock)}>
                   <Button className={s.actionBtn} onClick={playHandler}>
                     <Play />
                   </Button>
@@ -55,11 +61,11 @@ export const DescTable = ({ head, items }: DescTableProps) => {
                     <Delete />
                   </Button>
                 </div>
-              </Cell>
-            </Row>
+              </Table.Cell>
+            </Table.Row>
           )
         })}
-      </Body>
-    </Root>
+      </Table.Body>
+    </Table.Root>
   )
 }
