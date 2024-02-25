@@ -21,7 +21,6 @@ export const registerSchema = z
     path: ['confirmPassword'],
   })
 
-export type FormValues = z.infer<typeof loginSchema>
 export type RegisterFormValues = z.infer<typeof registerSchema>
 
 export const emailFormSchema = z.object({

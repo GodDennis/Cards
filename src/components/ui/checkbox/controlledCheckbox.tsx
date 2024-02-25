@@ -22,7 +22,7 @@ const ControlledCheckbox = <T extends FieldValues>({
     shouldUnregister,
   })
 
-  return <Checkbox {...rest} checked={value} onCheckedChange={onChange} ref={ref}/>
+  return <Checkbox {...rest} checked={value} onCheckedChange={onChange} ref={ref} />
 }
 
 export default ControlledCheckbox
