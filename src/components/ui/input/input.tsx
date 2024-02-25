@@ -15,13 +15,12 @@ export type InputProps = {
 } & ComponentPropsWithoutRef<'input'>
 
 export const Input = forwardRef<ElementRef<'input'>, InputProps>((props, ref) => {
-  const { className, disabled = false, error = null, label, variant = 'simple', ...rest } = props
+  const { className, disabled = false, error = null, label, variant = 'simple', width, ...rest } = props
 
   const [showPassword, setShowPassword] = useState(false)
 
   return (
-    <div className={`${s.inputHeaders} ${disabled ? s.disabled : ''}`}>
-      {' '}
+    <div className={`${s.inputHeaders} ${disabled ? s.disabled : ''} ${className}`}>
       {label}
       <div className={s.inputContainer}>
         <input
