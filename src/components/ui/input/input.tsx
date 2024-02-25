@@ -37,7 +37,6 @@ export const Input = forwardRef<ElementRef<'input'>, InputProps>((props, ref) =>
           <span className={s.passwordIcon} onClick={() => setShowPassword(!showPassword)}>
             {' '}
             {showPassword ? <EyeOffOutline fill={'white'} /> : <EyeOutline fill={'white'} />}
-
           </span>
         )}
         {variant === 'search' && (
