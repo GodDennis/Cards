@@ -1,10 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
+import { withRouter } from 'storybook-addon-react-router-v6'
+
 import { QuestionCard } from './'
 
 const meta = {
   argTypes: {},
   component: QuestionCard,
+  decorators: [withRouter],
   parameters: {
     layout: 'fullscreen',
   },

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -37,47 +38,60 @@ export const QuestionCard = () => {
   const [withAnswer, setWithAnswer] = useState<boolean>(false)
   const [currentOption, setCurrentOption] = useState('1')
   //temp
-  const mockQuestion = 'How "This" works in JavaScript?'
-  const mockAnswer = 'This is how "This" works in JavaScript'
+  const question = 'How "This" works in JavaScript?'
+  const answer = 'This is how "This" works in JavaScript'
   const questionImg = mockImg
   const answerImg = mockImg
 
   return (
-    <Card>
-      <div className={s.questionBlockWrapper}>
-        <span className={s.questionStringkWrapper}>
-          <Typography as={'span'} variant={'subtitle1'}>
-            {`Question: `}
-          </Typography>
-          <Typography as={'span'} variant={'body1'}>
-            {mockQuestion}
-          </Typography>
-          {questionImg && <img className={s.image} src={questionImg} />}
-          <Typography as={'span'} className={s.quectionNote} variant={'body2'}>
-            Количество попыток ответов на вопрос: 10
-          </Typography>
-        </span>
-      </div>
-      <div className={s.answerBlockWrapper}>
-        <span className={s.answerStringkWrapper}>
-          <Typography as={'span'} variant={'subtitle1'}>
-            {`Answer: `}
-          </Typography>
-          <Typography as={'span'} variant={'body1'}>
-            {mockAnswer}
-          </Typography>
-        </span>
-        {answerImg && <img className={s.image} src={answerImg} />}
-      </div>
-      <RadioGroup
-        changeHandler={setCurrentOption}
-        name={'grade'}
-        options={radioOptions}
-        value={currentOption}
-      />
-      <Button fullWidth>
-        <Typography>{withAnswer ? 'Next Question' : 'Show Answer'}</Typography>
-      </Button>
-    </Card>
+    <div className={s.pageContentWrapper}>
+      <Typography as={Link} className={s.backLink} to={'/decks-list'} variant={'body2'}>
+        &#8592; Back to Decks List
+      </Typography>
+      <Card className={s.questionCard}>
+        <div className={s.questionBlockWrapper}>
+          <span className={s.questionStringkWrapper}>
+            <Typography as={'span'} variant={'subtitle1'}>
+              {`Question: `}
+            </Typography>
+            <Typography as={'span'} variant={'body1'}>
+              {question}
+            </Typography>
+            {questionImg && <img className={s.image} src={questionImg} />}
+            <Typography as={'span'} className={s.quectionNote} variant={'body2'}>
+              Количество попыток ответов на вопрос: 10
+            </Typography>
+          </span>
+          {!withAnswer && (
+            <Button fullWidth onClick={() => setWithAnswer(true)}>
+              <Typography>Show Answer</Typography>
+            </Button>
+          )}
+        </div>
+
+        {withAnswer && (
+          <div className={s.answerBlockWrapper}>
+            <span className={s.answerStringkWrapper}>
+              <Typography as={'span'} variant={'subtitle1'}>
+                {`Answer: `}
+              </Typography>
+              <Typography as={'span'} variant={'body1'}>
+                {answer}
+              </Typography>
+            </span>
+            {answerImg && <img className={s.image} src={answerImg} />}
+            <RadioGroup
+              changeHandler={setCurrentOption}
+              name={'grade'}
+              options={radioOptions}
+              value={currentOption}
+            />
+            <Button fullWidth onClick={() => setWithAnswer(false)}>
+              <Typography>Next Question</Typography>
+            </Button>
+          </div>
+        )}
+      </Card>
+    </div>
   )
 }
