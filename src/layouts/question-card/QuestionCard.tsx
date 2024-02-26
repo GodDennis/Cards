@@ -41,8 +41,13 @@ export const QuestionCard = () => {
   const question = 'How "This" works in JavaScript?'
   const answer = 'This is how "This" works in JavaScript'
   const questionImg = mockImg
+  // const questionImg = false
   const answerImg = mockImg
   const deckName = 'Deck Name'
+
+  const nextQuestionHandler = (cardID: string, grade: string) => {
+    //XXX
+  }
 
   return (
     <div className={s.pageContentWrapper}>
@@ -53,7 +58,7 @@ export const QuestionCard = () => {
         <Typography as={'h1'} className={s.title} variant={'h1'}>
           {`Learn “${deckName}”`}
         </Typography>
-        <div className={s.questionBlockWrapper}>
+        <div>
           <span className={s.questionStringkWrapper}>
             <Typography as={'span'} variant={'subtitle1'}>
               {`Question: `}
@@ -63,7 +68,11 @@ export const QuestionCard = () => {
             </Typography>
           </span>
           {questionImg && <img className={clsx(s.image, s.questionImg)} src={questionImg} />}
-          <Typography as={'span'} className={s.quectionNote} variant={'body2'}>
+          <Typography
+            as={'span'}
+            className={clsx(s.quectionNote, !questionImg && s.withoutImg)}
+            variant={'body2'}
+          >
             Количество попыток ответов на вопрос: 10
           </Typography>
           {!withAnswer && (
@@ -74,7 +83,7 @@ export const QuestionCard = () => {
         </div>
 
         {withAnswer && (
-          <div className={s.answerBlockWrapper}>
+          <div>
             <span className={s.answerStringkWrapper}>
               <Typography as={'span'} variant={'subtitle1'}>
                 {`Answer: `}

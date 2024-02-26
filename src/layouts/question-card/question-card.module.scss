@@ -41,24 +41,23 @@
   margin-bottom: 10px;
 }
 
-.questionBlockWrapper {
-  margin-bottom: 11px;
-}
-
 .questionStringkWrapper {
   display: block;
   margin-bottom: 18px;
 }
 
 .quectionNote {
+  display: block;
+  margin-bottom: 11px;
   color: var(--color-dark-100);
+}
+
+.withoutImg {
+  margin-bottom: 40px;
 }
 
 .showAnswerBtn {
   margin-top: 17px;
-}
-
-.answerBlockWrapper {
 }
 
 .answerStringkWrapper {
