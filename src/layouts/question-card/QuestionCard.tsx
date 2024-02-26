@@ -42,6 +42,7 @@ export const QuestionCard = () => {
   const answer = 'This is how "This" works in JavaScript'
   const questionImg = mockImg
   const answerImg = mockImg
+  const deckName = 'Deck Name'
 
   return (
     <div className={s.pageContentWrapper}>
@@ -49,6 +50,9 @@ export const QuestionCard = () => {
         &#8592; Back to Decks List
       </Typography>
       <Card className={s.questionCard}>
+        <Typography as={'h1'} className={s.title} variant={'h1'}>
+          {`Learn “${deckName}”`}
+        </Typography>
         <div className={s.questionBlockWrapper}>
           <span className={s.questionStringkWrapper}>
             <Typography as={'span'} variant={'subtitle1'}>
@@ -57,13 +61,13 @@ export const QuestionCard = () => {
             <Typography as={'span'} variant={'body1'}>
               {question}
             </Typography>
-            {questionImg && <img className={s.image} src={questionImg} />}
-            <Typography as={'span'} className={s.quectionNote} variant={'body2'}>
-              Количество попыток ответов на вопрос: 10
-            </Typography>
           </span>
+          {questionImg && <img className={clsx(s.image, s.questionImg)} src={questionImg} />}
+          <Typography as={'span'} className={s.quectionNote} variant={'body2'}>
+            Количество попыток ответов на вопрос: 10
+          </Typography>
           {!withAnswer && (
-            <Button fullWidth onClick={() => setWithAnswer(true)}>
+            <Button className={s.showAnswerBtn} fullWidth onClick={() => setWithAnswer(true)}>
               <Typography>Show Answer</Typography>
             </Button>
           )}
@@ -79,9 +83,13 @@ export const QuestionCard = () => {
                 {answer}
               </Typography>
             </span>
-            {answerImg && <img className={s.image} src={answerImg} />}
+            {answerImg && <img className={clsx(s.image, s.answerImg)} src={answerImg} />}
+            <Typography as={'h2'} className={s.radioTitle} variant={'subtitle1'}>
+              Rate yourself:
+            </Typography>
             <RadioGroup
               changeHandler={setCurrentOption}
+              className={s.radio}
               name={'grade'}
               options={radioOptions}
               value={currentOption}

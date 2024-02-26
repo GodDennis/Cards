@@ -18,4 +18,10 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Primary: Story = {}
+export const Primary: Story = {
+  render: () => (
+    <div style={{ height: '100vh', width: '100%' }}>
+      <QuestionCard />
+    </div>
+  ),
+}
