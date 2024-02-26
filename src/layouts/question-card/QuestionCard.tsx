@@ -2,13 +2,38 @@ import { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
+import { RadioGroup } from '@/components/ui/radio-group'
 import { Typography } from '@/components/ui/typography'
 // mokcImg is temp
 import mokcImg from '@/layouts/images/Mask.png'
 import clsx from 'clsx'
 
+const radioOptions = [
+  {
+    name: 'Did not know',
+    value: '1',
+  },
+  {
+    name: 'Forgot',
+    value: '2',
+  },
+  {
+    name: 'A lot of thought',
+    value: '3',
+  },
+  {
+    name: 'Confused',
+    value: '4',
+  },
+  {
+    name: 'Knew the answer',
+    value: '5',
+  },
+]
+
 export const QuestionCard = () => {
   const [withAnswer, setWithAnswer] = useState<boolean>(false)
+  const [currentOption, setCurrentOption] = useState('1')
   //temp
   const mockQuestion = 'How "This" works in JavaScript?'
   const mockAnswer = 'This is how "This" works in JavaScript'
@@ -40,7 +65,12 @@ export const QuestionCard = () => {
         </span>
         {answerImg && <img src={answerImg} />}
       </div>
-
+      <RadioGroup
+        changeHandler={setCurrentOption}
+        name={'grade'}
+        options={radioOptions}
+        value={currentOption}
+      />
       <Button fullWidth>
         <Typography>{withAnswer ? 'Next Question' : 'Show Answer'}</Typography>
       </Button>
