@@ -1,0 +1,16 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-bottom: 24px;
+
+  .inputLabel {
+    display: flex;
+    gap: 12px;
+    flex-direction: column;
+
+    .namePack {
+      width: 100%;
+    }
+  }
+}
