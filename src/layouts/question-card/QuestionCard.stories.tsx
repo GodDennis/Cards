@@ -6,10 +6,10 @@ const meta = {
   argTypes: {},
   component: QuestionCard,
   parameters: {
-    layout: 'centered',
+    layout: 'fullscreen',
   },
   tags: ['autodocs'],
-  title: 'Components/QuestionCard',
+  title: 'features/QuestionCard',
 } satisfies Meta<typeof QuestionCard>
 
 export default meta
