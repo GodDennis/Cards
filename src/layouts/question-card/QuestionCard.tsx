@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
 
+import { BackwardLink } from '@/components/ui/backward-link'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { RadioGroup } from '@/components/ui/radio-group'
@@ -51,9 +51,9 @@ export const QuestionCard = () => {
 
   return (
     <div className={s.pageContentWrapper}>
-      <Typography as={Link} className={s.backLink} to={'/decks-list'} variant={'body2'}>
-        &#8592; Back to Decks List
-      </Typography>
+      <BackwardLink className={s.backLink} to={'/decks-list'} variant={'body2'}>
+        Back to Decks List
+      </BackwardLink>
       <Card className={s.questionCard}>
         <Typography as={'h1'} className={s.title} variant={'h1'}>
           {`Learn “${deckName}”`}
