@@ -1,0 +1,14 @@
+.backwardLink {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+
+  color: var(--color-light-100);
+  text-decoration: none;
+
+  transition: 0.2s;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
