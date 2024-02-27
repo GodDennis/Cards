@@ -1,9 +1,23 @@
-import { ElementType } from 'react'
+import { Link } from 'react-router-dom'
 
-import { Typography, TypographyProps } from '@/components/ui/typography'
+import { Typography, Variant } from '@/components/ui/typography'
+import { ArrowBack } from '@/icons/ArrowBack'
+import clsx from 'clsx'
 
-type BackwardLinkProps<T extends ElementType> = TypographyProps<T>
+import s from './backward-list.module.scss'
 
-export const BackwardLink = <T extends ElementType>({ ...rest }: BackwardLinkProps<T>) => {
-  return <Typography {...rest} />
+type BackwardLinkProps = {
+  children: string
+  className?: string
+  to: string
+  variant?: Variant
+}
+
+export const BackwardLink = ({ children, className, to, variant }: BackwardLinkProps) => {
+  return (
+    <Typography as={Link} className={clsx(s.backwardLink, className)} to={to} variant={variant}>
+      <ArrowBack />
+      {children}
+    </Typography>
+  )
 }
