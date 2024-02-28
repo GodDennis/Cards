@@ -1,4 +1,4 @@
-import { Deck, res } from '../components/ui/table/table.stories'
+import { Deck, res } from '@/components/ui/table/table.stories'
 
 export const decksDto = (items: typeof res): Deck[] => {
   return items.items.map(item => ({
