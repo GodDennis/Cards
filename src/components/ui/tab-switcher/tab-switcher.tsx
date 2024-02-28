@@ -17,20 +17,31 @@ type TabSwitcherProps = {
   changeHandler?: (value: string) => void
   //children should be arr of TabContent components, which placed below
   children?: ReactNode
-  //Don't use with value at the same time, for uncontrolled case
+  className?: string
+  //Don't use with value at the same time, for uncontrolled case only
   defaultValue?: string
   tabs: TabsType
+  tabsListClassName?: string
   title?: string
   //use for controlled component case with changeHandler
   value?: string
 }
 
 export const TabSwitcher = (props: TabSwitcherProps) => {
-  const { changeHandler, children, defaultValue, tabs, title, value } = props
+  const {
+    changeHandler,
+    children,
+    className,
+    defaultValue,
+    tabs,
+    tabsListClassName,
+    title,
+    value,
+  } = props
 
   return (
     <Tabs.Root
-      className={s.tabsRoot}
+      className={clsx(s.tabsRoot, className)}
       defaultValue={defaultValue}
       onValueChange={changeHandler}
       value={value}
@@ -40,7 +51,7 @@ export const TabSwitcher = (props: TabSwitcherProps) => {
           {title}
         </Typography>
       )}
-      <Tabs.List className={s.tabsList}>
+      <Tabs.List className={clsx(s.tabsList, tabsListClassName)}>
         {tabs.map((t, i) => (
           <Tabs.Trigger
             className={s.tabsTrigger}
