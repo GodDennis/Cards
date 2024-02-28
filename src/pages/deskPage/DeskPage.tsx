@@ -1,20 +1,49 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Pagination } from '@/components/ui/pagination'
+import { Slider } from '@/components/ui/slider'
+import { TabSwitcher } from '@/components/ui/tab-switcher'
+import { DescTable } from '@/components/ui/table/DescTable/DescTable'
+import { HeadCellProps } from '@/components/ui/table/THeader'
+import { Typography } from '@/components/ui/typography'
+import { decksDto } from '@/utils/decksDto'
 
-import { decksDto } from '../../../utils/decksDto'
-import { DescTable } from './DescTable/DescTable'
-import { HeadCellProps } from './THeader'
+import s from './deskPage.module.scss'
 
-const meta = {
-  component: DescTable,
-  // parameters: {
-  //   layout: 'centered',
-  // },
-  tags: ['autodocs'],
-  title: 'Components/Table',
-} satisfies Meta<typeof DescTable>
+export const DeskPage = () => {
+  const tabs = [
+    { name: 'My Cards', value: 'myCards' },
+    { name: 'All Cards', value: 'allCards' },
+  ]
 
-export default meta
-type Story = StoryObj<typeof meta>
+  return (
+    <div className={s.container}>
+      <div className={s.sectionHeader}>
+        <Typography variant={'h1'}>Decks list</Typography>
+        <Button>Add New Deck</Button>
+      </div>
+      <div className={s.deskActions}>
+        <Input className={s.search} variant={'search'} />
+
+        <div className={s.flexItemsContainer}>
+          <Typography className={s.tabLabel} variant={'body2'}>
+            Show decks cards
+          </Typography>
+          <TabSwitcher tabs={tabs}></TabSwitcher>
+        </div>
+        <div className={s.flexItemsContainer}>
+          <Typography className={s.sliderLabel} variant={'body2'}>
+            Number of cards
+          </Typography>
+          <Slider />
+        </div>
+        <Button variant={'secondary'}>Clear Filter</Button>
+      </div>
+      <DescTable className={s.table} decks={decksDto(res)} head={columns} />
+      <Pagination />
+    </div>
+  )
+}
 
 const columns: HeadCellProps[] = [
   { key: 'name', title: 'Name' },
@@ -24,7 +53,7 @@ const columns: HeadCellProps[] = [
   { key: '', title: '' },
 ]
 
-export const res = {
+const res = {
   items: [
     {
       author: {
@@ -172,20 +201,5 @@ export const res = {
     itemsPerPage: 10,
     totalItems: 2524,
     totalPages: 253,
-  },
-}
-
-export type Deck = {
-  cardsCount: number
-  createdBy: string
-  id: string
-  lastUpdated: string
-  name: string
-}
-
-export const Table: Story = {
-  args: {
-    decks: decksDto(res),
-    head: columns,
   },
 }

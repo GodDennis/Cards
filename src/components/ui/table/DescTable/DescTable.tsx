@@ -22,17 +22,18 @@ type Deck = {
 }
 
 type DescTableProps = {
+  className?: string
   decks: Deck[]
   head: HeadCellProps[]
 }
 
-export const DescTable = ({ decks, head }: DescTableProps) => {
+export const DescTable = ({ className, decks, head }: DescTableProps) => {
   const playHandler = () => {}
   const editHandler = () => {}
   const deleteHandler = () => {}
 
   return (
-    <Table.Root className={s.root}>
+    <Table.Root className={clsx(s.root, className)}>
       <THeader head={head} />
       <Table.Body>
         {decks.map(deck => {
