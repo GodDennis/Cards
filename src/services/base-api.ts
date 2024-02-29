@@ -8,6 +8,17 @@ export const baseApi = createApi({
       headers.append('x-auth-skip', 'true')
     },
   }),
-  endpoints: builder => ({}),
+  endpoints: builder => ({
+    getCard: builder.query<any, string>({
+      providesTags: ['card'],
+      query: (id: string) => ({
+        method: 'GET',
+        url: `/v1/cards/${id}`,
+      }),
+    }),
+  }),
   reducerPath: 'baseApi',
+  tagTypes: ['card'],
 })
+
+export const { useGetCardQuery } = baseApi
