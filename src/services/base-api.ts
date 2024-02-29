@@ -1,5 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
+import { SaveGradeBody } from './api-types'
+
 export const baseApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://api.flashcards.andrii.es',
@@ -23,6 +25,14 @@ export const baseApi = createApi({
         params: {
           previousCardId,
         },
+        url: `/v1/decks/${deckId}/learn`,
+      }),
+    }),
+    saveGrade: builder.mutation<any, { body: SaveGradeBody; deckId: string }>({
+      invalidatesTags: ['RandomCard'],
+      query: ({ body, deckId }) => ({
+        body,
+        method: 'POST',
         url: `/v1/decks/${deckId}/learn`,
       }),
     }),
