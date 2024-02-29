@@ -13,3 +13,11 @@ export type CreateCardBody = {
 }
 
 export type UpdateCardBody = Partial<CreateCardBody>
+
+export type GetCardsInDeckParams = {
+  answer?: string
+  currentPage?: string
+  itemsPerPage?: string
+  orderBy?: string
+  question?: string
+}

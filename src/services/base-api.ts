@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-import { CreateCardBody, SaveGradeBody, UpdateCardBody } from './api-types'
+import { CreateCardBody, GetCardsInDeckParams, SaveGradeBody, UpdateCardBody } from './api-types'
 
 export const baseApi = createApi({
   baseQuery: fetchBaseQuery({
@@ -31,6 +31,14 @@ export const baseApi = createApi({
       query: cardId => ({
         method: 'GET',
         url: `/v1/cards/${cardId}`,
+      }),
+    }),
+    getCardsInDeck: builder.query<any, { deckId: string; params: GetCardsInDeckParams }>({
+      providesTags: ['Cards'],
+      query: ({ deckId, params }) => ({
+        method: 'GET',
+        params,
+        url: `/v1/decks/${deckId}/cards`,
       }),
     }),
     getRandomCard: builder.query<any, { deckId: string; previousCardId: null | string }>({
@@ -68,6 +76,7 @@ export const {
   useCreateCardMutation,
   useDeleteCardMutation,
   useGetCardQuery,
+  useGetCardsInDeckQuery,
   useGetRandomCardQuery,
   useSaveGradeMutation,
   useUpdateCardMutation,
