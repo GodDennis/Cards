@@ -11,9 +11,16 @@ export const baseApi = createApi({
     },
   }),
   endpoints: builder => ({
+    deleteCard: builder.mutation<void, string>({
+      invalidatesTags: ['Card'],
+      query: cardId => ({
+        method: 'DELETE',
+        url: `/v1/cards/${cardId}`,
+      }),
+    }),
     getCard: builder.query<any, string>({
       providesTags: ['Card'],
-      query: (cardId: string) => ({
+      query: cardId => ({
         method: 'GET',
         url: `/v1/cards/${cardId}`,
       }),
@@ -50,6 +57,7 @@ export const baseApi = createApi({
 })
 
 export const {
+  useDeleteCardMutation,
   useGetCardQuery,
   useGetRandomCardQuery,
   useSaveGradeMutation,
