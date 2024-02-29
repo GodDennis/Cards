@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-import { SaveGradeBody } from './api-types'
+import { SaveGradeBody, UpdateCardBody } from './api-types'
 
 export const baseApi = createApi({
   baseQuery: fetchBaseQuery({
@@ -36,9 +36,22 @@ export const baseApi = createApi({
         url: `/v1/decks/${deckId}/learn`,
       }),
     }),
+    updateCard: builder.mutation<any, { body: UpdateCardBody; cardId: string }>({
+      invalidatesTags: ['Card'],
+      query: ({ body, cardId }) => ({
+        body,
+        method: 'PATCH',
+        url: `/v1/cards/${cardId}`,
+      }),
+    }),
   }),
   reducerPath: 'baseApi',
   tagTypes: ['Card', 'RandomCard'],
 })
 
-export const { useGetCardQuery, useGetRandomCardQuery, useSaveGradeMutation } = baseApi
+export const {
+  useGetCardQuery,
+  useGetRandomCardQuery,
+  useSaveGradeMutation,
+  useUpdateCardMutation,
+} = baseApi
