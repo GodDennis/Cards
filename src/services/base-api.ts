@@ -41,4 +41,4 @@ export const baseApi = createApi({
   tagTypes: ['Card', 'RandomCard'],
 })
 
-export const { useGetCardQuery, useGetRandomCardQuery } = baseApi
+export const { useGetCardQuery, useGetRandomCardQuery, useSaveGradeMutation } = baseApi
