@@ -22,7 +22,7 @@ export type GetCardsInDeckParams = {
   question?: string
 }
 export type GetCardsInDeckResponse = {
-  items: Card[]
+  items: CardWithGrade[]
   pagination: {
     currentPage: number
     itemsPerPage: number
@@ -31,13 +31,13 @@ export type GetCardsInDeckResponse = {
   }
 }
 
-export type Card = {
+export type CardWithGrade = {
   answer: string
   answerImg: string
   answerVideo: string
   created: string
   deckId: string
-  grade: number
+  grade: string
   id: string
   question: string
   questionImg: string
@@ -47,4 +47,6 @@ export type Card = {
   userId: string
 }
 
-export type CardWithoutGrade = Omit<Card, 'grade'>
+export type CardWithoutGrade = Omit<CardWithGrade, 'grade'>
+
+// export type Grade = '1' | '2' | '3' | '4' | '5'

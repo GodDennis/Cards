@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { withRouter } from 'storybook-addon-react-router-v6'
 
-import { QuestionCard } from './'
+import { QuestionCard } from '.'
 
 const meta = {
   argTypes: {},
@@ -12,16 +12,17 @@ const meta = {
     layout: 'fullscreen',
   },
   tags: ['autodocs'],
-  title: 'features/QuestionCard',
+  title: 'Pages/QuestionCard',
 } satisfies Meta<typeof QuestionCard>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {
+  args: { deckId: 'id' },
   render: () => (
     <div style={{ height: '100vh', width: '100%' }}>
-      <QuestionCard />
+      <QuestionCard deckId={'id'} />
     </div>
   ),
 }
