@@ -10,13 +10,14 @@ export const baseApi = createApi({
   }),
   endpoints: builder => ({
     getCard: builder.query<any, string>({
-      providesTags: ['card'],
+      providesTags: ['Card'],
       query: (cardId: string) => ({
         method: 'GET',
         url: `/v1/cards/${cardId}`,
       }),
     }),
     getRandomCard: builder.query<any, { deckId: string; previousCardId: null | string }>({
+      providesTags: ['RandomCard'],
       query: ({ deckId, previousCardId }) => ({
         method: 'GET',
         params: {
@@ -27,7 +28,7 @@ export const baseApi = createApi({
     }),
   }),
   reducerPath: 'baseApi',
-  tagTypes: ['card'],
+  tagTypes: ['Card', 'RandomCard'],
 })
 
 export const { useGetCardQuery, useGetRandomCardQuery } = baseApi
