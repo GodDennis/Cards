@@ -1,14 +1,13 @@
-import { Button } from '@/components/ui/button'
-import { Slider } from '@/components/ui/slider'
+import { Provider } from 'react-redux'
+
+import { Router } from './router'
+import { store } from './services/store'
 
 function App() {
   return (
-    <div>
-      <Button as={'a'} href={'https://google.com'}>
-        hello
-      </Button>
-      <Slider maxValue={100} />
-    </div>
+    <Provider store={store}>
+      <Router />
+    </Provider>
   )
 }
 
