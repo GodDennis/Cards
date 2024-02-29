@@ -3,11 +3,13 @@ export type SaveGradeBody = {
   grade: string
 }
 
-export type UpdateCardBody = {
-  answer?: string
+export type CreateCardBody = {
+  answer: string
   answerImg?: string
   answerVideo?: string
-  question?: string
+  question: string
   questionImg?: string
   questionVideo?: string
 }
+
+export type UpdateCardBody = Partial<CreateCardBody>
