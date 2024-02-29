@@ -21,3 +21,30 @@ export type GetCardsInDeckParams = {
   orderBy?: string
   question?: string
 }
+export type GetCardsInDeckResponse = {
+  items: Card[]
+  pagination: {
+    currentPage: number
+    itemsPerPage: number
+    totalItems: number
+    totalPages: number
+  }
+}
+
+export type Card = {
+  answer: string
+  answerImg: string
+  answerVideo: string
+  created: string
+  deckId: string
+  grade: number
+  id: string
+  question: string
+  questionImg: string
+  questionVideo: string
+  shots: number
+  updated: string
+  userId: string
+}
+
+export type CardWithoutGrade = Omit<Card, 'grade'>

@@ -1,6 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-import { CreateCardBody, GetCardsInDeckParams, SaveGradeBody, UpdateCardBody } from './api-types'
+import {
+  Card,
+  CardWithoutGrade,
+  CreateCardBody,
+  GetCardsInDeckParams,
+  GetCardsInDeckResponse,
+  SaveGradeBody,
+  UpdateCardBody,
+} from './api-types'
 
 export const baseApi = createApi({
   baseQuery: fetchBaseQuery({
@@ -11,7 +19,7 @@ export const baseApi = createApi({
     },
   }),
   endpoints: builder => ({
-    createCard: builder.mutation<any, { body: CreateCardBody; deckId: string }>({
+    createCard: builder.mutation<CardWithoutGrade, { body: CreateCardBody; deckId: string }>({
       invalidatesTags: ['Cards'],
       query: ({ body, deckId }) => ({
         body,
@@ -26,14 +34,17 @@ export const baseApi = createApi({
         url: `/v1/cards/${cardId}`,
       }),
     }),
-    getCard: builder.query<any, string>({
+    getCard: builder.query<Card, string>({
       providesTags: ['Card'],
       query: cardId => ({
         method: 'GET',
         url: `/v1/cards/${cardId}`,
       }),
     }),
-    getCardsInDeck: builder.query<any, { deckId: string; params: GetCardsInDeckParams }>({
+    getCardsInDeck: builder.query<
+      GetCardsInDeckResponse,
+      { deckId: string; params: GetCardsInDeckParams }
+    >({
       providesTags: ['Cards'],
       query: ({ deckId, params }) => ({
         method: 'GET',
@@ -41,7 +52,7 @@ export const baseApi = createApi({
         url: `/v1/decks/${deckId}/cards`,
       }),
     }),
-    getRandomCard: builder.query<any, { deckId: string; previousCardId: null | string }>({
+    getRandomCard: builder.query<Card, { deckId: string; previousCardId: null | string }>({
       providesTags: ['RandomCard'],
       query: ({ deckId, previousCardId }) => ({
         method: 'GET',
@@ -51,7 +62,7 @@ export const baseApi = createApi({
         url: `/v1/decks/${deckId}/learn`,
       }),
     }),
-    saveGrade: builder.mutation<any, { body: SaveGradeBody; deckId: string }>({
+    saveGrade: builder.mutation<Card, { body: SaveGradeBody; deckId: string }>({
       invalidatesTags: ['RandomCard'],
       query: ({ body, deckId }) => ({
         body,
@@ -59,7 +70,7 @@ export const baseApi = createApi({
         url: `/v1/decks/${deckId}/learn`,
       }),
     }),
-    updateCard: builder.mutation<any, { body: UpdateCardBody; cardId: string }>({
+    updateCard: builder.mutation<CardWithoutGrade, { body: UpdateCardBody; cardId: string }>({
       invalidatesTags: ['Card'],
       query: ({ body, cardId }) => ({
         body,
