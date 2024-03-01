@@ -1,6 +1,7 @@
-import { Deck, res } from '../components/ui/table/table.stories'
+import { Deck } from '@/components/ui/table/table.stories'
+import {GetDecksResponse} from "@/services/api-types";
 
-export const decksDto = (items: typeof res): Deck[] => {
+export const decksDto = (items: GetDecksResponse): Deck[] => {
   return items.items.map(item => ({
     cardsCount: item.cardsCount,
     createdBy: item.author.name,
