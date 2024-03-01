@@ -1,8 +1,8 @@
 import { z } from 'zod'
 
 export const emailZodCheck = z.string().email()
-export const passwordZodCheck = z.string().email()
-export const rememberMeZodCheck = z.string().email()
+export const passwordZodCheck = z.string().min(3).max(30)
+export const rememberMeZodCheck = z.boolean().optional()
 
 export const loginSchema = z.object({
   email: emailZodCheck,
