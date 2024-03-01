@@ -9,39 +9,47 @@ import { Typography } from '@/components/ui/typography'
 import { decksDto } from '@/utils/decksDto'
 
 import s from './deskPage.module.scss'
+import {useGetAllDecksQuery} from "@/services/base-api";
 
 export const DeskPage = () => {
+
+  const {data} = useGetAllDecksQuery()
+
+  console.log(data)
+
   const tabs = [
     { name: 'My Cards', value: 'myCards' },
     { name: 'All Cards', value: 'allCards' },
   ]
 
   return (
-    <div className={s.container}>
-      <div className={s.sectionHeader}>
-        <Typography variant={'h1'}>Decks list</Typography>
-        <Button>Add New Deck</Button>
-      </div>
-      <div className={s.deskActions}>
-        <Input className={s.search} variant={'search'} />
+      <div className={s.superContainer}>
+        <div className={s.container}>
+          <div className={s.sectionHeader}>
+            <Typography variant={'h1'}>Decks list</Typography>
+            <Button>Add New Deck</Button>
+          </div>
+          <div className={s.deskActions}>
+            <Input className={s.search} variant={'search'} placeholder={'Input search'}/>
 
-        <div className={s.flexItemsContainer}>
-          <Typography className={s.tabLabel} variant={'body2'}>
-            Show decks cards
-          </Typography>
-          <TabSwitcher tabs={tabs}></TabSwitcher>
+            <div className={s.flexItemsContainer}>
+              <Typography className={s.tabLabel} variant={'body2'}>
+                Show decks cards
+              </Typography>
+              <TabSwitcher tabs={tabs}></TabSwitcher>
+            </div>
+            <div className={s.flexItemsContainer}>
+              <Typography className={s.sliderLabel} variant={'body2'}>
+                Number of cards
+              </Typography>
+              <Slider/>
+            </div>
+            <Button variant={'secondary'}>Clear Filter</Button>
+          </div>
+          <DescTable className={s.table} decks={decksDto(res)} head={columns}/>
+          <Pagination/>
         </div>
-        <div className={s.flexItemsContainer}>
-          <Typography className={s.sliderLabel} variant={'body2'}>
-            Number of cards
-          </Typography>
-          <Slider />
-        </div>
-        <Button variant={'secondary'}>Clear Filter</Button>
       </div>
-      <DescTable className={s.table} decks={decksDto(res)} head={columns} />
-      <Pagination />
-    </div>
   )
 }
 

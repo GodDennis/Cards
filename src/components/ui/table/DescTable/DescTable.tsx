@@ -36,7 +36,7 @@ export const DescTable = ({ className, decks, head }: DescTableProps) => {
     <Table.Root className={clsx(s.root, className)}>
       <THeader head={head} />
       <Table.Body>
-        {decks.map(deck => {
+        {decks?.map(deck => {
           return (
             <Table.Row key={deck.id}>
               <Table.Cell>
@@ -46,6 +46,10 @@ export const DescTable = ({ className, decks, head }: DescTableProps) => {
                 </div>
               </Table.Cell>
               <Table.Cell>{deck.cardsCount}</Table.Cell>
+              <Table.Cell>{deck.lastUpdated}</Table.Cell>
+              <Table.Cell>
+                <span>{deck.createdBy}</span>
+              </Table.Cell>
               <Table.Cell>{deck.lastUpdated}</Table.Cell>
               <Table.Cell>
                 <span>{deck.createdBy}</span>
