@@ -1,6 +1,15 @@
+.rating {
+  display: flex;
+  flex-wrap: nowrap;
+  width: max-content;
+  height: max-content;
+}
+
 .star {
-  cursor: pointer;
   display: inline-flex;
   align-items: center;
+  margin-right: 10px;
+  width: 16px;
+  height: 16px;
   padding: 0;
 }
