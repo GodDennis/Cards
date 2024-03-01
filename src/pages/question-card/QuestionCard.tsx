@@ -44,24 +44,24 @@ export const QuestionCard = ({ deckId }: Props) => {
   const [withAnswer, setWithAnswer] = useState<boolean>(false)
   const [currentOption, setCurrentOption] = useState('1')
 
-  const [cardData, setCardData] = useState<CardWithGrade>()
+  const [saveGrade, { data: cardMutationData, isLoading: isUpdatng }] = useSaveGradeMutation()
 
-  const { data: cardQueryData, isError, isLoading } = useGetRandomCardQuery({ deckId })
-  const [saveGrade, { isLoading: isUpdatng }] = useSaveGradeMutation()
+  const {
+    data: cardQueryData,
+    isError,
+    isLoading,
+  } = useGetRandomCardQuery({ deckId }, { skip: !!cardMutationData })
 
-  //temp
-  const question = cardData?.question || cardQueryData?.question
-  const answer = cardData?.answer || cardQueryData?.answer
-  const questionImg = cardData?.questionImg || cardQueryData?.questionImg
-  const answerImg = cardData?.answerImg || cardQueryData?.answerImg
-  const cardId = cardData?.id || cardQueryData?.id
+  const question = cardMutationData?.question || cardQueryData?.question
+  const answer = cardMutationData?.answer || cardQueryData?.answer
+  const questionImg = cardMutationData?.questionImg || cardQueryData?.questionImg
+  const answerImg = cardMutationData?.answerImg || cardQueryData?.answerImg
+  const cardId = cardMutationData?.id || cardQueryData?.id
   const deckName = 'Deck Name' ///!!!!решить как брать name
 
   const nextQuestionHandler = () => {
     if (cardId) {
-      saveGrade({ body: { cardId: cardId, grade: currentOption }, deckId })
-        .unwrap()
-        .then(res => setCardData(res))
+      saveGrade({ body: { cardId, grade: currentOption }, deckId })
     }
   }
 
