@@ -1,5 +1,5 @@
 import { Deck } from '@/components/ui/table/table.stories'
-import {GetDecksResponse} from "@/services/api-types";
+import { GetDecksResponse } from '@/services/api-types'
 
 export const decksDto = (items: GetDecksResponse): Deck[] => {
   return items.items.map(item => ({

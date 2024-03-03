@@ -51,29 +51,29 @@ export type CardWithoutGrade = Omit<Card, 'grade'>
 
 export type DeckType = {
   author: {
-    id: string;
-    name: string;
-  };
-  cardsCount: number;
-  cover: null | string;
-  created: string;
-  id: string;
-  isPrivate: boolean;
-  name: string;
-  updated: string;
-  userId: string;
-};
+    id: string
+    name: string
+  }
+  cardsCount: number
+  cover: null | string
+  created: string
+  id: string
+  isPrivate: boolean
+  name: string
+  updated: string
+  userId: string
+}
 
 export type DeckWithoutAuthor = Omit<DeckType, 'author'>
 
 export type GetDecksResponse = {
   items: DeckType[]
   pagination: {
-    currentPage: number,
-    itemsPerPage: number,
-    totalItems: number,
-    totalPages: number,
-  },
+    currentPage: number
+    itemsPerPage: number
+    totalItems: number
+    totalPages: number
+  }
 }
 
 export type GetDecksArgs = {
