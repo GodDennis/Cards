@@ -47,7 +47,7 @@ export const DescTable = ({ className, decks, head }: DescTableProps) => {
               </Table.Cell>
               <Table.Cell>{deck.cardsCount}</Table.Cell>
               <Table.Cell>{deck.lastUpdated}</Table.Cell>
-               <Table.Cell>
+              <Table.Cell>
                 <span>{deck.createdBy}</span>
               </Table.Cell>
               <Table.Cell>
