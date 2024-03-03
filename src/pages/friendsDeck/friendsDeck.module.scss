@@ -1,0 +1,38 @@
+.container {
+  width: 100%;
+  max-width: 1006px;
+
+  .linkBack {
+    margin-bottom: 33px;
+  }
+}
+
+.search {
+  height: 36px;
+  width: 100%;
+}
+
+.table {
+  margin-bottom: 24px;
+}
+
+.sectionHeader {
+  .headreWithDropDown {
+    display: flex;
+    align-items: end;
+    gap: 6px;
+  }
+
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.deskActions {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+
+  height: 65px;
+  margin-bottom: 36px;
+}
