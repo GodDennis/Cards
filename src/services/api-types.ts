@@ -47,7 +47,6 @@ export type CardWithGrade = {
   userId: string
 }
 
-
 export type DeckType = {
   author: {
     id: string
