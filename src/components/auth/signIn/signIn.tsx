@@ -7,7 +7,6 @@ import { Typography } from '@/components/ui/typography'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import s from './signIn.module.scss'
-import { Header } from '@/components/ui/header'
 import { ControlledInput } from '@/components/ui/input/ControlledInput'
 
 export const SignIn = () => {
@@ -23,7 +22,6 @@ export const SignIn = () => {
 
   return (
     <div className={s.container}>
-      <Header isLoggedIn={false} />
       <Card as={'div'} className={s.cardContainer}>
         <Typography as={'h1'} variant={'h1'}>
           Sign in
