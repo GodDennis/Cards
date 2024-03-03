@@ -47,7 +47,6 @@ export type CardWithGrade = {
   userId: string
 }
 
-export type CardWithoutGrade = Omit<Card, 'grade'>
 
 export type DeckType = {
   author: {

@@ -50,10 +50,6 @@ export const DescTable = ({ className, decks, head }: DescTableProps) => {
               <Table.Cell>
                 <span>{deck.createdBy}</span>
               </Table.Cell>
-              <Table.Cell>{deck.lastUpdated}</Table.Cell>
-              <Table.Cell>
-                <span>{deck.createdBy}</span>
-              </Table.Cell>
               <Table.Cell>
                 <div className={clsx(s.flexContainer, s.buttonsBlock)}>
                   <Button className={s.actionBtn} onClick={playHandler}>
