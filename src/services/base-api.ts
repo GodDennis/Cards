@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import {
-  Card,
+  CardWithGrade,
   CardWithoutGrade,
   CreateCardBody,
   CreateDeckArgs,
@@ -42,7 +42,7 @@ export const baseApi = createApi({
         url: `/v1/cards/${cardId}`,
       }),
     }),
-    getCard: builder.query<Card, string>({
+    getCard: builder.query<CardWithGrade, string>({
       providesTags: ['Card'],
       query: cardId => ({
         method: 'GET',
@@ -60,7 +60,7 @@ export const baseApi = createApi({
         url: `/v1/decks/${deckId}/cards`,
       }),
     }),
-    getRandomCard: builder.query<Card, { deckId: string; previousCardId: null | string }>({
+    getRandomCard: builder.query<CardWithGrade, { deckId: string; previousCardId?: string }>({
       providesTags: ['RandomCard'],
       query: ({ deckId, previousCardId }) => ({
         method: 'GET',
@@ -70,7 +70,7 @@ export const baseApi = createApi({
         url: `/v1/decks/${deckId}/learn`,
       }),
     }),
-    saveGrade: builder.mutation<Card, { body: SaveGradeBody; deckId: string }>({
+    saveGrade: builder.mutation<CardWithGrade, { body: SaveGradeBody; deckId: string }>({
       invalidatesTags: ['RandomCard'],
       query: ({ body, deckId }) => ({
         body,

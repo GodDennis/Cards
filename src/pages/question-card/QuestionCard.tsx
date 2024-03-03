@@ -7,9 +7,15 @@ import { RadioGroup } from '@/components/ui/radio-group'
 import { Typography } from '@/components/ui/typography'
 // mockImg is temp
 import mockImg from '@/layouts/images/Mask.png'
+import { CardWithGrade } from '@/services/api-types'
+import { useGetRandomCardQuery, useSaveGradeMutation } from '@/services/base-api'
 import clsx from 'clsx'
 
 import s from './question-card.module.scss'
+
+type Props = {
+  deckId: string
+}
 
 const radioOptions = [
   {
@@ -34,19 +40,29 @@ const radioOptions = [
   },
 ]
 
-export const QuestionCard = () => {
+export const QuestionCard = ({ deckId }: Props) => {
   const [withAnswer, setWithAnswer] = useState<boolean>(false)
   const [currentOption, setCurrentOption] = useState('1')
-  //temp
-  const question = 'How "This" works in JavaScript?'
-  const answer = 'This is how "This" works in JavaScript'
-  const questionImg = mockImg
-  // const questionImg = false
-  const answerImg = mockImg
-  const deckName = 'Deck Name'
 
-  const nextQuestionHandler = (cardID: string, grade: string) => {
-    //XXX
+  const [saveGrade, { data: cardMutationData, isLoading: isUpdatng }] = useSaveGradeMutation()
+
+  const {
+    data: cardQueryData,
+    isError,
+    isLoading,
+  } = useGetRandomCardQuery({ deckId }, { skip: !!cardMutationData })
+
+  const question = cardMutationData?.question || cardQueryData?.question
+  const answer = cardMutationData?.answer || cardQueryData?.answer
+  const questionImg = cardMutationData?.questionImg || cardQueryData?.questionImg
+  const answerImg = cardMutationData?.answerImg || cardQueryData?.answerImg
+  const cardId = cardMutationData?.id || cardQueryData?.id
+  const deckName = 'Deck Name' ///!!!!решить как брать name
+
+  const nextQuestionHandler = () => {
+    if (cardId) {
+      saveGrade({ body: { cardId, grade: currentOption }, deckId })
+    }
   }
 
   return (
