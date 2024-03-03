@@ -11,8 +11,6 @@ export const decksDto = (items: GetDecksResponse): Deck[] => {
   }))
 }
 
-
 export const getTimeString = (time: string) => {
   return new Date(time).toLocaleDateString('ru-RU')
 }
-
