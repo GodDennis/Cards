@@ -9,12 +9,9 @@ import { Typography } from '@/components/ui/typography'
 import { decksDto } from '@/utils/decksDto'
 
 import s from './deskPage.module.scss'
-import { useGetAllDecksQuery } from '@/services/base-api'
 
 export const DeskPage = () => {
-  const { data } = useGetAllDecksQuery()
 
-  console.log(data)
 
   const tabs = [
     { name: 'My Cards', value: 'myCards' },

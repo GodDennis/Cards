@@ -4,7 +4,9 @@ import { Pagination } from '@/components/ui/pagination'
 import { HeadCellProps } from '@/components/ui/table/THeader'
 import { Typography } from '@/components/ui/typography'
 import image from './../../layouts/images/Mask.png'
+
 import s from './myDeck.module.scss'
+
 import { DropDownMenu } from '@/components/ui/drop-down-menu'
 import { BackwardLink } from '@/components/ui/backward-link'
 import play from '@/assets/Images/play-circle-outline.svg'
