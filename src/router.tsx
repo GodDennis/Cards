@@ -8,6 +8,7 @@ import {
 
 import { SignIn } from './components/auth/signIn'
 import { DeskPage } from './pages/deskPage'
+import { LearnPage } from './pages/learnPage'
 
 const publicRouts: RouteObject[] = [
   {
@@ -20,6 +21,10 @@ const privatRouts: RouteObject[] = [
   {
     element: <DeskPage />,
     path: '/',
+  },
+  {
+    element: <LearnPage />,
+    path: '/leatn/:deckId',
   },
 ]
 
