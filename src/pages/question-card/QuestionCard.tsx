@@ -5,9 +5,6 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { RadioGroup } from '@/components/ui/radio-group'
 import { Typography } from '@/components/ui/typography'
-// mockImg is temp
-import mockImg from '@/layouts/images/Mask.png'
-import { CardWithGrade } from '@/services/api-types'
 import { useGetRandomCardQuery, useSaveGradeMutation } from '@/services/base-api'
 import clsx from 'clsx'
 
