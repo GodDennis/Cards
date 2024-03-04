@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { RadioGroup } from '@/components/ui/radio-group'
 import { Typography } from '@/components/ui/typography'
-import { useGetRandomCardQuery, useSaveGradeMutation } from '@/services/base-api'
+import { useGetDeckQuery, useGetRandomCardQuery, useSaveGradeMutation } from '@/services/base-api'
 import clsx from 'clsx'
 
 import s from './question-card.module.scss'
@@ -48,13 +48,14 @@ export const QuestionCard = ({ deckId }: Props) => {
     isError,
     isLoading,
   } = useGetRandomCardQuery({ deckId }, { skip: !!cardMutationData })
+  const { data: deckData } = useGetDeckQuery(deckId)
 
   const question = cardMutationData?.question || cardQueryData?.question
   const answer = cardMutationData?.answer || cardQueryData?.answer
   const questionImg = cardMutationData?.questionImg || cardQueryData?.questionImg
   const answerImg = cardMutationData?.answerImg || cardQueryData?.answerImg
   const cardId = cardMutationData?.id || cardQueryData?.id
-  const deckName = 'Deck Name' ///!!!!решить как брать name
+  const deckName = deckData?.name
 
   const nextQuestionHandler = () => {
     if (cardId) {
