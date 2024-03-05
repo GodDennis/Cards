@@ -11,8 +11,6 @@ import { decksDto } from '@/utils/decksDto'
 import s from './deskPage.module.scss'
 
 export const DeskPage = () => {
-
-
   const tabs = [
     { name: 'My Cards', value: 'myCards' },
     { name: 'All Cards', value: 'allCards' },

@@ -1,13 +1,14 @@
 import { useForm } from 'react-hook-form'
+
 import { LoginFormValues, loginSchema } from '@/components/auth/helpers/loginValidationSchema'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import ControlledCheckbox from '@/components/ui/checkbox/controlledCheckbox'
+import { ControlledInput } from '@/components/ui/input/ControlledInput'
 import { Typography } from '@/components/ui/typography'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import s from './signIn.module.scss'
-import { ControlledInput } from '@/components/ui/input/ControlledInput'
 
 export const SignIn = () => {
   const {
@@ -29,19 +30,19 @@ export const SignIn = () => {
         <form className={s.formContainer} onSubmit={handleSubmit(onSubmit)}>
           <div className={s.inputContainer}>
             <ControlledInput
+              className={s.input}
+              control={control}
               error={errors.email?.message}
               label={'Email'}
-              className={s.input}
               name={'email'}
-              control={control}
             />
             <ControlledInput
+              className={s.input}
+              control={control}
               error={errors.password?.message}
               label={'Password'}
               name={'password'}
-              control={control}
               variant={'password'}
-              className={s.input}
             />
           </div>
           <div className={s.linkCheckbox}>

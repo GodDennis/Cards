@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { RadioGroup } from '@/components/ui/radio-group'
 import { Typography } from '@/components/ui/typography'
-import { useGetDeckQuery, useGetRandomCardQuery, useSaveGradeMutation } from '@/services/base-api'
+import { useGetDeckQuery, useGetRandomCardQuery, useSaveGradeMutation } from '@/services/desk-api'
 import clsx from 'clsx'
 
 import s from './question-card.module.scss'
