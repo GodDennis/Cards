@@ -1,5 +1,4 @@
 import {
-  CardWithGrade,
   CardWithoutGrade,
   CreateCardBody,
   CreateDeckArgs,
@@ -10,7 +9,6 @@ import {
   GetDecksArgs,
   GetDecksResponse,
   GetMinMax,
-  SaveGradeBody,
 } from './api-types'
 import { baseApi } from './base-api'
 
@@ -71,24 +69,6 @@ export const deskApi = baseApi.injectEndpoints({
         url: `/v1/decks/min-max-cards`,
       }),
     }),
-    getRandomCard: builder.query<CardWithGrade, { deckId: string; previousCardId?: string }>({
-      providesTags: ['RandomCard'],
-      query: ({ deckId, previousCardId }) => ({
-        method: 'GET',
-        params: {
-          previousCardId,
-        },
-        url: `/v1/decks/${deckId}/learn`,
-      }),
-    }),
-    saveGrade: builder.mutation<CardWithGrade, { body: SaveGradeBody; deckId: string }>({
-      invalidatesTags: ['RandomCard'],
-      query: ({ body, deckId }) => ({
-        body,
-        method: 'POST',
-        url: `/v1/decks/${deckId}/learn`,
-      }),
-    }),
     updateDeck: builder.mutation<DeckType, { body: Partial<CreateDeckArgs>; id: string }>({
       invalidatesTags: ['Decks'],
       query: ({ body, id }) => ({
@@ -109,7 +89,5 @@ export const {
   useGetCardsInDeckQuery,
   useGetDeckQuery,
   useGetMinMaxQuery,
-  useGetRandomCardQuery,
-  useSaveGradeMutation,
   useUpdateDeckMutation,
 } = deskApi

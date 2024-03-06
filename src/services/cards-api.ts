@@ -1,4 +1,4 @@
-import { CardWithGrade, CardWithoutGrade, UpdateCardBody } from './api-types'
+import { CardWithGrade, CardWithoutGrade, SaveGradeBody, UpdateCardBody } from './api-types'
 import { baseApi } from './base-api'
 
 const cardsApi = baseApi.injectEndpoints({
@@ -17,6 +17,24 @@ const cardsApi = baseApi.injectEndpoints({
         url: `/v1/cards/${cardId}`,
       }),
     }),
+    getRandomCard: builder.query<CardWithGrade, { deckId: string; previousCardId?: string }>({
+      providesTags: ['RandomCard'],
+      query: ({ deckId, previousCardId }) => ({
+        method: 'GET',
+        params: {
+          previousCardId,
+        },
+        url: `/v1/decks/${deckId}/learn`,
+      }),
+    }),
+    saveGrade: builder.mutation<CardWithGrade, { body: SaveGradeBody; deckId: string }>({
+      invalidatesTags: ['RandomCard'],
+      query: ({ body, deckId }) => ({
+        body,
+        method: 'POST',
+        url: `/v1/decks/${deckId}/learn`,
+      }),
+    }),
     updateCard: builder.mutation<CardWithoutGrade, { body: UpdateCardBody; cardId: string }>({
       invalidatesTags: ['Card'],
       query: ({ body, cardId }) => ({
@@ -29,4 +47,10 @@ const cardsApi = baseApi.injectEndpoints({
   overrideExisting: false,
 })
 
-export const { useDeleteCardMutation, useGetCardQuery, useUpdateCardMutation } = cardsApi
+export const {
+  useDeleteCardMutation,
+  useGetCardQuery,
+  useGetRandomCardQuery,
+  useSaveGradeMutation,
+  useUpdateCardMutation,
+} = cardsApi
