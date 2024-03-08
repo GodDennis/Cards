@@ -24,7 +24,7 @@ const privatRouts: RouteObject[] = [
   },
   {
     element: <LearnPage />,
-    path: '/leatn/:deckId',
+    path: '/learn/:deckId',
   },
 ]
 
