@@ -8,17 +8,17 @@ import { dropDownMenuList } from '.'
 import { Typography } from '../typography'
 
 type Props = {
-  list: dropDownMenuList[]
+  options: dropDownMenuList[]
 }
 
-export const DropDownList = ({ list }: Props) => {
-  const dropDownList = list.map((el, i) => {
+export const DropDownList = ({ options }: Props) => {
+  const dropDownList = options?.map((el, i) => {
     return (
       <DropdownMenu.Item className={s.menuItem} key={i}>
         <Typography
           as={Link}
           className={s.item}
-          style={{ textDecoration: 'none' }}
+          onClick={el.onClick}
           to={el.redirect}
           variant={'caption'}
         >

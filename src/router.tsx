@@ -6,7 +6,10 @@ import {
   createBrowserRouter,
 } from 'react-router-dom'
 
+import { Layout } from './Layout'
+import { CheckEmail } from './components/auth/checkEmail'
 import { SignIn } from './components/auth/signIn'
+import { SignUp } from './components/auth/signUp'
 import { DeskPage } from './pages/deskPage'
 import { LearnPage } from './pages/learnPage'
 
@@ -14,6 +17,14 @@ const publicRouts: RouteObject[] = [
   {
     element: <SignIn />,
     path: '/login',
+  },
+  {
+    element: <SignUp />,
+    path: '/signUp',
+  },
+  {
+    element: <CheckEmail />,
+    path: '/checkEmail/:email',
   },
 ]
 
@@ -28,16 +39,21 @@ const privatRouts: RouteObject[] = [
   },
 ]
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
   {
-    children: privatRouts,
-    element: <PrivateRoutes />,
+    children: [
+      {
+        children: privatRouts,
+        element: <PrivateRoutes />,
+      },
+      ...publicRouts,
+    ],
+    element: <Layout />,
   },
-  ...publicRouts,
 ])
 
 function PrivateRoutes() {
-  const isAuthenticated = true
+  const isAuthenticated = false
 
   return isAuthenticated ? <Outlet /> : <Navigate to={'/login'} />
 }

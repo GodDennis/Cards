@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import ivan from '@/assets/Images/ivan.jpeg'
+import { withRedux } from '@/utils/decorators/rtk-sb-dec'
+import { withRouter } from 'storybook-addon-react-router-v6'
 
 import { Header } from '.'
 
@@ -13,6 +14,7 @@ const meta = {
   },
 
   component: Header,
+  decorators: [withRedux, withRouter],
   parameters: {
     layout: 'full',
   },
@@ -23,15 +25,5 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const LoggedIn: Story = {
-  args: { isLoggedIn: true },
-}
-export const Logged: Story = {
-  args: {
-    isLoggedIn: false,
-    user: {
-      avatar: ivan,
-      name: 'Ivan',
-    },
-  },
-}
+export const LoggedIn: Story = {}
+export const Logged: Story = {}

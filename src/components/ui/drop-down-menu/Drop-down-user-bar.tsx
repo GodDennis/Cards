@@ -2,16 +2,18 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 
 import s from './drop-down-menu.module.scss'
 
-import { userBarProps } from '.'
 import { Avatar } from '../avatar/Avatar'
 import { Typography } from '../typography'
 
-type Props = {
-  userBarInfo: userBarProps
+export type Props = {
+  avatar: string
+  email: string
+  id: number
+  userName: string
 }
 
-export const UserBarDropDown = ({ userBarInfo }: Props) => {
-  const { avatar, email, id, userName } = userBarInfo
+export const UserBarDropDown = (props: Props) => {
+  const { avatar, email, id, userName } = props
 
   return (
     <DropdownMenu.Item className={`${s.item} ${s.menuItem}`} key={id}>

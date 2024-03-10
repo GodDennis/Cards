@@ -23,13 +23,13 @@ const meta = {
   title: 'Components/Drop-down-menu',
 } satisfies Meta<typeof DropDownMenu>
 
-const list = [
+const options = [
   { redirect: '#', src: play, title: 'Learn' },
   { redirect: '#', src: edit, title: 'Edit' },
   { redirect: '#', src: trash, title: 'Delete' },
 ]
 
-const userList = [
+const userOptions = [
   { redirect: '#', src: person, title: 'My Profile' },
   { redirect: '#', src: logOut, title: 'Sign Out' },
 ]
@@ -47,8 +47,13 @@ export const WithUser: Story = {
   args: {
     children: (
       <>
-        <UserBarDropDown userBarInfo={userBarInfo} />
-        <DropDownList list={userList} />
+        <UserBarDropDown
+          avatar={userBarInfo.avatar}
+          email={userBarInfo.email}
+          id={userBarInfo.id}
+          userName={userBarInfo.userName}
+        />
+        <DropDownList options={userOptions} />
       </>
     ),
     trigger: <Avatar src={userBarInfo?.avatar} />,
@@ -56,6 +61,6 @@ export const WithUser: Story = {
 }
 export const Simple: Story = {
   args: {
-    children: <DropDownList list={list} />,
+    children: <DropDownList options={options} />,
   },
 }

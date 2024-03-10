@@ -1,69 +1,110 @@
 import { useForm } from 'react-hook-form'
+import { Link, useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify'
+
 import { RegisterFormValues, registerSchema } from '@/components/auth/helpers/loginValidationSchema'
-import { zodResolver } from '@hookform/resolvers/zod'
-import s from '@/components/auth/signIn/signIn.module.scss'
-import { Header } from '@/components/ui/header'
-import { Card } from '@/components/ui/card'
-import { Typography } from '@/components/ui/typography'
 import { Button } from '@/components/ui/button'
-import { clsx } from 'clsx'
+import { Card } from '@/components/ui/card'
 import { ControlledInput } from '@/components/ui/input/ControlledInput'
+import { Typography } from '@/components/ui/typography'
+import { useSignUpMutation } from '@/services/auth-api'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { clsx } from 'clsx'
+
+import 'react-toastify/dist/ReactToastify.css'
+
+import s from '@/components/auth/signIn/signIn.module.scss'
 
 export const SignUp = () => {
+  const [signUp] = useSignUpMutation()
+
   const {
+    control,
     formState: { errors },
     handleSubmit,
-    control,
+    reset,
   } = useForm<RegisterFormValues>({ resolver: zodResolver(registerSchema) })
 
+  const navigate = useNavigate()
+
   const onSubmit = (values: RegisterFormValues) => {
-    console.log(values)
+    signUp({
+      email: values.email,
+      html: '<b>Hello, ##name##!</b><br/>Please confirm your email by clicking on the link below:<br/><a href="http://localhost:3000/confirm-email/##token##">Confirm email</a>. If it doesn\'t work, copy and paste the following link in your browser:<br/>http://localhost:3000/confirm-email/##token##',
+      name: 'Unnamed',
+      password: values.password,
+      sendConfirmationEmail: true,
+      subject: 'FlashCards',
+    })
+      .unwrap()
+      .then(() => {
+        navigate(`/checkEmail/${values.email}`)
+      })
+      .catch(e => {
+        if (e.status === 400) {
+          toast.error('This email already exists!', {})
+        } else {
+          toast.error('Some error has occurred')
+        }
+      })
+    reset()
   }
 
   return (
     <div className={s.container}>
-      <Header isLoggedIn={false} />
       <Card as={'div'} className={s.cardContainer}>
-        <Typography as={'h1'} variant={'h1'} className={s.title}>
+        <Typography as={'h1'} className={s.title} variant={'h1'}>
           Sign Up
         </Typography>
         <form className={s.formContainer} onSubmit={handleSubmit(onSubmit)}>
           <div className={clsx(s.inputContainer, s.signUpInputs)}>
             <ControlledInput
+              className={s.input}
               control={control}
-              name={'email'}
               error={errors.email?.message}
               label={'Email'}
-              className={s.input}
+              name={'email'}
             />
             <ControlledInput
+              className={s.input}
               control={control}
-              name={'password'}
               error={errors.password?.message}
               label={'Password'}
+              name={'password'}
               variant={'password'}
-              className={s.input}
             />
             <ControlledInput
+              className={s.input}
               control={control}
-              name={'confirmPassword'}
               error={errors.confirmPassword?.message}
               label={'Confirm Password'}
+              name={'confirmPassword'}
               variant={'password'}
-              className={s.input}
             />
           </div>
           <Button fullWidth type={'submit'}>
             Sign Up
           </Button>
         </form>
-        <Typography variant={'body2'} className={s.haveAnAccount}>
+        <Typography className={s.haveAnAccount} variant={'body2'}>
           Already have an account?
         </Typography>
-        <Typography as={'a'} className={s.signIn} href={'#'}>
+        <Typography as={Link} className={s.signIn} to={'/login'}>
           Sign In
         </Typography>
       </Card>
+      <ToastContainer
+        autoClose={5000}
+        closeOnClick
+        draggable
+        hideProgressBar={false}
+        newestOnTop={false}
+        pauseOnFocusLoss
+        pauseOnHover
+        position={'bottom-left'}
+        rtl={false}
+        theme={'colored'}
+      />
     </div>
   )
 }

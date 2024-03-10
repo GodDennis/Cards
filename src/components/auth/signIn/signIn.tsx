@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 
 import { LoginFormValues, loginSchema } from '@/components/auth/helpers/loginValidationSchema'
 import { Button } from '@/components/ui/button'
@@ -6,6 +7,7 @@ import { Card } from '@/components/ui/card'
 import ControlledCheckbox from '@/components/ui/checkbox/controlledCheckbox'
 import { ControlledInput } from '@/components/ui/input/ControlledInput'
 import { Typography } from '@/components/ui/typography'
+import { useLoginMutation } from '@/services/auth-api'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import s from './signIn.module.scss'
@@ -15,10 +17,17 @@ export const SignIn = () => {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<LoginFormValues>({ resolver: zodResolver(loginSchema) })
+  } = useForm<LoginFormValues>({
+    defaultValues: { email: '', password: '', rememberMe: false },
+    resolver: zodResolver(loginSchema),
+  })
+
+  const [login] = useLoginMutation()
 
   const onSubmit = (values: LoginFormValues) => {
-    console.log(values)
+    login(values)
+      .unwrap()
+      .catch(e => {})
   }
 
   return (
@@ -61,8 +70,8 @@ export const SignIn = () => {
             Sign in
           </Button>
         </form>
-        <Typography variant={'body2'}>Don't have an account?</Typography>
-        <Typography as={'a'} className={s.signIn} href={'#'}>
+        <Typography variant={'body2'}>Don&apos;t have an account?</Typography>
+        <Typography as={Link} className={s.signIn} to={'/signUp'}>
           Sign Up
         </Typography>
       </Card>

@@ -1,10 +1,10 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef, useState } from 'react'
 
+import { EyeOffOutline } from '@/icons/EyeOffOutline'
 import { EyeOutline } from '@/icons/EyeOutline'
 import { SearchOutline } from '@/icons/SearchOutline'
 
 import s from '@/components/ui/input/input.module.scss'
-import { EyeOffOutline } from '@/icons/EyeOffOutline'
 
 export type InputProps = {
   disabled?: boolean
@@ -20,6 +20,7 @@ export const Input = forwardRef<ElementRef<'input'>, InputProps>((props, ref) =>
     disabled = false,
     error = null,
     label,
+    value,
     variant = 'simple',
     width,
     ...rest
@@ -37,7 +38,9 @@ export const Input = forwardRef<ElementRef<'input'>, InputProps>((props, ref) =>
           } ${className}`}
           {...rest}
           ref={ref}
+          // eslint-disable-next-line no-nested-ternary
           type={showPassword ? 'text' : variant === 'password' ? 'password' : 'text'}
+          value={value || ''}
         />
         {error && <div className={s.errorMessage}>{error}</div>}
         {variant === 'password' && (

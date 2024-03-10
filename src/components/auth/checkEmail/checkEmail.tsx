@@ -1,25 +1,28 @@
-import s from './checkEmail.module.scss'
-import { Header } from '@/components/ui/header'
-import { Typography } from '@/components/ui/typography'
-import { Card } from '@/components/ui/card'
+import { Link, useParams } from 'react-router-dom'
+
 import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import { Typography } from '@/components/ui/typography'
 import { Email } from '@/icons/Email'
 
+import s from './checkEmail.module.scss'
+
 export const CheckEmail = () => {
+  const { email } = useParams()
+
   return (
     <div className={s.container}>
-      <Header isLoggedIn={false} />
       <Card as={'div'} className={s.cardContainer}>
-        <Typography as={'h1'} variant={'h1'} className={s.title}>
+        <Typography as={'h1'} className={s.title} variant={'h1'}>
           Check Email
         </Typography>
         <div className={s.imageContainer}>
           <Email />
         </div>
         <Typography className={s.instructions} variant={'body2'}>
-          We’ve sent an Email with instructions to example@mail.com
+          We’ve sent an Email with instructions to {email}
         </Typography>
-        <Button as={'a'} className={s.button} href={'#'} fullWidth>
+        <Button as={Link} className={s.button} fullWidth to={'/login'}>
           Back to Sign In
         </Button>
       </Card>
