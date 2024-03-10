@@ -1,19 +1,35 @@
 ul {
-  list-style-type: none;
-  padding: 0;
   display: flex;
+
+  padding: 0;
+
   font-size: 14px;
   font-weight: 400;
+  list-style-type: none;
 }
 
-li {
+.link {
+  all: unset;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  margin: 0 5px;
+
   width: 24px;
   height: 24px;
+}
+
+li {
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 24px;
+  height: 24px;
+  margin: 0 5px;
+
   color: white;
 
   &:hover {
@@ -23,9 +39,9 @@ li {
 }
 
 li.active {
+  color: black;
   background-color: white;
   border-radius: 3px;
-  color: black;
 }
 
 .pagination {
@@ -34,8 +50,8 @@ li.active {
 }
 
 .countPicker {
-  margin-left: 20px;
   display: flex;
-  align-items: center;
   gap: 10px;
+  align-items: center;
+  margin-left: 20px;
 }

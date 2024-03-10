@@ -12,6 +12,7 @@ import { SignIn } from './components/auth/signIn'
 import { SignUp } from './components/auth/signUp'
 import { DeskPage } from './pages/deskPage'
 import { LearnPage } from './pages/learnPage'
+import { useGetAuthQuery } from './services/auth-api'
 
 const publicRouts: RouteObject[] = [
   {
@@ -31,6 +32,10 @@ const publicRouts: RouteObject[] = [
 const privatRouts: RouteObject[] = [
   {
     element: <DeskPage />,
+    path: '/:pageCount',
+  },
+  {
+    element: <Navigate to={'/1'} />,
     path: '/',
   },
   {
@@ -54,8 +59,9 @@ export const router = createBrowserRouter([
 
 function PrivateRoutes() {
   const isAuthenticated = false
+  const { isError } = useGetAuthQuery()
 
-  return isAuthenticated ? <Outlet /> : <Navigate to={'/login'} />
+  return !isError ? <Outlet /> : <Navigate to={'/login'} />
 }
 
 export const Router = () => {

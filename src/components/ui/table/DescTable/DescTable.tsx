@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 import image from '@/assets/Images/ivan.jpeg'
 import { Delete } from '@/icons/Delete'
 import { EditPen } from '@/icons/EditPen'
@@ -41,7 +43,7 @@ export const DescTable = ({ className, decks, head }: DescTableProps) => {
             <Table.Row key={deck.id}>
               <Table.Cell>
                 <div className={s.flexContainer}>
-                  <img alt={'Desc Preview'} className={s.deckPreview} src={image} />
+                  {image && <img alt={'Desc Preview'} className={s.deckPreview} src={image} />}
                   {deck.name}
                 </div>
               </Table.Cell>
@@ -52,7 +54,12 @@ export const DescTable = ({ className, decks, head }: DescTableProps) => {
               </Table.Cell>
               <Table.Cell>
                 <div className={clsx(s.flexContainer, s.buttonsBlock)}>
-                  <Button className={s.actionBtn} onClick={playHandler}>
+                  <Button
+                    as={Link}
+                    className={s.actionBtn}
+                    onClick={playHandler}
+                    to={'/learn/' + deck.id}
+                  >
                     <Play />
                   </Button>
                   <Button className={s.actionBtn} onClick={editHandler}>

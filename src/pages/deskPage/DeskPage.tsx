@@ -1,3 +1,5 @@
+import { useParams } from 'react-router-dom'
+
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Pagination } from '@/components/ui/pagination'
@@ -6,11 +8,18 @@ import { TabSwitcher } from '@/components/ui/tab-switcher'
 import { DescTable } from '@/components/ui/table/DescTable/DescTable'
 import { HeadCellProps } from '@/components/ui/table/THeader'
 import { Typography } from '@/components/ui/typography'
+import { GetDecksResponse } from '@/services/api-types'
+import { useGetAllDecksQuery } from '@/services/desk-api'
 import { decksDto } from '@/utils/decksDto'
 
 import s from './deskPage.module.scss'
 
 export const DeskPage = () => {
+  const { pageCount } = useParams()
+  const { data } = useGetAllDecksQuery()
+
+  console.log(data)
+
   const tabs = [
     { name: 'My Cards', value: 'myCards' },
     { name: 'All Cards', value: 'allCards' },
@@ -24,7 +33,7 @@ export const DeskPage = () => {
           <Button>Add New Deck</Button>
         </div>
         <div className={s.deskActions}>
-          <Input className={s.search} variant={'search'} placeholder={'Input search'} />
+          <Input className={s.search} placeholder={'Input search'} variant={'search'} />
 
           <div className={s.flexItemsContainer}>
             <Typography className={s.tabLabel} variant={'body2'}>
@@ -40,8 +49,12 @@ export const DeskPage = () => {
           </div>
           <Button variant={'secondary'}>Clear Filter</Button>
         </div>
-        <DescTable className={s.table} decks={decksDto(res)} head={columns} />
-        <Pagination />
+        <DescTable
+          className={s.table}
+          decks={decksDto(data ?? ({} as GetDecksResponse))}
+          head={columns}
+        />
+        <Pagination totalPages={data?.pagination.totalPages || 1} />
       </div>
     </div>
   )
