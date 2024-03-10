@@ -37,14 +37,6 @@ export const deskApi = baseApi.injectEndpoints({
         url: `/v1/decks/${id}`,
       }),
     }),
-    getAllDecks: builder.query<GetDecksResponse, GetDecksArgs | void>({
-      providesTags: ['Decks'],
-      query: args => ({
-        method: 'GET',
-        params: args || undefined,
-        url: `/v2/decks`,
-      }),
-    }),
     getCardsInDeck: builder.query<
       GetCardsInDeckResponse,
       { deckId: string; params: GetCardsInDeckParams }
@@ -61,6 +53,14 @@ export const deskApi = baseApi.injectEndpoints({
       query: id => ({
         method: 'GET',
         url: `/v1/decks/${id}`,
+      }),
+    }),
+    getDecks: builder.query<GetDecksResponse, GetDecksArgs | void>({
+      providesTags: ['Decks'],
+      query: args => ({
+        method: 'GET',
+        params: args || undefined,
+        url: `/v2/decks`,
       }),
     }),
     getMinMax: builder.query<GetMinMax, void>({
@@ -85,9 +85,9 @@ export const {
   useCreateCardMutation,
   useCreateDeckMutation,
   useDeleteDeckMutation,
-  useGetAllDecksQuery,
   useGetCardsInDeckQuery,
   useGetDeckQuery,
+  useGetDecksQuery,
   useGetMinMaxQuery,
   useUpdateDeckMutation,
 } = deskApi

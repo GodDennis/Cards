@@ -11,7 +11,7 @@ import { CheckEmail } from './components/auth/checkEmail'
 import { SignIn } from './components/auth/signIn'
 import { SignUp } from './components/auth/signUp'
 import { DeskPage } from './pages/deskPage'
-import { LearnPage } from './pages/learnPage'
+import { QuestionCard } from './pages/questionCard'
 import { useGetAuthQuery } from './services/auth-api'
 
 const publicRouts: RouteObject[] = [
@@ -39,7 +39,7 @@ const privatRouts: RouteObject[] = [
     path: '/',
   },
   {
-    element: <LearnPage />,
+    element: <QuestionCard />,
     path: '/learn/:deckId',
   },
 ]

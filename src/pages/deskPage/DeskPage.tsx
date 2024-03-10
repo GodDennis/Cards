@@ -9,14 +9,14 @@ import { DescTable } from '@/components/ui/table/DescTable/DescTable'
 import { HeadCellProps } from '@/components/ui/table/THeader'
 import { Typography } from '@/components/ui/typography'
 import { GetDecksResponse } from '@/services/api-types'
-import { useGetAllDecksQuery } from '@/services/desk-api'
+import { useGetDecksQuery } from '@/services/desk-api'
 import { decksDto } from '@/utils/decksDto'
 
 import s from './deskPage.module.scss'
 
 export const DeskPage = () => {
   const { pageCount } = useParams()
-  const { data } = useGetAllDecksQuery()
+  const { data } = useGetDecksQuery()
 
   console.log(data)
 

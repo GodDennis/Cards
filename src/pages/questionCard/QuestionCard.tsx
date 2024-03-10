@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useParams } from 'react-router-dom'
 
 import { BackwardLink } from '@/components/ui/backward-link'
 import { Button } from '@/components/ui/button'
@@ -10,10 +11,6 @@ import { useGetDeckQuery } from '@/services/desk-api'
 import clsx from 'clsx'
 
 import s from './question-card.module.scss'
-
-type Props = {
-  deckId: string
-}
 
 const radioOptions = [
   {
@@ -38,7 +35,8 @@ const radioOptions = [
   },
 ]
 
-export const QuestionCard = ({ deckId }: Props) => {
+export const QuestionCard = () => {
+  const { deckId = '' } = useParams()
   const [withAnswer, setWithAnswer] = useState<boolean>(false)
   const [currentOption, setCurrentOption] = useState('1')
 
