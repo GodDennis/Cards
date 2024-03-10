@@ -66,7 +66,7 @@ export const QuestionCard = () => {
 
   return (
     <div className={s.pageContentWrapper}>
-      <BackwardLink className={s.backLink} to={'/decks-list'} variant={'body2'}>
+      <BackwardLink className={s.backLink} to={'/'} variant={'body2'}>
         Back to Decks List
       </BackwardLink>
       <Card className={s.questionCard}>
