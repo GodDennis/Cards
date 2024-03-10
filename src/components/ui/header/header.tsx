@@ -13,8 +13,6 @@ export const Header = () => {
   const { data: isAuth, isError: isAuthError, isFetching: isAuthFetching } = useGetAuthQuery()
   const [logout] = useLogoutMutation()
 
-  console.log(!isAuthError)
-
   const options = [
     { redirect: '/profile', src: person, title: 'My Profile' },
     {
