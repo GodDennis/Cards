@@ -60,6 +60,7 @@ export const QuestionCard = () => {
   const nextQuestionHandler = () => {
     if (cardId) {
       saveGrade({ body: { cardId, grade: +currentOption }, deckId })
+      setWithAnswer(false)
     }
   }
 
