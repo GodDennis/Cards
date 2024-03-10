@@ -38,7 +38,7 @@ const radioOptions = [
 export const QuestionCard = () => {
   const { deckId = '' } = useParams()
   const [withAnswer, setWithAnswer] = useState<boolean>(false)
-  const [currentOption, setCurrentOption] = useState('1')
+  const [currentOption, setCurrentOption] = useState<string>('1')
 
   const [saveGrade, { data: cardMutationData, isLoading: isUpdatng }] = useSaveGradeMutation()
 
@@ -47,6 +47,7 @@ export const QuestionCard = () => {
     isError,
     isLoading,
   } = useGetRandomCardQuery({ deckId }, { skip: !!cardMutationData })
+
   const { data: deckData } = useGetDeckQuery(deckId)
 
   const question = cardMutationData?.question || cardQueryData?.question
@@ -58,7 +59,7 @@ export const QuestionCard = () => {
 
   const nextQuestionHandler = () => {
     if (cardId) {
-      saveGrade({ body: { cardId, grade: currentOption }, deckId })
+      saveGrade({ body: { cardId, grade: +currentOption }, deckId })
     }
   }
 
@@ -116,7 +117,7 @@ export const QuestionCard = () => {
               options={radioOptions}
               value={currentOption}
             />
-            <Button fullWidth onClick={() => setWithAnswer(false)}>
+            <Button fullWidth onClick={nextQuestionHandler}>
               <Typography>Next Question</Typography>
             </Button>
           </div>

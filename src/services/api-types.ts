@@ -1,6 +1,6 @@
 export type SaveGradeBody = {
   cardId: string
-  grade: string
+  grade: number
 }
 
 export type CreateCardBody = {
@@ -75,19 +75,19 @@ export type GetDecksResponse = {
 }
 
 export type GetDecksArgs = {
-  minCardsCont?: number
-  maxCardsCount?: number
-  name?: string
   authorId?: string
-  userId?: string
   currentPage?: number
   itemsPerPage?: number
+  maxCardsCount?: number
+  minCardsCont?: number
+  name?: string
+  userId?: string
 }
 
 export type CreateDeckArgs = {
   cover?: string
-  name: string
   isPrivate?: boolean
+  name: string
 }
 
 export type GetMinMax = {
