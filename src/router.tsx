@@ -45,7 +45,7 @@ const privatRouts: RouteObject[] = [
   },
   {
     element: <Deck />,
-    path: '/deck',
+    path: '/deck/:deckId',
   },
 ]
 

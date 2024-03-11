@@ -10,6 +10,7 @@ import s from './descTable.module.scss'
 
 import { Table } from '..'
 import { Button } from '../../button'
+import { Typography } from '../../typography'
 import { THeader } from '../THeader'
 
 type HeadCellProps = {
@@ -30,9 +31,9 @@ type DescTableProps = {
 }
 
 export const DescTable = ({ className, decks, head }: DescTableProps) => {
-  const playHandler = () => {}
-  const editHandler = () => {}
-  const deleteHandler = () => {}
+  const playHandler = () => { }
+  const editHandler = () => { }
+  const deleteHandler = () => { }
 
   return (
     <Table.Root className={clsx(s.root, className)}>
@@ -44,13 +45,24 @@ export const DescTable = ({ className, decks, head }: DescTableProps) => {
               <Table.Cell>
                 <div className={s.flexContainer}>
                   {image && <img alt={'Desc Preview'} className={s.deckPreview} src={image} />}
-                  {deck.name}
+                  <Typography
+                    as={Link}
+                    className={s.link}
+                    to={`/deck/${deck.id}`}
+                    variant={'body2'}
+                  >
+                    {deck.name}
+                  </Typography>
                 </div>
               </Table.Cell>
-              <Table.Cell>{deck.cardsCount}</Table.Cell>
-              <Table.Cell>{deck.lastUpdated}</Table.Cell>
               <Table.Cell>
-                <span>{deck.createdBy}</span>
+                <Typography variant={'body2'}>{deck.cardsCount}</Typography>
+              </Table.Cell>
+              <Table.Cell>
+                <Typography variant={'body2'}>{deck.lastUpdated}</Typography>
+              </Table.Cell>
+              <Table.Cell>
+                <Typography variant={'body2'}>{deck.createdBy}</Typography>
               </Table.Cell>
               <Table.Cell>
                 <div className={clsx(s.flexContainer, s.buttonsBlock)}>
