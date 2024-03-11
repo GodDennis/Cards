@@ -32,7 +32,7 @@ export const DropDownMenu = (props: DropDownMenuProps) => {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <button aria-label={'Customise options'} className={'IconButton'}>
+        <button aria-label={'Customise options'} className={s.iconButton}>
           {trigger ? trigger : <ContextMenu />}
         </button>
       </DropdownMenu.Trigger>

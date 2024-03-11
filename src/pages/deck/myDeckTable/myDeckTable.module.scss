@@ -15,14 +15,5 @@
 .deckPreview {
   width: 118px;
   height: 48px;
-}
-
-.link {
-  color: var(--color-light-100);
-  text-decoration: none;
-  transition: 0.2s;
-
-  &:hover {
-    text-decoration: underline;
-  }
+  object-fit: contain;
 }
