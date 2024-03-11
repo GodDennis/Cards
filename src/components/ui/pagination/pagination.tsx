@@ -20,7 +20,9 @@ export const Pagination = (props: Props) => {
   const { currentPage, pageSize, path, setCurrentPage, setPageSize, totalPages } = props
 
   const handlePageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber)
+    if (pageNumber >= 1 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber)
+    }
   }
 
   const options = [
@@ -104,15 +106,16 @@ export const Pagination = (props: Props) => {
             className={s.link}
             to={`/${path}/${currentPage > 1 ? currentPage - 1 : currentPage}`}
           >
-            <ArrowBack fill={`${currentPage === 1 ? 'var(--color-dark-100)' : 'white'}`} />
+            <ArrowBack fill={currentPage === 1 ? 'var(--color-dark-100)' : 'white'} />
           </Link>
         </li>
         {renderPageNumbers()}
         <li onClick={() => handlePageChange(currentPage + 1)}>
-          <Link className={s.link} to={`/${path}/${currentPage + 1}`}>
-            <ArrowForward
-              fill={`${currentPage === totalPages ? 'var(--color-dark-100)' : 'white'}`}
-            />
+          <Link
+            className={s.link}
+            to={`/${path}/${currentPage === totalPages ? currentPage : currentPage + 1}`}
+          >
+            <ArrowForward fill={currentPage === totalPages ? 'var(--color-dark-100)' : 'white'} />
           </Link>
         </li>
       </ul>
