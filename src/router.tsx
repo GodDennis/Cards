@@ -10,6 +10,7 @@ import { Layout } from './Layout'
 import { CheckEmail } from './components/auth/checkEmail'
 import { SignIn } from './components/auth/signIn'
 import { SignUp } from './components/auth/signUp'
+import { Deck } from './pages/deck'
 import { DeskPage } from './pages/deskPage'
 import { QuestionCard } from './pages/questionCard'
 import { useGetAuthQuery } from './services/auth-api'
@@ -41,6 +42,10 @@ const privatRouts: RouteObject[] = [
   {
     element: <QuestionCard />,
     path: '/learn/:deckId',
+  },
+  {
+    element: <Deck />,
+    path: '/deck',
   },
 ]
 

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import edit from '@/assets/Images/edit-2-outline.svg'
 import play from '@/assets/Images/play-circle-outline.svg'
@@ -12,7 +13,7 @@ import { Pagination } from '@/components/ui/pagination'
 import { HeadCellProps } from '@/components/ui/table/THeader'
 import { Typography } from '@/components/ui/typography'
 import { AddNewCard } from '@/layouts/modals/addNewCard'
-import { MyDeckTable } from '@/pages/myDeck/myDeckTable/myDeckTable'
+import { MyDeckTable } from '@/pages/deck/myDeckTable/myDeckTable'
 
 import s from './deck.module.scss'
 
@@ -52,24 +53,33 @@ export const Deck = () => {
   return (
     <div className={s.container}>
       <div>
-        <BackwardLink className={s.linkBack} to={'https://google.com'} variant={'body2'}>
+        <BackwardLink className={s.linkBack} to={'/'} variant={'body2'}>
           Back to Decks List
         </BackwardLink>
       </div>
       <div className={s.sectionHeader}>
         <div className={s.headerWithDropDown}>
-          <Typography variant={'h1'}>My Deck</Typography>
-          <DropDownMenu className={s.menu}>
-            <DropDownList options={list} />
-          </DropDownMenu>
+          <Typography variant={'h1'}>{isAuthor ? 'My Deck' : 'Friend’s Deck'}</Typography>
+          {isAuthor && (
+            <DropDownMenu className={s.menu}>
+              <DropDownList options={list} />
+            </DropDownMenu>
+          )}
         </div>
-        <Button onClick={() => setOpenAdd(true)}>Add New Card</Button>
+        {isAuthor ? (
+          <Button onClick={() => setOpenAdd(true)}>Add New Card</Button>
+        ) : (
+          // !!! add id to a path
+          <Button as={Link} to={`/learn/`}>
+            Learn to Pack
+          </Button>
+        )}
         {openAdd && <AddNewCard closeHandler={setOpenAdd} open={openAdd} />}
       </div>
       <div className={s.deskActions}>
         <Input className={s.search} placeholder={'Input search'} variant={'search'} />
       </div>
-      <MyDeckTable className={s.table} decks={decks} head={columns} />
+      <MyDeckTable className={s.table} decks={decks} head={columns} withSettings={isAuthor} />
       <Pagination />
     </div>
   )

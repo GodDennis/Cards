@@ -44,7 +44,7 @@ export function getImageOrText(data: string) {
   }
 }
 
-export const MyDeckTable = ({ className, decks, head, withSettings = true }: DescTableProps) => {
+export const MyDeckTable = ({ className, decks, head, withSettings = false }: DescTableProps) => {
   const [openDelete, setOpenDelete] = useState(false)
 
   const editHandler = () => {
