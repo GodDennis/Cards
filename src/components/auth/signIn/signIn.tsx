@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import { LoginFormValues, loginSchema } from '@/components/auth/helpers/loginValidationSchema'
 import { Button } from '@/components/ui/button'
@@ -30,7 +31,11 @@ export const SignIn = () => {
       .then(() => {
         navigate('/')
       })
-    // .catch(e => {})
+      .catch(e => {
+        if (e.status === 401) {
+          toast.error('Incorrect login or password')
+        }
+      })
   }
 
   return (

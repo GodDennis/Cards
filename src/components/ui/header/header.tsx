@@ -1,6 +1,8 @@
+import { Link } from 'react-router-dom'
+
 import logOut from '@/assets/Images/log-out.svg'
 import person from '@/assets/Images/person-outline.svg'
-import { useGetAuthQuery, useLogoutMutation } from '@/services/auth-api'
+import { useLogoutMutation } from '@/services/auth-api'
 
 import s from './header.module.scss'
 
@@ -9,8 +11,12 @@ import { HeaderDropDown } from '../drop-down-menu/headerDropDown'
 import { Logo } from '../logo'
 import { Typography } from '../typography'
 
-export const Header = () => {
-  const { data: isAuth, isError: isAuthError, isFetching: isAuthFetching } = useGetAuthQuery()
+type Props = {
+  auth: any
+  isAuthenticated: boolean
+}
+
+export const Header = ({ auth, isAuthenticated }: Props) => {
   const [logout] = useLogoutMutation()
 
   const options = [
@@ -29,22 +35,24 @@ export const Header = () => {
     <header className={s.container}>
       <div className={s.content}>
         <Logo />
-        {!isAuthError && !isAuthFetching ? (
+        {isAuthenticated ? (
           <div className={s.userBar}>
             <Typography as={'span'} className={s.userName} variant={'body1'}>
-              {isAuth?.name}
+              {auth?.name}
             </Typography>
 
             <HeaderDropDown
-              avatar={isAuth?.avatar}
-              email={isAuth?.email}
-              id={isAuth?.id}
+              avatar={auth?.avatar}
+              email={auth?.email}
+              id={auth?.id}
               options={options}
-              userName={isAuth?.name}
+              userName={auth?.name}
             />
           </div>
         ) : (
-          <Button variant={'secondary'}>Sign in</Button>
+          <Button as={Link} to={'/login'} variant={'secondary'}>
+            Sign in
+          </Button>
         )}
       </div>
     </header>
