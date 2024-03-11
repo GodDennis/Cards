@@ -30,7 +30,7 @@ export const SignIn = () => {
       .then(() => {
         navigate('/')
       })
-      .catch(e => {})
+    // .catch(e => {})
   }
 
   return (
