@@ -19,8 +19,6 @@ import { useGetCardsInDeckQuery, useGetDeckQuery } from '@/services/desk-api'
 
 import s from './deck.module.scss'
 
-import image from './../../layouts/images/Mask.png'
-
 export const Deck = () => {
   const [openAdd, setOpenAdd] = useState<boolean>(false)
   const [isAuthor, setIsAuthor] = useState<boolean>(false)
@@ -32,13 +30,14 @@ export const Deck = () => {
     if (userData && deckData && userData.id === deckData.userId) {
       setIsAuthor(true)
     } else {
-      setIsAuthor(false)
+      setIsAuthor(true)
     }
   }, [userData, deckData])
 
   const { data: cardsData, isError, isLoading } = useGetCardsInDeckQuery({ deckId, params: {} })
   const totalPages = cardsData?.pagination.totalPages ?? 0
   const cards = cardsData?.items ?? []
+  const cover = deckData?.cover
 
   const list = [
     {
@@ -76,12 +75,17 @@ export const Deck = () => {
       </div>
       <div className={s.sectionHeader}>
         <div className={s.headerWithDropDown}>
-          <Typography variant={'h1'}>{isAuthor ? 'My Deck' : 'Friend’s Deck'}</Typography>
-          {isAuthor && (
-            <DropDownMenu className={s.menu}>
-              <DropDownList options={list} />
-            </DropDownMenu>
-          )}
+          <div className={s.headerContainer}>
+            <Typography as={'h1'} className={s.header} variant={'h1'}>
+              {isAuthor ? 'My Deck' : 'Friend’s Deck'}
+            </Typography>
+            {isAuthor && (
+              <DropDownMenu className={s.menu}>
+                <DropDownList options={list} />
+              </DropDownMenu>
+            )}
+          </div>
+          {cover && <img alt={'deck image'} className={s.deckImage} src={cover} />}
         </div>
         {isAuthor ? (
           <Button onClick={() => setOpenAdd(true)}>Add New Card</Button>
