@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
 
 import edit from '@/assets/Images/edit-2-outline.svg'
 import play from '@/assets/Images/play-circle-outline.svg'
@@ -14,6 +14,8 @@ import { HeadCellProps } from '@/components/ui/table/THeader'
 import { Typography } from '@/components/ui/typography'
 import { AddNewCard } from '@/layouts/modals/addNewCard'
 import { MyDeckTable } from '@/pages/deck/myDeckTable/myDeckTable'
+import { useGetAuthQuery } from '@/services/auth-api'
+import { useGetCardsInDeckQuery, useGetDeckQuery } from '@/services/desk-api'
 
 import s from './deck.module.scss'
 
@@ -22,6 +24,21 @@ import image from './../../layouts/images/Mask.png'
 export const Deck = () => {
   const [openAdd, setOpenAdd] = useState<boolean>(false)
   const [isAuthor, setIsAuthor] = useState<boolean>(false)
+  const { deckId = '' } = useParams()
+  const { data: userData } = useGetAuthQuery()
+  const { data: deckData } = useGetDeckQuery(deckId)
+
+  useEffect(() => {
+    if (userData && deckData && userData.id === deckData.userId) {
+      setIsAuthor(true)
+    } else {
+      setIsAuthor(false)
+    }
+  }, [userData, deckData])
+
+  const { data: cardsData, isError, isLoading } = useGetCardsInDeckQuery({ deckId, params: {} })
+  const totalPages = cardsData?.pagination.totalPages ?? 0
+  const cards = cardsData?.items ?? []
 
   const list = [
     {
@@ -69,8 +86,7 @@ export const Deck = () => {
         {isAuthor ? (
           <Button onClick={() => setOpenAdd(true)}>Add New Card</Button>
         ) : (
-          // !!! add id to a path
-          <Button as={Link} to={`/learn/`}>
+          <Button as={Link} to={`/learn/${deckId}`}>
             Learn to Pack
           </Button>
         )}
@@ -79,8 +95,8 @@ export const Deck = () => {
       <div className={s.deskActions}>
         <Input className={s.search} placeholder={'Input search'} variant={'search'} />
       </div>
-      <MyDeckTable className={s.table} decks={decks} head={columns} withSettings={isAuthor} />
-      <Pagination />
+      <MyDeckTable cards={cards} className={s.table} head={columns} withSettings={isAuthor} />
+      <Pagination totalPages={totalPages} />
     </div>
   )
 }
@@ -91,21 +107,4 @@ const columns: HeadCellProps[] = [
   { key: 'lastUpdated', title: 'Last Updated' },
   { key: 'grade', title: 'Grade' },
   { key: '', title: '' },
-]
-
-export const decks = [
-  {
-    answer: 'This is TS',
-    grade: 3,
-    id: '1',
-    lastUpdated: '2024-02-11T17:23:02.188Z',
-    question: 'This is JS',
-  },
-  {
-    answer: image,
-    grade: 4,
-    id: '2',
-    lastUpdated: '2024-02-11T17:23:02.188Z',
-    question: image,
-  },
 ]

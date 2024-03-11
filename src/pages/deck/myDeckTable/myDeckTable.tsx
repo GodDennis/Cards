@@ -7,6 +7,7 @@ import { THeader } from '@/components/ui/table/THeader'
 import { Delete } from '@/icons/Delete'
 import { EditPen } from '@/icons/EditPen'
 import { DeleteCard } from '@/layouts/modals/deleteCard'
+import { CardWithGrade } from '@/services/api-types'
 import { getTimeString } from '@/utils/decksDto'
 import clsx from 'clsx'
 
@@ -15,17 +16,11 @@ import s from './myDeckTable.module.scss'
 type HeadCellProps = {
   [key: string]: string
 }
-type Deck = {
-  answer: string
-  grade: number
-  id: string
-  lastUpdated: string
-  question: string
-}
+type card = CardWithGrade
 
 type DescTableProps = {
+  cards: card[]
   className?: string
-  decks: Deck[]
   head: HeadCellProps[]
   withSettings?: boolean
 }
@@ -44,7 +39,7 @@ export function getImageOrText(data: string) {
   }
 }
 
-export const MyDeckTable = ({ className, decks, head, withSettings = false }: DescTableProps) => {
+export const MyDeckTable = ({ cards, className, head, withSettings = false }: DescTableProps) => {
   const [openDelete, setOpenDelete] = useState(false)
 
   const editHandler = () => {
@@ -58,14 +53,14 @@ export const MyDeckTable = ({ className, decks, head, withSettings = false }: De
     <Table.Root className={clsx(s.root, className)}>
       <THeader head={head} />
       <Table.Body>
-        {decks.map(deck => {
+        {cards.map(card => {
           return (
-            <Table.Row key={deck.id}>
-              <Table.Cell>{getImageOrText(deck.question)}</Table.Cell>
-              <Table.Cell>{getImageOrText(deck.answer)}</Table.Cell>
-              <Table.Cell>{getTimeString(deck.lastUpdated)}</Table.Cell>
+            <Table.Row key={card.id}>
+              <Table.Cell>{getImageOrText(card.question)}</Table.Cell>
+              <Table.Cell>{getImageOrText(card.answer)}</Table.Cell>
+              <Table.Cell>{getTimeString(card.updated)}</Table.Cell>
               <Table.Cell>
-                <Rating value={deck.grade} />
+                <Rating value={+card.grade} />
               </Table.Cell>
               {withSettings && (
                 <Table.Cell>
