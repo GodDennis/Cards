@@ -24,11 +24,21 @@ export const deskApi = baseApi.injectEndpoints({
     }),
     createDeck: builder.mutation<DeckType, CreateDeckArgs>({
       invalidatesTags: ['Decks'],
-      query: body => ({
-        body,
-        method: 'POST',
-        url: `/v1/decks`,
-      }),
+      query: body => {
+        const formData = new FormData()
+
+        if (body.cover) {
+          formData.append('cover', body.cover)
+        }
+        formData.append('name', body.name)
+        formData.append('isPrivate', String(body.isPrivate))
+
+        return {
+          body: formData,
+          method: 'POST',
+          url: `/v1/decks`,
+        }
+      },
     }),
     deleteDeck: builder.mutation<DeckWithoutAuthor, string>({
       invalidatesTags: ['Decks'],

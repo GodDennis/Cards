@@ -1,3 +1,4 @@
+import { ChangeEvent, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
@@ -6,6 +7,7 @@ import { ControlledInput } from '@/components/ui/input/ControlledInput'
 import { Modal } from '@/components/ui/modal'
 import { ModalFooter } from '@/components/ui/modal/modal-footer'
 import { Image } from '@/icons/Image'
+import { useCreateDeckMutation } from '@/services/desk-api'
 
 import s from './addNewDeck.module.scss'
 
@@ -20,6 +22,8 @@ type FormValues = {
 }
 
 export const AddNewDeck = ({ closeHandler, open = false }: AddNewDeckProps) => {
+  const [cover, setCover] = useState<File | null>(null)
+  const [createDeck] = useCreateDeckMutation()
   const {
     control,
     formState: { errors },
@@ -31,7 +35,16 @@ export const AddNewDeck = ({ closeHandler, open = false }: AddNewDeckProps) => {
     },
   })
 
-  const onSubmit = (values: FormValues) => { }
+  const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setCover(e.currentTarget.files?.[0] ?? null)
+  }
+
+  const onSubmit = (values: FormValues) => {
+    const formValues = { ...values, cover }
+
+    createDeck(formValues)
+    closeHandler(false)
+  }
 
   return (
     <Modal closeHandler={closeHandler} open={open} title={'Add New Deck'}>
@@ -46,7 +59,12 @@ export const AddNewDeck = ({ closeHandler, open = false }: AddNewDeckProps) => {
             variant={'simple'}
             width={'100%'}
           />
-          <input className={s.file} id={'addDeckCoverInput'} type={'file'} />
+          <input
+            className={s.file}
+            id={'addDeckCoverInput'}
+            onChange={onFileChange}
+            type={'file'}
+          />
           <Button as={'label'} fullWidth htmlFor={'addDeckCoverInput'} variant={'secondary'}>
             <Image />
             Upload Image
