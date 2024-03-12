@@ -12,3 +12,11 @@
 .file {
   display: none;
 }
+
+.fileActive {
+  background-color: var(--color-success-500);
+
+  &:hover {
+    background-color: var(--color-success-300);
+  }
+}
