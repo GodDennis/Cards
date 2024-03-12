@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Select } from '@/components/ui/select'
@@ -8,26 +7,22 @@ import { ArrowForward } from '@/icons/ArrowForward'
 import s from './pagination.module.scss'
 
 type Props = {
-  // curentPage?: number
+  currentPage: number
+  pageSize?: number
+  path: string
+  setCurrentPage: (value: number) => void
+  setPageSize: (value: number) => void
   totalCount?: number
-  // pageSize?: number
   totalPages: number
 }
 
 export const Pagination = (props: Props) => {
-  const {
-    // curentPage,
-    totalCount = 1000,
-    // pageSize = 10
-    totalPages,
-  } = props
-
-  const [pageSize, setPageSize] = useState(20)
-  const [currentPage, setCurrentPage] = useState(1)
-  // const totalPages = Math.ceil(totalCount / pageSize)
+  const { currentPage, pageSize, path, setCurrentPage, setPageSize, totalPages } = props
 
   const handlePageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber)
+    if (pageNumber >= 1 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber)
+    }
   }
 
   const options = [
@@ -65,7 +60,7 @@ export const Pagination = (props: Props) => {
           key={i}
           onClick={() => handlePageChange(i)}
         >
-          <Link className={s.link} to={'' + i}>
+          <Link className={s.link} to={`/${path}/${i}`}>
             {i}
           </Link>
         </li>
@@ -75,7 +70,7 @@ export const Pagination = (props: Props) => {
     if (startPage > 1) {
       pageNumbers.unshift(
         <li key={'1'} onClick={() => handlePageChange(1)}>
-          <Link className={s.link} to={'1'}>
+          <Link className={s.link} to={`/${path}/1`}>
             1
           </Link>
         </li>
@@ -85,7 +80,7 @@ export const Pagination = (props: Props) => {
     if (endPage < totalPages) {
       pageNumbers.push(
         <li key={totalPages} onClick={() => handlePageChange(totalPages)}>
-          <Link className={s.link} to={`/${totalPages}`}>
+          <Link className={s.link} to={`/${path}/${totalPages}?`}>
             {totalPages}
           </Link>
         </li>
@@ -107,16 +102,20 @@ export const Pagination = (props: Props) => {
     <div className={s.pagination}>
       <ul>
         <li onClick={() => handlePageChange(currentPage - 1)}>
-          <Link className={s.link} to={`${currentPage > 1 ? currentPage - 1 : currentPage}`}>
-            <ArrowBack fill={`${currentPage === 1 ? 'var(--color-dark-100)' : 'white'}`} />
+          <Link
+            className={s.link}
+            to={`/${path}/${currentPage > 1 ? currentPage - 1 : currentPage}`}
+          >
+            <ArrowBack fill={currentPage === 1 ? 'var(--color-dark-100)' : 'white'} />
           </Link>
         </li>
         {renderPageNumbers()}
         <li onClick={() => handlePageChange(currentPage + 1)}>
-          <Link className={s.link} to={`${currentPage + 1}`}>
-            <ArrowForward
-              fill={`${currentPage === totalPages ? 'var(--color-dark-100)' : 'white'}`}
-            />
+          <Link
+            className={s.link}
+            to={`/${path}/${currentPage === totalPages ? currentPage : currentPage + 1}`}
+          >
+            <ArrowForward fill={currentPage === totalPages ? 'var(--color-dark-100)' : 'white'} />
           </Link>
         </li>
       </ul>
@@ -124,7 +123,7 @@ export const Pagination = (props: Props) => {
       <div className={s.countPicker}>
         Показать
         <Select
-          defaultValue={pageSize.toString()}
+          defaultValue={pageSize?.toString()}
           onValueChange={changePageSize}
           options={options}
         />

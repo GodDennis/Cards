@@ -4,6 +4,7 @@ import {
   RouteObject,
   RouterProvider,
   createBrowserRouter,
+  useOutletContext,
 } from 'react-router-dom'
 
 import { Layout } from './Layout'
@@ -11,9 +12,8 @@ import { CheckEmail } from './components/auth/checkEmail'
 import { SignIn } from './components/auth/signIn'
 import { SignUp } from './components/auth/signUp'
 import { Deck } from './pages/deck'
-import { DeskPage } from './pages/deskPage'
+import { DecksPage } from './pages/deckPage'
 import { QuestionCard } from './pages/questionCard'
-import { useGetAuthQuery } from './services/auth-api'
 
 const publicRouts: RouteObject[] = [
   {
@@ -32,11 +32,11 @@ const publicRouts: RouteObject[] = [
 
 const privatRouts: RouteObject[] = [
   {
-    element: <DeskPage />,
-    path: '/:pageCount',
+    element: <DecksPage />,
+    path: '/decks/:pageCount',
   },
   {
-    element: <Navigate to={'1'} />,
+    element: <Navigate to={'/decks/1'} />,
     path: '/',
   },
   {
@@ -45,7 +45,7 @@ const privatRouts: RouteObject[] = [
   },
   {
     element: <Deck />,
-    path: '/deck/:deckId',
+    path: '/deck/:deckId/:pageCount',
   },
 ]
 
@@ -63,8 +63,7 @@ export const router = createBrowserRouter([
 ])
 
 function PrivateRoutes() {
-  const isAuthenticated = false
-  const { isError } = useGetAuthQuery()
+  const isError = useOutletContext()
 
   return !isError ? <Outlet /> : <Navigate to={'/login'} />
 }

@@ -31,9 +31,9 @@ type DescTableProps = {
 }
 
 export const DescTable = ({ className, decks, head }: DescTableProps) => {
-  const playHandler = () => { }
-  const editHandler = () => { }
-  const deleteHandler = () => { }
+  const playHandler = () => {}
+  const editHandler = () => {}
+  const deleteHandler = () => {}
 
   return (
     <Table.Root className={clsx(s.root, className)}>
@@ -48,7 +48,7 @@ export const DescTable = ({ className, decks, head }: DescTableProps) => {
                   <Typography
                     as={Link}
                     className={s.link}
-                    to={`/deck/${deck.id}`}
+                    to={`/deck/${deck.id}/1`}
                     variant={'body2'}
                   >
                     {deck.name}

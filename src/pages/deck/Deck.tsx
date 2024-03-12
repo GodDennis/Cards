@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom'
 import edit from '@/assets/Images/edit-2-outline.svg'
 import play from '@/assets/Images/play-circle-outline.svg'
 import trash from '@/assets/Images/trash-outline.svg'
+import { usePagination } from '@/castomHooks/usePagination'
 import { BackwardLink } from '@/components/ui/backward-link'
 import { Button } from '@/components/ui/button'
 import { DropDownMenu } from '@/components/ui/drop-down-menu'
@@ -25,6 +26,8 @@ export const Deck = () => {
   const { deckId = '' } = useParams()
   const { data: userData } = useGetAuthQuery()
   const { data: deckData } = useGetDeckQuery(deckId)
+
+  const { currentPage, onSetCurrentPage, onSetPageSize, pageSize } = usePagination()
 
   useEffect(() => {
     if (userData && deckData && userData.id === deckData.userId) {
@@ -100,7 +103,14 @@ export const Deck = () => {
         <Input className={s.search} placeholder={'Input search'} variant={'search'} />
       </div>
       <MyDeckTable cards={cards} className={s.table} head={columns} withSettings={isAuthor} />
-      <Pagination totalPages={totalPages} />
+      <Pagination
+        currentPage={currentPage}
+        pageSize={pageSize}
+        path={`deck/${deckId}`}
+        setCurrentPage={onSetCurrentPage}
+        setPageSize={onSetPageSize}
+        totalPages={totalPages}
+      />
     </div>
   )
 }

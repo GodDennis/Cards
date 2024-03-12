@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
-import { ToastContainer, toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 
 import { RegisterFormValues, registerSchema } from '@/components/auth/helpers/loginValidationSchema'
 import { Button } from '@/components/ui/button'
@@ -93,18 +93,6 @@ export const SignUp = () => {
           Sign In
         </Typography>
       </Card>
-      <ToastContainer
-        autoClose={5000}
-        closeOnClick
-        draggable
-        hideProgressBar={false}
-        newestOnTop={false}
-        pauseOnFocusLoss
-        pauseOnHover
-        position={'bottom-left'}
-        rtl={false}
-        theme={'colored'}
-      />
     </div>
   )
 }
