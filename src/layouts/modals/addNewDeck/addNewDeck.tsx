@@ -29,7 +29,9 @@ export const AddNewDeck = ({ closeHandler, open = false }: AddNewDeckProps) => {
         <Checkbox text={'Private pack'} />
       </div>
       <ModalFooter>
-        <Button variant={'secondary'}>Cancel</Button>
+        <Button onClick={() => closeHandler(false)} variant={'secondary'}>
+          Cancel
+        </Button>
         <Button variant={'primary'}>Add New Pack</Button>
       </ModalFooter>
     </Modal>

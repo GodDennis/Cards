@@ -28,7 +28,7 @@ export const DecksPage = () => {
   ]
 
   const swichIsAddDeckOpenHandler = () => {
-    setIsAddDeckOpen(state => !state)
+    setIsAddDeckOpen(true)
   }
 
   return (
@@ -74,7 +74,7 @@ export const DecksPage = () => {
           totalPages={data?.pagination.totalPages || 1}
         />
       </div>
-      <AddNewDeck closeHandler={swichIsAddDeckOpenHandler} open={isAddDeckOpen} />
+      <AddNewDeck closeHandler={setIsAddDeckOpen} open={isAddDeckOpen} />
     </div>
   )
 }
