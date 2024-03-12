@@ -47,7 +47,6 @@ export const AddNewDeck = ({ closeHandler, open = false }: AddNewDeckProps) => {
     resolver: zodResolver(formSchema),
   })
 
-  console.log(errors)
   const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCover(e.currentTarget.files?.[0] ?? null)
   }
