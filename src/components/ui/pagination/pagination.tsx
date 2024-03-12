@@ -65,7 +65,7 @@ export const Pagination = (props: Props) => {
           key={i}
           onClick={() => handlePageChange(i)}
         >
-          <Link className={s.link} to={'/' + i}>
+          <Link className={s.link} to={'' + i}>
             {i}
           </Link>
         </li>
@@ -75,7 +75,7 @@ export const Pagination = (props: Props) => {
     if (startPage > 1) {
       pageNumbers.unshift(
         <li key={'1'} onClick={() => handlePageChange(1)}>
-          <Link className={s.link} to={'/1'}>
+          <Link className={s.link} to={'1'}>
             1
           </Link>
         </li>
@@ -107,13 +107,13 @@ export const Pagination = (props: Props) => {
     <div className={s.pagination}>
       <ul>
         <li onClick={() => handlePageChange(currentPage - 1)}>
-          <Link className={s.link} to={`/${currentPage > 1 ? currentPage - 1 : currentPage}`}>
+          <Link className={s.link} to={`${currentPage > 1 ? currentPage - 1 : currentPage}`}>
             <ArrowBack fill={`${currentPage === 1 ? 'var(--color-dark-100)' : 'white'}`} />
           </Link>
         </li>
         {renderPageNumbers()}
         <li onClick={() => handlePageChange(currentPage + 1)}>
-          <Link className={s.link} to={`/${currentPage + 1}`}>
+          <Link className={s.link} to={`${currentPage + 1}`}>
             <ArrowForward
               fill={`${currentPage === totalPages ? 'var(--color-dark-100)' : 'white'}`}
             />

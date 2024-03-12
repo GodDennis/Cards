@@ -36,7 +36,7 @@ const privatRouts: RouteObject[] = [
     path: '/:pageCount',
   },
   {
-    element: <Navigate to={'/1'} />,
+    element: <Navigate to={'1'} />,
     path: '/',
   },
   {

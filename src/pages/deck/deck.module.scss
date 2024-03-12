@@ -43,8 +43,11 @@
 
 .deckImage {
   display: block;
-  width: 170px;
+
+  width: 100%;
+  max-width: 500px;
   height: 110px;
+
   object-fit: cover;
 }
 
