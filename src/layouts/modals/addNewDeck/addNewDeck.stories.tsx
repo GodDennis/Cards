@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { AddNewDeck } from '@/layouts/modals/addNewDeck/addNewDeck'
+import { AddNewDeck } from '@/layouts/modals/addNewDeck/AddNewDeck'
 
 const meta = {
   argTypes: {},

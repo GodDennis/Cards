@@ -1,10 +1,11 @@
+import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Input } from '@/components/ui/input'
 import { Modal } from '@/components/ui/modal'
 import { ModalFooter } from '@/components/ui/modal/modal-footer'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Checkbox } from '@/components/ui/checkbox'
-import s from './addNewDeck.module.scss'
 import { Image } from '@/icons/Image'
+
+import s from './addNewDeck.module.scss'
 
 type AddNewDeckProps = {
   closeHandler: (isOpen: boolean) => void
@@ -12,16 +13,16 @@ type AddNewDeckProps = {
 }
 export const AddNewDeck = ({ closeHandler, open = false }: AddNewDeckProps) => {
   return (
-    <Modal title={'Add New Deck'} closeHandler={closeHandler} open={open}>
+    <Modal closeHandler={closeHandler} open={open} title={'Add New Deck'}>
       <div className={s.content}>
         <Input
+          className={s.namePack}
           label={'Name Pack'}
           placeholder={'Name'}
           variant={'simple'}
-          className={s.namePack}
           width={'100%'}
         />
-        <Button variant={'secondary'} fullWidth={true}>
+        <Button fullWidth variant={'secondary'}>
           <Image />
           Upload Image
         </Button>

@@ -1,1 +1,1 @@
-export * from './addNewDeck'
+export * from './AddNewDeck'

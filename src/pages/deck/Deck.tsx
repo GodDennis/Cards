@@ -33,7 +33,7 @@ export const Deck = () => {
     if (userData && deckData && userData.id === deckData.userId) {
       setIsAuthor(true)
     } else {
-      setIsAuthor(true)
+      setIsAuthor(false)
     }
   }, [userData, deckData])
 

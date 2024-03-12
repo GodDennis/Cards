@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { usePagination } from '@/castomHooks/usePagination'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -7,6 +9,7 @@ import { TabSwitcher } from '@/components/ui/tab-switcher'
 import { DescTable } from '@/components/ui/table/DescTable/DescTable'
 import { HeadCellProps } from '@/components/ui/table/THeader'
 import { Typography } from '@/components/ui/typography'
+import { AddNewDeck } from '@/layouts/modals/addNewDeck'
 import { GetDecksResponse } from '@/services/api-types'
 import { useGetDecksQuery } from '@/services/desk-api'
 import { decksDto } from '@/utils/decksDto'
@@ -15,6 +18,7 @@ import s from './deckPage.module.scss'
 
 export const DecksPage = () => {
   const { currentPage, onSetCurrentPage, onSetPageSize, pageSize } = usePagination()
+  const [isAddDeckOpen, setIsAddDeckOpen] = useState<boolean>(false)
 
   const { data } = useGetDecksQuery({ currentPage: currentPage, itemsPerPage: pageSize })
 
@@ -23,17 +27,21 @@ export const DecksPage = () => {
     { name: 'All Cards', value: 'allCards' },
   ]
 
+  const swichIsAddDeckOpenHandler = () => {
+    setIsAddDeckOpen(state => !state)
+  }
+
   return (
     <div className={s.superContainer}>
       <div className={s.container}>
         <div className={s.sectionHeader}>
           <Typography variant={'h1'}>Decks list</Typography>
-          <Button>Add New Deck</Button>
+          <Button onClick={swichIsAddDeckOpenHandler}>Add New Deck</Button>
         </div>
         <div className={s.deskActions}>
           <Input
             className={s.search}
-            onChange={() => {}}
+            onChange={() => { }}
             placeholder={'Input search'}
             variant={'search'}
           />
@@ -66,6 +74,7 @@ export const DecksPage = () => {
           totalPages={data?.pagination.totalPages || 1}
         />
       </div>
+      <AddNewDeck closeHandler={swichIsAddDeckOpenHandler} open={isAddDeckOpen} />
     </div>
   )
 }
