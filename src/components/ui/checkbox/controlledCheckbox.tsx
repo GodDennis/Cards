@@ -14,7 +14,7 @@ const ControlledCheckbox = <T extends FieldValues>({
   ...rest
 }: ControlledCheckboxProps<T>) => {
   const {
-    field: { onChange, value, ref },
+    field: { onChange, ref, value },
   } = useController({
     control,
     disabled: rest.disabled,
