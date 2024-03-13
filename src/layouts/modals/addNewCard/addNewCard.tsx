@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
@@ -7,6 +7,7 @@ import { Modal } from '@/components/ui/modal'
 import { ModalFooter } from '@/components/ui/modal/modal-footer'
 import { Typography } from '@/components/ui/typography'
 import { Image } from '@/icons/Image'
+import clsx from 'clsx'
 
 import s from './addNewCard.module.scss'
 
@@ -27,13 +28,31 @@ export const AddNewCard = ({ closeHandler, open = false }: AddNewCardProps) => {
     },
   })
 
+  const onQuectionImgChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.currentTarget.files?.[0]) {
+      const imgURL = URL.createObjectURL(e.currentTarget.files?.[0])
+
+      setQuestionImg(imgURL)
+    }
+  }
+
+  const onAnswerImgChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.currentTarget.files?.[0]) {
+      const imgURL = URL.createObjectURL(e.currentTarget.files?.[0])
+
+      setAnswerImg(imgURL)
+    }
+  }
+
   const onClose = () => {
     setQuestionImg(null)
     setAnswerImg(null)
     closeHandler(false)
   }
 
-  const onSubmit = () => { }
+  const onSubmit = () => {
+    return
+  }
 
   return (
     <Modal closeHandler={onClose} open={open} title={'Add New Card'}>
@@ -48,12 +67,24 @@ export const AddNewCard = ({ closeHandler, open = false }: AddNewCardProps) => {
               width={'100%'}
               {...register('question')}
             />
-
             <img alt={'default image'} src={defaultImage} />
           </div>
-          <Button fullWidth variant={'secondary'}>
+          <input
+            className={s.inputFile}
+            id={'questionImgInput'}
+            name={'questionImgInput'}
+            onChange={onQuectionImgChange}
+            type={'file'}
+          />
+          <Button
+            as={'label'}
+            className={clsx(questionImg && s.fileActive)}
+            fullWidth
+            htmlFor={'questionImgInput'}
+            variant={'secondary'}
+          >
             <Image />
-            Change Image
+            {questionImg ? 'Change Image' : 'Upload Image'}
           </Button>
         </div>
         <div className={s.content}>
@@ -68,9 +99,22 @@ export const AddNewCard = ({ closeHandler, open = false }: AddNewCardProps) => {
             />
             <img alt={'default image'} src={defaultImage} />
           </div>
-          <Button fullWidth variant={'secondary'}>
+          <input
+            className={s.inputFile}
+            id={'answerImgInput'}
+            name={'answerImgInput'}
+            onChange={onAnswerImgChange}
+            type={'file'}
+          />
+          <Button
+            as={'label'}
+            className={clsx(answerImg && s.fileActive)}
+            fullWidth
+            htmlFor={'answerImgInput'}
+            variant={'secondary'}
+          >
             <Image />
-            Change Image
+            {answerImg ? 'Change Image' : 'Upload Image'}
           </Button>
         </div>
         <ModalFooter>
