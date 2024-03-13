@@ -5,10 +5,10 @@ export type SaveGradeBody = {
 
 export type CreateCardBody = {
   answer: string
-  answerImg?: string
+  answerImg?: File
   answerVideo?: string
   question: string
-  questionImg?: string
+  questionImg?: File
   questionVideo?: string
 }
 

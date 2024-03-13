@@ -64,10 +64,10 @@ export const AddNewCard = ({ closeHandler, open = false }: AddNewCardProps) => {
     const body: CreateCardBody = { ...data }
 
     if (questionImg) {
-      body.questionImg = questionImg as unknown as string
+      body.questionImg = questionImg
     }
     if (answerImg) {
-      body.answerImg = answerImg as unknown as string
+      body.answerImg = answerImg
     }
 
     createCard({ body, deckId })
