@@ -97,7 +97,7 @@ export const Deck = () => {
             Learn to Pack
           </Button>
         )}
-        {openAdd && <AddNewCard closeHandler={setOpenAdd} open={openAdd} />}
+        <AddNewCard closeHandler={setOpenAdd} open={openAdd} />
       </div>
       <div className={s.deskActions}>
         <Input className={s.search} placeholder={'Input search'} variant={'search'} />
