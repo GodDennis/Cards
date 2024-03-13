@@ -62,10 +62,12 @@ export const AddNewDeck = ({ closeHandler, open = false }: AddNewDeckProps) => {
 
     createDeck(formValues)
       .unwrap()
+      .then(() => {
+        onClose()
+      })
       .catch(e => {
         toast.error(e.data.errorMessages[0].message)
       })
-    onClose()
   }
 
   return (
@@ -96,7 +98,7 @@ export const AddNewDeck = ({ closeHandler, open = false }: AddNewDeckProps) => {
             variant={'secondary'}
           >
             <Image />
-            Upload Image
+            {cover ? 'Change Image' : 'Upload Image'}
           </Button>
           <ControlledCheckbox control={control} name={'isPrivat'} text={'Private pack'} />
         </div>
