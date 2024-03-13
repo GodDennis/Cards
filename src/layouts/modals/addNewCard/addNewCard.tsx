@@ -27,10 +27,16 @@ export const AddNewCard = ({ closeHandler, open = false }: AddNewCardProps) => {
     },
   })
 
+  const onClose = () => {
+    setQuestionImg(null)
+    setAnswerImg(null)
+    closeHandler(false)
+  }
+
   const onSubmit = () => { }
 
   return (
-    <Modal closeHandler={closeHandler} open={open} title={'Add New Card'}>
+    <Modal closeHandler={onClose} open={open} title={'Add New Card'}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={s.content}>
           <div className={s.inputLabel}>
@@ -68,7 +74,9 @@ export const AddNewCard = ({ closeHandler, open = false }: AddNewCardProps) => {
           </Button>
         </div>
         <ModalFooter>
-          <Button variant={'secondary'}>Cancel</Button>
+          <Button onClick={onClose} variant={'secondary'}>
+            Cancel
+          </Button>
           <Button variant={'primary'}>Add New Card</Button>
         </ModalFooter>
       </form>
