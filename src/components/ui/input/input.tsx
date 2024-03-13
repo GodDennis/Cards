@@ -33,14 +33,15 @@ export const Input = forwardRef<ElementRef<'input'>, InputProps>((props, ref) =>
       {label}
       <div className={s.inputContainer}>
         <input
-          className={`${s.input} ${s[variant]} ${error ? s.error : ''} ${
-            disabled ? s.disabled : ''
-          } ${className}`}
+          // eslint-disable-next-line prettier/prettier
+          className={`${s.input} ${s[variant]} ${error ? s.error : ''} ${disabled ? s.disabled : ''
+            // eslint-disable-next-line prettier/prettier
+            } ${className}`}
           {...rest}
           ref={ref}
           // eslint-disable-next-line no-nested-ternary
           type={showPassword ? 'text' : variant === 'password' ? 'password' : 'text'}
-          value={value || ''}
+          value={value}
         />
         {error && <div className={s.errorMessage}>{error}</div>}
         {variant === 'password' && (
