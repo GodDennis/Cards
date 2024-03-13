@@ -8,11 +8,13 @@ import { Modal } from '@/components/ui/modal'
 import { ModalFooter } from '@/components/ui/modal/modal-footer'
 import { Typography } from '@/components/ui/typography'
 import { Image } from '@/icons/Image'
+import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 
 import s from './addNewCard.module.scss'
 
-import defaultImage from './../../images/Mask.png'
+import { setFileIfValid } from './utils/setFileIfValid'
+import { AddNewCardForm, addNewCardSchema } from './validationSchema'
 
 type AddNewCardProps = {
   closeHandler: (isOpen: boolean) => void
@@ -22,34 +24,23 @@ export const AddNewCard = ({ closeHandler, open = false }: AddNewCardProps) => {
   const [questionImg, setQuestionImg] = useState<null | string>(null)
   const [answerImg, setAnswerImg] = useState<null | string>(null)
 
-  const { handleSubmit, register } = useForm({
+  const { handleSubmit, register } = useForm<AddNewCardForm>({
     defaultValues: {
       answer: '',
       question: '',
     },
+    resolver: zodResolver(addNewCardSchema),
   })
 
   const onQuectionImgChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.currentTarget.files?.[0]) {
-      if (e.currentTarget.files?.[0].size <= 1.5 * 1024 * 1024) {
-        const imgURL = URL.createObjectURL(e.currentTarget.files?.[0])
-
-        setQuestionImg(imgURL)
-      } else {
-        toast.error('File size must be smaller than 1.5mb!')
-      }
+      setFileIfValid(setQuestionImg, e.currentTarget.files?.[0], 1.5)
     }
   }
 
   const onAnswerImgChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.currentTarget.files?.[0]) {
-      if (e.currentTarget.files?.[0].size <= 1.5 * 1024 * 1024) {
-        const imgURL = URL.createObjectURL(e.currentTarget.files?.[0])
-
-        setAnswerImg(imgURL)
-      }
-    } else {
-      toast.error('File size must be smaller than 1.5mb!')
+      setFileIfValid(setAnswerImg, e.currentTarget.files?.[0], 1.5)
     }
   }
 
