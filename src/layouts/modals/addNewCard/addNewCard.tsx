@@ -24,7 +24,11 @@ export const AddNewCard = ({ closeHandler, open = false }: AddNewCardProps) => {
   const [questionImg, setQuestionImg] = useState<null | string>(null)
   const [answerImg, setAnswerImg] = useState<null | string>(null)
 
-  const { handleSubmit, register } = useForm<AddNewCardForm>({
+  const {
+    formState: { errors },
+    handleSubmit,
+    register,
+  } = useForm<AddNewCardForm>({
     defaultValues: {
       answer: '',
       question: '',
@@ -54,6 +58,8 @@ export const AddNewCard = ({ closeHandler, open = false }: AddNewCardProps) => {
     return
   }
 
+  console.log(errors.question?.message?.[0])
+
   return (
     <Modal closeHandler={onClose} open={open} title={'Add New Card'}>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -62,6 +68,7 @@ export const AddNewCard = ({ closeHandler, open = false }: AddNewCardProps) => {
             <Typography variant={'subtitle2'}>Question:</Typography>
             <Input
               className={s.namePack}
+              error={errors.question?.message?.[0] || null}
               placeholder={'Type your question'}
               variant={'simple'}
               width={'100%'}
@@ -96,6 +103,7 @@ export const AddNewCard = ({ closeHandler, open = false }: AddNewCardProps) => {
               variant={'simple'}
               width={'100%'}
               {...register('answer')}
+              error={errors.answer?.message?.[0] || null}
             />
             {answerImg && <img alt={'answer image'} src={answerImg} />}
           </div>
