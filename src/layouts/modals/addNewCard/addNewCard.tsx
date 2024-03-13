@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -30,17 +31,25 @@ export const AddNewCard = ({ closeHandler, open = false }: AddNewCardProps) => {
 
   const onQuectionImgChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.currentTarget.files?.[0]) {
-      const imgURL = URL.createObjectURL(e.currentTarget.files?.[0])
+      if (e.currentTarget.files?.[0].size <= 1.5 * 1024 * 1024) {
+        const imgURL = URL.createObjectURL(e.currentTarget.files?.[0])
 
-      setQuestionImg(imgURL)
+        setQuestionImg(imgURL)
+      } else {
+        toast.error('File size must be smaller than 1.5mb!')
+      }
     }
   }
 
   const onAnswerImgChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.currentTarget.files?.[0]) {
-      const imgURL = URL.createObjectURL(e.currentTarget.files?.[0])
+      if (e.currentTarget.files?.[0].size <= 1.5 * 1024 * 1024) {
+        const imgURL = URL.createObjectURL(e.currentTarget.files?.[0])
 
-      setAnswerImg(imgURL)
+        setAnswerImg(imgURL)
+      }
+    } else {
+      toast.error('File size must be smaller than 1.5mb!')
     }
   }
 
@@ -67,7 +76,7 @@ export const AddNewCard = ({ closeHandler, open = false }: AddNewCardProps) => {
               width={'100%'}
               {...register('question')}
             />
-            <img alt={'default image'} src={defaultImage} />
+            {questionImg && <img alt={'qyestion image'} src={questionImg} />}
           </div>
           <input
             className={s.inputFile}
@@ -97,7 +106,7 @@ export const AddNewCard = ({ closeHandler, open = false }: AddNewCardProps) => {
               width={'100%'}
               {...register('answer')}
             />
-            <img alt={'default image'} src={defaultImage} />
+            {answerImg && <img alt={'answer image'} src={answerImg} />}
           </div>
           <input
             className={s.inputFile}
