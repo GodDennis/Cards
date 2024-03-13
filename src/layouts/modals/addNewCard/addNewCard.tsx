@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { Button } from '@/components/ui/button'
@@ -8,12 +9,14 @@ import { Modal } from '@/components/ui/modal'
 import { ModalFooter } from '@/components/ui/modal/modal-footer'
 import { Typography } from '@/components/ui/typography'
 import { Image } from '@/icons/Image'
+import { CreateCardBody } from '@/services/api-types'
+import { useCreateCardMutation } from '@/services/desk-api'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 
 import s from './addNewCard.module.scss'
 
-import { setFileIfValid } from './utils/setFileIfValid'
+import { convertToBase64, setFileIfValid } from './utils/utils'
 import { AddNewCardForm, addNewCardSchema } from './validationSchema'
 
 type AddNewCardProps = {
@@ -21,13 +24,15 @@ type AddNewCardProps = {
   open?: boolean
 }
 export const AddNewCard = ({ closeHandler, open = false }: AddNewCardProps) => {
-  const [questionImg, setQuestionImg] = useState<null | string>(null)
-  const [answerImg, setAnswerImg] = useState<null | string>(null)
-
+  const { deckId = '' } = useParams()
+  const [questionImg, setQuestionImg] = useState<File | null>(null)
+  const [answerImg, setAnswerImg] = useState<File | null>(null)
+  const [createCard, { isError }] = useCreateCardMutation()
   const {
     formState: { errors },
     handleSubmit,
     register,
+    reset,
   } = useForm<AddNewCardForm>({
     defaultValues: {
       answer: '',
@@ -51,14 +56,29 @@ export const AddNewCard = ({ closeHandler, open = false }: AddNewCardProps) => {
   const onClose = () => {
     setQuestionImg(null)
     setAnswerImg(null)
+    reset()
     closeHandler(false)
   }
 
-  const onSubmit = () => {
-    return
-  }
+  const onSubmit = (data: AddNewCardForm) => {
+    const body: CreateCardBody = { ...data }
 
-  console.log(errors.question?.message?.[0])
+    if (questionImg) {
+      body.questionImg = questionImg as unknown as string
+    }
+    if (answerImg) {
+      body.answerImg = answerImg as unknown as string
+    }
+
+    createCard({ body, deckId })
+      .unwrap()
+      .then(() => {
+        onClose()
+      })
+      .catch(e => {
+        toast.error(e.data.errorMessages[0].message)
+      })
+  }
 
   return (
     <Modal closeHandler={onClose} open={open} title={'Add New Card'}>
@@ -68,13 +88,13 @@ export const AddNewCard = ({ closeHandler, open = false }: AddNewCardProps) => {
             <Typography variant={'subtitle2'}>Question:</Typography>
             <Input
               className={s.namePack}
-              error={errors.question?.message?.[0] || null}
+              error={errors.question?.message || null}
               placeholder={'Type your question'}
               variant={'simple'}
               width={'100%'}
               {...register('question')}
             />
-            {questionImg && <img alt={'qyestion image'} src={questionImg} />}
+            {questionImg && <img alt={'question image'} src={convertToBase64(questionImg)} />}
           </div>
           <input
             className={s.inputFile}
@@ -103,9 +123,9 @@ export const AddNewCard = ({ closeHandler, open = false }: AddNewCardProps) => {
               variant={'simple'}
               width={'100%'}
               {...register('answer')}
-              error={errors.answer?.message?.[0] || null}
+              error={errors.answer?.message || null}
             />
-            {answerImg && <img alt={'answer image'} src={answerImg} />}
+            {answerImg && <img alt={'answer image'} src={convertToBase64(answerImg)} />}
           </div>
           <input
             className={s.inputFile}

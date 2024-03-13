@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
-const question = z.string().min(2)
-const answer = z.string().min(1)
+const question = z.string().min(3)
+const answer = z.string().min(3)
 
 export const addNewCardSchema = z.object({
   answer,

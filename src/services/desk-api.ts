@@ -16,11 +16,24 @@ export const deskApi = baseApi.injectEndpoints({
   endpoints: builder => ({
     createCard: builder.mutation<CardWithoutGrade, { body: CreateCardBody; deckId: string }>({
       invalidatesTags: ['Cards'],
-      query: ({ body, deckId }) => ({
-        body,
-        method: 'POST',
-        url: `/v1/decks/${deckId}/cards`,
-      }),
+      query: ({ body, deckId }) => {
+        const formData = new FormData()
+
+        formData.append('answer', body.answer)
+        formData.append('question', body.question)
+        if (body.questionImg) {
+          formData.append('questionImg', body.questionImg)
+        }
+        if (body.answerImg) {
+          formData.append('answerImg', body.answerImg)
+        }
+
+        return {
+          body: formData,
+          method: 'POST',
+          url: `/v1/decks/${deckId}/cards`,
+        }
+      },
     }),
     createDeck: builder.mutation<DeckType, CreateDeckArgs>({
       invalidatesTags: ['Decks'],
