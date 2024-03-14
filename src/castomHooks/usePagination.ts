@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 export const usePagination = () => {
   const { pageCount } = useParams()
 
-  const [pageSize, setPageSize] = useState<number>(20)
+  const [pageSize, setPageSize] = useState<number>(10)
   const onSetPageSize = (value: number) => {
     setPageSize(value)
   }

@@ -50,6 +50,7 @@ export const Deck = () => {
   const cards = cardsData?.items ?? []
   const cover = deckData?.cover
 
+  //!!!!!!add condition for empty deck
   if (currentPage !== 1 && currentPage > totalPages) {
     navigate('/404')
   }

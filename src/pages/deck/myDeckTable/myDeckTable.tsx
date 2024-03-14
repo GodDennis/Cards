@@ -25,20 +25,6 @@ type DescTableProps = {
   withSettings?: boolean
 }
 
-export function getImageOrText(data: string) {
-  const isImageURL = (url: string) => {
-    const imageExtensions = /\.(jpeg|jpg|gif|png)$/i
-
-    return imageExtensions.test(url)
-  }
-
-  if (isImageURL(data)) {
-    return <img alt={'Desc Preview'} className={s.deckPreview} src={data} />
-  } else {
-    return data
-  }
-}
-
 export const MyDeckTable = ({ cards, className, head, withSettings = false }: DescTableProps) => {
   const [openDelete, setOpenDelete] = useState(false)
 
@@ -56,8 +42,20 @@ export const MyDeckTable = ({ cards, className, head, withSettings = false }: De
         {cards.map(card => {
           return (
             <Table.Row key={card.id}>
-              <Table.Cell>{getImageOrText(card.question)}</Table.Cell>
-              <Table.Cell>{getImageOrText(card.answer)}</Table.Cell>
+              <Table.Cell>
+                {card.questionImg ? (
+                  <img alt={'Question image'} className={s.deckPreview} src={card.questionImg} />
+                ) : (
+                  card.question
+                )}
+              </Table.Cell>
+              <Table.Cell>
+                {card.answerImg ? (
+                  <img alt={'Answer image'} className={s.deckPreview} src={card.answerImg} />
+                ) : (
+                  card.answer
+                )}
+              </Table.Cell>
               <Table.Cell>{getTimeString(card.updated)}</Table.Cell>
               <Table.Cell>
                 <Rating value={+card.grade} />
