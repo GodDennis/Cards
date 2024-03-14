@@ -8,6 +8,7 @@ import { Delete } from '@/icons/Delete'
 import { EditPen } from '@/icons/EditPen'
 import { DeleteModal } from '@/layouts/modals/deleteCard'
 import { CardWithGrade } from '@/services/api-types'
+import { useDeleteCardMutation } from '@/services/cards-api'
 import { getTimeString } from '@/utils/decksDto'
 import clsx from 'clsx'
 
@@ -27,12 +28,19 @@ type DescTableProps = {
 
 export const MyDeckTable = ({ cards, className, head, withSettings = false }: DescTableProps) => {
   const [openDelete, setOpenDelete] = useState(false)
-
+  // Костыль, тк при нормальной реализации через map в модалку всегда приходит id последнего элемента. Предположительно из-за порталов в модалке
+  const [deleteCardId, setDeleteCardId] = useState<string>('')
+  const [deleteCardHandler] = useDeleteCardMutation()
   const editHandler = () => {
     return
   }
-  const deleteHandler = () => {
+  const onDeleteBtnClick = (cardId: string) => {
+    setDeleteCardId(cardId)
     setOpenDelete(true)
+  }
+
+  const removeHandler = () => {
+    deleteCardHandler(deleteCardId)
   }
 
   return (
@@ -63,10 +71,10 @@ export const MyDeckTable = ({ cards, className, head, withSettings = false }: De
               {withSettings && (
                 <Table.Cell>
                   <div className={clsx(s.flexContainer, s.buttonsBlock)}>
-                    <Button className={s.actionBtn} onClick={editHandler}>
+                    <Button className={s.actionBtn} onClick={() => alert(card.id)}>
                       <EditPen />
                     </Button>
-                    <Button className={s.actionBtn} onClick={deleteHandler}>
+                    <Button className={s.actionBtn} onClick={() => onDeleteBtnClick(card.id)}>
                       <Delete />
                     </Button>
                   </div>
@@ -76,7 +84,13 @@ export const MyDeckTable = ({ cards, className, head, withSettings = false }: De
           )
         })}
       </Table.Body>
-      <DeleteModal closeHandler={setOpenDelete} open={openDelete} title={'Delete card'} />
+      <DeleteModal
+        closeHandler={setOpenDelete}
+        elementType={'card'}
+        open={openDelete}
+        removeHandler={removeHandler}
+        title={'Delete card'}
+      />
     </Table.Root>
   )
 }

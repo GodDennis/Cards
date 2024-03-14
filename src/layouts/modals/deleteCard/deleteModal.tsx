@@ -8,9 +8,11 @@ import s from './deleteModal.module.scss'
 type ModalTypes = 'card' | 'deck'
 
 type DeleteModalProps = {
+  cardId?: string
   closeHandler: (isOpen: boolean) => void
   elementType?: ModalTypes
   open?: boolean
+  overlayClassName?: string
   removeHandler: () => void
   removingInstanceName?: string
   title: string
@@ -20,12 +22,23 @@ export const DeleteModal = ({
   closeHandler,
   elementType,
   open = false,
+  overlayClassName,
   removeHandler,
   removingInstanceName,
   title,
 }: DeleteModalProps) => {
+  const deleteHanler = () => {
+    removeHandler()
+    closeHandler(false)
+  }
+
   return (
-    <Modal closeHandler={closeHandler} open={open} title={title}>
+    <Modal
+      closeHandler={closeHandler}
+      open={open}
+      overlayClassName={overlayClassName}
+      title={title}
+    >
       <div className={s.textContent}>
         <Typography variant={'subtitle1'}>
           Do you really want to remove{' '}
@@ -37,7 +50,7 @@ export const DeleteModal = ({
         <Button onClick={() => closeHandler(true)} variant={'secondary'}>
           Cancel
         </Button>
-        <Button variant={'primary'}>{`Delete ${elementType}`}</Button>
+        <Button onClick={deleteHanler} variant={'primary'}>{`Delete ${elementType}`}</Button>
       </ModalFooter>
     </Modal>
   )
