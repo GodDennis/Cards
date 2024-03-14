@@ -9,6 +9,7 @@ import {
 
 import { Layout } from './Layout'
 import { CheckEmail } from './components/auth/checkEmail'
+import { Page404 } from './components/auth/page404'
 import { SignIn } from './components/auth/signIn'
 import { SignUp } from './components/auth/signUp'
 import { Deck } from './pages/deck'
@@ -27,6 +28,10 @@ const publicRouts: RouteObject[] = [
   {
     element: <CheckEmail />,
     path: '/checkEmail/:email',
+  },
+  {
+    element: <Page404 />,
+    path: '/404',
   },
 ]
 

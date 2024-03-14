@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 
 import edit from '@/assets/Images/edit-2-outline.svg'
 import play from '@/assets/Images/play-circle-outline.svg'
@@ -26,7 +26,7 @@ export const Deck = () => {
   const { deckId = '' } = useParams()
   const { data: userData } = useGetAuthQuery()
   const { data: deckData } = useGetDeckQuery(deckId)
-
+  const navigate = useNavigate()
   const { currentPage, onSetCurrentPage, onSetPageSize, pageSize } = usePagination()
 
   useEffect(() => {
@@ -37,10 +37,22 @@ export const Deck = () => {
     }
   }, [userData, deckData])
 
-  const { data: cardsData, isError, isLoading } = useGetCardsInDeckQuery({ deckId, params: {} })
+  const {
+    data: cardsData,
+    isError,
+    isLoading,
+  } = useGetCardsInDeckQuery({
+    deckId,
+    params: { currentPage: String(currentPage), itemsPerPage: String(pageSize) },
+  })
+
   const totalPages = cardsData?.pagination.totalPages ?? 0
   const cards = cardsData?.items ?? []
   const cover = deckData?.cover
+
+  if (currentPage !== 1 && currentPage > totalPages) {
+    navigate('/404')
+  }
 
   const list = [
     {
