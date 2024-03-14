@@ -42,7 +42,7 @@ export const DeleteModal = ({
       <div className={s.textContent}>
         <Typography variant={'subtitle1'}>
           Do you really want to remove{' '}
-          <strong>{removingInstanceName || `this ${elementType}`}</strong>?
+          {removingInstanceName ? <strong>{removingInstanceName}</strong> : `this ${elementType}`}?
         </Typography>
         <Typography variant={'subtitle1'}>All cards will be deleted</Typography>
       </div>
