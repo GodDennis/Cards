@@ -11,12 +11,21 @@ import { Typography } from '../typography'
 type ModalProps = {
   closeHandler: (isOpen: boolean) => void
   open?: boolean
+  overlayClassName?: string
   title: string
   withCloseBtn?: boolean
 } & ComponentProps<'div'>
 
 export const Modal = forwardRef<ComponentRef<'div'>, ModalProps>(props => {
-  const { children, className, closeHandler, open = false, title, withCloseBtn = true } = props
+  const {
+    children,
+    className,
+    closeHandler,
+    open = false,
+    overlayClassName,
+    title,
+    withCloseBtn = true,
+  } = props
   const clickHandler = () => {
     closeHandler(false)
   }
@@ -24,7 +33,7 @@ export const Modal = forwardRef<ComponentRef<'div'>, ModalProps>(props => {
   const classNames = {
     contentWtapper: clsx(s.contentWtapper, className),
     dialogContent: s.dialogContent,
-    dialogOverlay: s.dialogOverlay,
+    dialogOverlay: clsx(s.dialogOverlay, overlayClassName),
     dialogTitle: s.dialogTitle,
     header: s.header,
     iconButton: s.iconButton,

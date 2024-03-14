@@ -1,1 +1,1 @@
-export * from './deleteCard'
+export * from './deleteModal'

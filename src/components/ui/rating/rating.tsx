@@ -1,15 +1,16 @@
+import { useState } from 'react'
+
 import { StarFilled } from '@/icons/StarFilled'
 import { StarOutlined } from '@/icons/StarOutlined'
 
 import s from './rating.module.scss'
-import { useState } from 'react'
 
 type RatingProps = {
-  value?: number
   changeable?: boolean
+  value?: number
 }
 
-export const Rating = ({ value = 0, changeable = false }: RatingProps) => {
+export const Rating = ({ changeable = false, value = 0 }: RatingProps) => {
   const maxRating = 5
   const [rating, setRating] = useState(value || 0)
 

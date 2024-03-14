@@ -6,8 +6,9 @@ import { Table } from '@/components/ui/table'
 import { THeader } from '@/components/ui/table/THeader'
 import { Delete } from '@/icons/Delete'
 import { EditPen } from '@/icons/EditPen'
-import { DeleteCard } from '@/layouts/modals/deleteCard'
+import { DeleteModal } from '@/layouts/modals/deleteCard'
 import { CardWithGrade } from '@/services/api-types'
+import { useDeleteCardMutation } from '@/services/cards-api'
 import { getTimeString } from '@/utils/decksDto'
 import clsx from 'clsx'
 
@@ -25,28 +26,21 @@ type DescTableProps = {
   withSettings?: boolean
 }
 
-export function getImageOrText(data: string) {
-  const isImageURL = (url: string) => {
-    const imageExtensions = /\.(jpeg|jpg|gif|png)$/i
-
-    return imageExtensions.test(url)
-  }
-
-  if (isImageURL(data)) {
-    return <img alt={'Desc Preview'} className={s.deckPreview} src={data} />
-  } else {
-    return data
-  }
-}
-
 export const MyDeckTable = ({ cards, className, head, withSettings = false }: DescTableProps) => {
   const [openDelete, setOpenDelete] = useState(false)
-
+  // Костыль, тк при нормальной реализации через map в модалку всегда приходит id последнего элемента. Предположительно из-за порталов в модалке
+  const [deleteCardId, setDeleteCardId] = useState<string>('')
+  const [deleteCardHandler] = useDeleteCardMutation()
   const editHandler = () => {
     return
   }
-  const deleteHandler = () => {
+  const onDeleteBtnClick = (cardId: string) => {
+    setDeleteCardId(cardId)
     setOpenDelete(true)
+  }
+
+  const removeHandler = () => {
+    deleteCardHandler(deleteCardId)
   }
 
   return (
@@ -56,22 +50,33 @@ export const MyDeckTable = ({ cards, className, head, withSettings = false }: De
         {cards.map(card => {
           return (
             <Table.Row key={card.id}>
-              <Table.Cell>{getImageOrText(card.question)}</Table.Cell>
-              <Table.Cell>{getImageOrText(card.answer)}</Table.Cell>
-              <Table.Cell>{getTimeString(card.updated)}</Table.Cell>
               <Table.Cell>
+                {card.questionImg ? (
+                  <img alt={'Question image'} className={s.deckPreview} src={card.questionImg} />
+                ) : (
+                  card.question
+                )}
+              </Table.Cell>
+              <Table.Cell>
+                {card.answerImg ? (
+                  <img alt={'Answer image'} className={s.deckPreview} src={card.answerImg} />
+                ) : (
+                  card.answer
+                )}
+              </Table.Cell>
+              <Table.Cell>{getTimeString(card.updated)}</Table.Cell>
+              <Table.Cell className={s.gradeCell}>
                 <Rating value={+card.grade} />
               </Table.Cell>
               {withSettings && (
                 <Table.Cell>
                   <div className={clsx(s.flexContainer, s.buttonsBlock)}>
-                    <Button className={s.actionBtn} onClick={editHandler}>
+                    <Button className={s.actionBtn} onClick={() => alert(card.id)}>
                       <EditPen />
                     </Button>
-                    <Button className={s.actionBtn} onClick={deleteHandler}>
+                    <Button className={s.actionBtn} onClick={() => onDeleteBtnClick(card.id)}>
                       <Delete />
                     </Button>
-                    {openDelete && <DeleteCard closeHandler={setOpenDelete} open={openDelete} />}
                   </div>
                 </Table.Cell>
               )}
@@ -79,6 +84,13 @@ export const MyDeckTable = ({ cards, className, head, withSettings = false }: De
           )
         })}
       </Table.Body>
+      <DeleteModal
+        closeHandler={setOpenDelete}
+        elementType={'card'}
+        open={openDelete}
+        removeHandler={removeHandler}
+        title={'Delete card'}
+      />
     </Table.Root>
   )
 }

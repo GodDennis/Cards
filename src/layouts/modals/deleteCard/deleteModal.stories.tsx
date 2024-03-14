@@ -1,24 +1,38 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { DeleteCard } from '@/layouts/modals/deleteCard/deleteCard'
+
 import { useState } from 'react'
+
 import { Button } from '@/components/ui/button'
+import { DeleteModal } from '@/layouts/modals/deleteCard/deleteModal'
 
 const meta = {
   argTypes: {},
-  component: DeleteCard,
+  args: {
+    title: '',
+  },
+  component: DeleteModal,
   tags: ['autodocs'],
-  title: 'Modals/DeleteCard',
-} satisfies Meta<typeof DeleteCard>
+  title: 'Modals/DeleteModal',
+} satisfies Meta<typeof DeleteModal>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 const DeleteCardUsage = () => {
   const [open, setOpen] = useState(false)
+
   return (
     <>
       <Button onClick={() => setOpen(true)}>Open Modal</Button>
-      {open && <DeleteCard closeHandler={setOpen} open={open} />}
+      {open && (
+        <DeleteModal
+          closeHandler={setOpen}
+          elementType={'card'}
+          open={open}
+          removeHandler={() => setOpen(true)}
+          title={'Remove card?'}
+        />
+      )}
     </>
   )
 }
