@@ -20,6 +20,13 @@ import { useGetCardsInDeckQuery, useGetDeckQuery } from '@/services/desk-api'
 
 import s from './deck.module.scss'
 
+const baseColumns: HeadCellProps[] = [
+  { key: 'question', title: 'Question' },
+  { key: 'answer', title: 'Answer' },
+  { key: 'lastUpdated', title: 'Last Updated' },
+  { key: 'grade', title: 'Grade' },
+]
+
 export const Deck = () => {
   const [openAdd, setOpenAdd] = useState<boolean>(false)
   const [isAuthor, setIsAuthor] = useState<boolean>(false)
@@ -53,6 +60,12 @@ export const Deck = () => {
   //!!!!!!add condition for empty deck
   if (currentPage !== 1 && currentPage > totalPages) {
     navigate('/404')
+  }
+
+  let columns = baseColumns
+
+  if (isAuthor) {
+    columns = [...baseColumns, { key: '', title: '' }]
   }
 
   const list = [
@@ -127,11 +140,3 @@ export const Deck = () => {
     </div>
   )
 }
-
-const columns: HeadCellProps[] = [
-  { key: 'question', title: 'Question' },
-  { key: 'answer', title: 'Answer' },
-  { key: 'lastUpdated', title: 'Last Updated' },
-  { key: 'grade', title: 'Grade' },
-  { key: '', title: '' }, //!!!!!!!!!!!
-]
