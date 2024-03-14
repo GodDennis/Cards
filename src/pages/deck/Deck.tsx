@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 
 import edit from '@/assets/Images/edit-2-outline.svg'
@@ -30,11 +30,25 @@ const baseColumns: HeadCellProps[] = [
 export const Deck = () => {
   const [openAdd, setOpenAdd] = useState<boolean>(false)
   const [isAuthor, setIsAuthor] = useState<boolean>(false)
+  const [searchString, setSearchString] = useState<string>('')
   const { deckId = '' } = useParams()
   const { data: userData } = useGetAuthQuery()
   const { data: deckData } = useGetDeckQuery(deckId)
   const navigate = useNavigate()
   const { currentPage, onSetCurrentPage, onSetPageSize, pageSize } = usePagination()
+
+  const {
+    data: cardsData,
+    isError,
+    isLoading,
+  } = useGetCardsInDeckQuery({
+    deckId,
+    params: {
+      currentPage: String(currentPage),
+      itemsPerPage: String(pageSize),
+      question: searchString,
+    },
+  })
 
   useEffect(() => {
     if (userData && deckData && userData.id === deckData.userId) {
@@ -43,30 +57,6 @@ export const Deck = () => {
       setIsAuthor(false)
     }
   }, [userData, deckData])
-
-  const {
-    data: cardsData,
-    isError,
-    isLoading,
-  } = useGetCardsInDeckQuery({
-    deckId,
-    params: { currentPage: String(currentPage), itemsPerPage: String(pageSize) },
-  })
-
-  const totalPages = cardsData?.pagination.totalPages ?? 0
-  const cards = cardsData?.items ?? []
-  const cover = deckData?.cover
-
-  //!!!!!!add condition for empty deck
-  if (currentPage !== 1 && currentPage > totalPages) {
-    navigate('/404')
-  }
-
-  let columns = baseColumns
-
-  if (isAuthor) {
-    columns = [...baseColumns, { key: '', title: '' }]
-  }
 
   const list = [
     {
@@ -94,6 +84,24 @@ export const Deck = () => {
       title: 'Delete',
     },
   ]
+  let columns = baseColumns
+  const totalPages = cardsData?.pagination.totalPages ?? 0
+  const cards = cardsData?.items ?? []
+  const cover = deckData?.cover
+
+  //!!!!!!add condition for empty deck
+  if (currentPage !== 1 && currentPage > totalPages) {
+    navigate('/404')
+  }
+
+  if (isAuthor) {
+    columns = [...baseColumns, { key: '', title: '' }]
+  }
+
+  const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    onSetCurrentPage(1)
+    setSearchString(e.currentTarget.value)
+  }
 
   return (
     <div className={s.container}>
@@ -126,7 +134,13 @@ export const Deck = () => {
         <AddNewCard closeHandler={setOpenAdd} open={openAdd} />
       </div>
       <div className={s.deskActions}>
-        <Input className={s.search} placeholder={'Input search'} variant={'search'} />
+        <Input
+          className={s.search}
+          onChange={onInputChange}
+          placeholder={'Input search'}
+          value={searchString}
+          variant={'search'}
+        />
       </div>
       <MyDeckTable cards={cards} className={s.table} head={columns} withSettings={isAuthor} />
       <Pagination

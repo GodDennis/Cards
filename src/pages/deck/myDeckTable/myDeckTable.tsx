@@ -57,7 +57,7 @@ export const MyDeckTable = ({ cards, className, head, withSettings = false }: De
                 )}
               </Table.Cell>
               <Table.Cell>{getTimeString(card.updated)}</Table.Cell>
-              <Table.Cell>
+              <Table.Cell className={s.gradeCell}>
                 <Rating value={+card.grade} />
               </Table.Cell>
               {withSettings && (
