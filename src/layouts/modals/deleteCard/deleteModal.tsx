@@ -3,19 +3,33 @@ import { Modal } from '@/components/ui/modal'
 import { ModalFooter } from '@/components/ui/modal/modal-footer'
 import { Typography } from '@/components/ui/typography'
 
-import s from './deleteCard.module.scss'
+import s from './deleteModal.module.scss'
 
-type DeleteCardProps = {
+type ModalTypes = 'card' | 'deck'
+
+type DeleteModalProps = {
   closeHandler: (isOpen: boolean) => void
+  elementType?: ModalTypes
   open?: boolean
+  removeHandler: () => void
+  removingInstanceName?: string
+  title: string
 }
 
-export const DeleteCard = ({ closeHandler, open = false }: DeleteCardProps) => {
+export const DeleteModal = ({
+  closeHandler,
+  elementType,
+  open = false,
+  removeHandler,
+  removingInstanceName,
+  title,
+}: DeleteModalProps) => {
   return (
-    <Modal closeHandler={closeHandler} open={open} title={'Delete Card'}>
+    <Modal closeHandler={closeHandler} open={open} title={title}>
       <div className={s.textContent}>
         <Typography variant={'subtitle1'}>
-          Do you really want to remove <strong>Card Name</strong>?
+          Do you really want to remove{' '}
+          <strong>{removingInstanceName || `this ${elementType}`}</strong>?
         </Typography>
         <Typography variant={'subtitle1'}>All cards will be deleted</Typography>
       </div>
@@ -23,7 +37,7 @@ export const DeleteCard = ({ closeHandler, open = false }: DeleteCardProps) => {
         <Button onClick={() => closeHandler(true)} variant={'secondary'}>
           Cancel
         </Button>
-        <Button variant={'primary'}>Delete Card</Button>
+        <Button variant={'primary'}>{`Delete ${elementType}`}</Button>
       </ModalFooter>
     </Modal>
   )

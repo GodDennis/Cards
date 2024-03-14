@@ -6,7 +6,7 @@ import { Table } from '@/components/ui/table'
 import { THeader } from '@/components/ui/table/THeader'
 import { Delete } from '@/icons/Delete'
 import { EditPen } from '@/icons/EditPen'
-import { DeleteCard } from '@/layouts/modals/deleteCard'
+import { DeleteModal } from '@/layouts/modals/deleteCard'
 import { CardWithGrade } from '@/services/api-types'
 import { getTimeString } from '@/utils/decksDto'
 import clsx from 'clsx'
@@ -76,7 +76,7 @@ export const MyDeckTable = ({ cards, className, head, withSettings = false }: De
           )
         })}
       </Table.Body>
-      <DeleteCard closeHandler={setOpenDelete} open={openDelete} />
+      <DeleteModal closeHandler={setOpenDelete} open={openDelete} title={'Delete card'} />
     </Table.Root>
   )
 }
