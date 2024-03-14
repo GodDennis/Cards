@@ -39,6 +39,7 @@ export const TabSwitcher = (props: TabSwitcherProps) => {
     value,
   } = props
 
+
   return (
     <Tabs.Root
       className={clsx(s.tabsRoot, className)}

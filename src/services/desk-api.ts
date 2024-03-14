@@ -111,6 +111,7 @@ export const {
   useGetCardsInDeckQuery,
   useGetDeckQuery,
   useGetDecksQuery,
+  useLazyGetDeckQuery,
   useGetMinMaxQuery,
   useUpdateDeckMutation,
 } = deskApi

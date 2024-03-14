@@ -12,6 +12,9 @@ import { Table } from '..'
 import { Button } from '../../button'
 import { Typography } from '../../typography'
 import { THeader } from '../THeader'
+import {useDeleteDeckMutation} from "@/services/desk-api";
+import {useState} from "react";
+import {AddNewCard} from "@/layouts/modals/addNewCard";
 
 type HeadCellProps = {
   [key: string]: string
@@ -31,9 +34,18 @@ type DescTableProps = {
 }
 
 export const DescTable = ({ className, decks, head }: DescTableProps) => {
+
+  const [deleteDeck] = useDeleteDeckMutation()
+  const [editOpen, setEditOpen] = useState(false)
+
   const playHandler = () => {}
-  const editHandler = () => {}
-  const deleteHandler = () => {}
+  const editHandler = () => {
+    setEditOpen(true)
+  }
+
+  const deleteHandler =  (id: string) => {
+      deleteDeck(id)
+  }
 
   return (
     <Table.Root className={clsx(s.root, className)}>
@@ -77,10 +89,11 @@ export const DescTable = ({ className, decks, head }: DescTableProps) => {
                   <Button className={s.actionBtn} onClick={editHandler}>
                     <EditPen />
                   </Button>
-                  <Button className={s.actionBtn} onClick={deleteHandler}>
+                  <Button className={s.actionBtn} onClick={() => deleteHandler(deck.id)}>
                     <Delete />
                   </Button>
                 </div>
+                <AddNewCard closeHandler={setEditOpen} open={editOpen}/>
               </Table.Cell>
             </Table.Row>
           )
