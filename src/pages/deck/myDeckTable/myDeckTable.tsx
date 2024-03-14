@@ -69,7 +69,6 @@ export const MyDeckTable = ({ cards, className, head, withSettings = false }: De
                     <Button className={s.actionBtn} onClick={deleteHandler}>
                       <Delete />
                     </Button>
-                    {openDelete && <DeleteCard closeHandler={setOpenDelete} open={openDelete} />}
                   </div>
                 </Table.Cell>
               )}
@@ -77,6 +76,7 @@ export const MyDeckTable = ({ cards, className, head, withSettings = false }: De
           )
         })}
       </Table.Body>
+      <DeleteCard closeHandler={setOpenDelete} open={openDelete} />
     </Table.Root>
   )
 }

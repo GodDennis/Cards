@@ -1,7 +1,8 @@
-import { Modal } from '@/components/ui/modal'
-import { Typography } from '@/components/ui/typography'
-import { ModalFooter } from '@/components/ui/modal/modal-footer'
 import { Button } from '@/components/ui/button'
+import { Modal } from '@/components/ui/modal'
+import { ModalFooter } from '@/components/ui/modal/modal-footer'
+import { Typography } from '@/components/ui/typography'
+
 import s from './deleteCard.module.scss'
 
 type DeleteCardProps = {
@@ -11,7 +12,7 @@ type DeleteCardProps = {
 
 export const DeleteCard = ({ closeHandler, open = false }: DeleteCardProps) => {
   return (
-    <Modal title={'Delete Card'} closeHandler={closeHandler} open={open}>
+    <Modal closeHandler={closeHandler} open={open} title={'Delete Card'}>
       <div className={s.textContent}>
         <Typography variant={'subtitle1'}>
           Do you really want to remove <strong>Card Name</strong>?
@@ -19,7 +20,9 @@ export const DeleteCard = ({ closeHandler, open = false }: DeleteCardProps) => {
         <Typography variant={'subtitle1'}>All cards will be deleted</Typography>
       </div>
       <ModalFooter>
-        <Button variant={'secondary'}>Cancel</Button>
+        <Button onClick={() => closeHandler(true)} variant={'secondary'}>
+          Cancel
+        </Button>
         <Button variant={'primary'}>Delete Card</Button>
       </ModalFooter>
     </Modal>

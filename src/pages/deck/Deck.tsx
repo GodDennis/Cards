@@ -90,9 +90,9 @@ export const Deck = () => {
   const cover = deckData?.cover
 
   //!!!!!!add condition for empty deck
-  if (currentPage !== 1 && currentPage > totalPages) {
-    navigate('/404')
-  }
+  // if (currentPage !== 1 && currentPage > totalPages) {
+  //   navigate('/404')
+  // }
 
   if (isAuthor) {
     columns = [...baseColumns, { key: '', title: '' }]
