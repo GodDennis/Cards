@@ -20,6 +20,8 @@ import { useGetCardsInDeckQuery, useGetDeckQuery } from '@/services/desk-api'
 
 import s from './deck.module.scss'
 
+import { DeckEmpty } from './deckEmpty/DeckEmpty'
+
 const baseColumns: HeadCellProps[] = [
   { key: 'question', title: 'Question' },
   { key: 'answer', title: 'Answer' },
@@ -63,7 +65,7 @@ export const Deck = () => {
       onClick: () => {
         return
       },
-      redirect: '#',
+      redirect: `/learn/${deckId}`,
       src: play,
       title: 'Learn',
     },
@@ -89,10 +91,15 @@ export const Deck = () => {
   const cards = cardsData?.items ?? []
   const cover = deckData?.cover
 
-  //!!!!!!add condition for empty deck
-  // if (currentPage !== 1 && currentPage > totalPages) {
-  //   navigate('/404')
-  // }
+  if (searchString) {
+    onSetCurrentPage(1)
+  }
+  if (currentPage !== 1 && !searchString && currentPage > totalPages) {
+    navigate('/404')
+  }
+  if (!cardsData?.items.length && !searchString) {
+    return <DeckEmpty isAuthor={isAuthor} />
+  }
 
   if (isAuthor) {
     columns = [...baseColumns, { key: '', title: '' }]

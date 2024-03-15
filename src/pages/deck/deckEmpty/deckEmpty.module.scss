@@ -1,0 +1,37 @@
+.container {
+  width: 100%;
+  max-width: 1006px;
+  margin: 0 auto;
+  margin-top: 24px;
+
+  .linkBack {
+    margin-bottom: 33px;
+  }
+}
+
+.sectionHeader {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.headerContainer {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 70px;
+}
+
+.description {
+  margin: 0;
+  margin-bottom: 30px;
+  padding: 0;
+
+  color: var(--color-dark-100);
+  text-align: center;
+}
+
+.buttonContainer {
+  margin: 0 auto;
+}

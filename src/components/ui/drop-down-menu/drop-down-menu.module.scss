@@ -1,12 +1,14 @@
 .item {
+  all: unset;
+
+  cursor: pointer;
+
   display: flex;
   gap: 6px;
   align-items: center;
 
   padding-top: 12px;
   padding-bottom: 12px;
-
-  text-decoration: 'none';
 }
 
 .menuItem {
