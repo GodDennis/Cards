@@ -39,11 +39,7 @@ export const Deck = () => {
   const navigate = useNavigate()
   const { currentPage, onSetCurrentPage, onSetPageSize, pageSize } = usePagination()
 
-  const {
-    data: cardsData,
-    isError,
-    isLoading,
-  } = useGetCardsInDeckQuery({
+  const { data: cardsData, isLoading } = useGetCardsInDeckQuery({
     deckId,
     params: {
       currentPage: String(currentPage),

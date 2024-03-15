@@ -17,13 +17,14 @@ import clsx from 'clsx'
 import s from './addNewCard.module.scss'
 
 import { convertToBase64, setFileIfValid } from './utils/utils'
-import { AddNewCardForm, addNewCardSchema } from './validationSchema'
+import { AddNewCardForm, addNewCardSchema, updateCardSchema } from './validationSchema'
 
 type AddNewCardProps = {
   closeHandler: (isOpen: boolean) => void
+  isUpdate?: boolean
   open?: boolean
 }
-export const AddNewCard = ({ closeHandler, open = false }: AddNewCardProps) => {
+export const AddNewCard = ({ closeHandler, isUpdate = true, open = false }: AddNewCardProps) => {
   const { deckId = '' } = useParams()
   const [questionImg, setQuestionImg] = useState<File | null>(null)
   const [answerImg, setAnswerImg] = useState<File | null>(null)
@@ -38,7 +39,7 @@ export const AddNewCard = ({ closeHandler, open = false }: AddNewCardProps) => {
       answer: '',
       question: '',
     },
-    resolver: zodResolver(addNewCardSchema),
+    resolver: zodResolver(isUpdate ? updateCardSchema : addNewCardSchema),
   })
 
   const onQuectionImgChange = (e: ChangeEvent<HTMLInputElement>) => {
