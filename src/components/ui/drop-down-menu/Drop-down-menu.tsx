@@ -14,7 +14,7 @@ export type userBarProps = {
 
 export type dropDownMenuList = {
   onClick?: () => void
-  redirect: string
+  redirect?: string
   src?: string
   title: string
 }

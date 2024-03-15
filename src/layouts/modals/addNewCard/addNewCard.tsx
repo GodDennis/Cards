@@ -21,10 +21,10 @@ import { AddNewCardForm, addNewCardSchema, updateCardSchema } from './validation
 
 type AddNewCardProps = {
   closeHandler: (isOpen: boolean) => void
-  isUpdate?: boolean
+  isRefactor?: boolean
   open?: boolean
 }
-export const AddNewCard = ({ closeHandler, isUpdate = true, open = false }: AddNewCardProps) => {
+export const AddNewCard = ({ closeHandler, isRefactor = false, open = false }: AddNewCardProps) => {
   const { deckId = '' } = useParams()
   const [questionImg, setQuestionImg] = useState<File | null>(null)
   const [answerImg, setAnswerImg] = useState<File | null>(null)
@@ -39,7 +39,7 @@ export const AddNewCard = ({ closeHandler, isUpdate = true, open = false }: AddN
       answer: '',
       question: '',
     },
-    resolver: zodResolver(isUpdate ? updateCardSchema : addNewCardSchema),
+    resolver: zodResolver(isRefactor ? updateCardSchema : addNewCardSchema),
   })
 
   const onQuectionImgChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -82,7 +82,7 @@ export const AddNewCard = ({ closeHandler, isUpdate = true, open = false }: AddN
   }
 
   return (
-    <Modal closeHandler={onClose} open={open} title={'Add New Card'}>
+    <Modal closeHandler={onClose} open={open} title={isRefactor ? 'Update Card' : 'Add New Card'}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={s.content}>
           <div className={s.inputLabel}>
@@ -150,7 +150,7 @@ export const AddNewCard = ({ closeHandler, isUpdate = true, open = false }: AddN
           <Button onClick={onClose} variant={'secondary'}>
             Cancel
           </Button>
-          <Button variant={'primary'}>Add New Card</Button>
+          <Button variant={'primary'}>{isRefactor ? 'Update card' : 'Add New Card'}</Button>
         </ModalFooter>
       </form>
     </Modal>

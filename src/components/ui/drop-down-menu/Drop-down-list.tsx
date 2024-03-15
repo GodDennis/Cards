@@ -5,6 +5,7 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import s from './drop-down-menu.module.scss'
 
 import { dropDownMenuList } from '.'
+import { Button } from '../button'
 import { Typography } from '../typography'
 
 type Props = {
@@ -16,7 +17,7 @@ export const DropDownList = ({ options }: Props) => {
     return (
       <DropdownMenu.Item className={s.menuItem} key={i}>
         <Typography
-          as={Link}
+          as={el.redirect ? Link : Button}
           className={s.item}
           onClick={el.onClick}
           to={el.redirect}
