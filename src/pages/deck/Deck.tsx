@@ -14,6 +14,7 @@ import { Pagination } from '@/components/ui/pagination'
 import { HeadCellProps } from '@/components/ui/table/THeader'
 import { Typography } from '@/components/ui/typography'
 import { AddNewCard } from '@/layouts/modals/addNewCard'
+import { AddNewDeck } from '@/layouts/modals/addNewDeck'
 import { MyDeckTable } from '@/pages/deck/myDeckTable/myDeckTable'
 import { useGetAuthQuery } from '@/services/auth-api'
 import { useGetCardsInDeckQuery, useGetDeckQuery } from '@/services/desk-api'
@@ -31,6 +32,7 @@ const baseColumns: HeadCellProps[] = [
 
 export const Deck = () => {
   const [openAdd, setOpenAdd] = useState<boolean>(false)
+  const [isRefactorDeckOpen, seIsRefactorDeckOpen] = useState<boolean>(false)
   const [isAuthor, setIsAuthor] = useState<boolean>(false)
   const [searchString, setSearchString] = useState<string>('')
   const { deckId = '' } = useParams()
@@ -64,7 +66,7 @@ export const Deck = () => {
     },
     {
       onClick: () => {
-        return
+        seIsRefactorDeckOpen(true)
       },
       src: edit,
       title: 'Edit',
@@ -149,6 +151,12 @@ export const Deck = () => {
         setCurrentPage={onSetCurrentPage}
         setPageSize={onSetPageSize}
         totalPages={totalPages}
+      />
+      <AddNewDeck
+        closeHandler={seIsRefactorDeckOpen}
+        deckId={deckId}
+        isRefactor
+        open={isRefactorDeckOpen}
       />
     </div>
   )

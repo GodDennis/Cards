@@ -1,9 +1,12 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import image from '@/assets/Images/ivan.jpeg'
 import { Delete } from '@/icons/Delete'
 import { EditPen } from '@/icons/EditPen'
 import { Play } from '@/icons/Play'
+import { AddNewDeck } from '@/layouts/modals/addNewDeck'
+import { useDeleteDeckMutation } from '@/services/desk-api'
 import clsx from 'clsx'
 
 import s from './descTable.module.scss'
@@ -12,9 +15,6 @@ import { Table } from '..'
 import { Button } from '../../button'
 import { Typography } from '../../typography'
 import { THeader } from '../THeader'
-import {useDeleteDeckMutation} from "@/services/desk-api";
-import {useState} from "react";
-import {AddNewCard} from "@/layouts/modals/addNewCard";
 
 type HeadCellProps = {
   [key: string]: string
@@ -34,17 +34,20 @@ type DescTableProps = {
 }
 
 export const DescTable = ({ className, decks, head }: DescTableProps) => {
-
   const [deleteDeck] = useDeleteDeckMutation()
-  const [editOpen, setEditOpen] = useState(false)
+  const [editOpen, setEditOpen] = useState<boolean>(false)
+  const [currentDeckId, setCurrentDeckId] = useState<string>('')
 
-  const playHandler = () => {}
-  const editHandler = () => {
+  const playHandler = () => {
+    return
+  }
+  const editHandler = (deckId: string) => {
+    setCurrentDeckId(deckId)
     setEditOpen(true)
   }
 
-  const deleteHandler =  (id: string) => {
-      deleteDeck(id)
+  const deleteHandler = (id: string) => {
+    deleteDeck(id)
   }
 
   return (
@@ -86,19 +89,19 @@ export const DescTable = ({ className, decks, head }: DescTableProps) => {
                   >
                     <Play />
                   </Button>
-                  <Button className={s.actionBtn} onClick={editHandler}>
+                  <Button className={s.actionBtn} onClick={() => editHandler(deck.id)}>
                     <EditPen />
                   </Button>
                   <Button className={s.actionBtn} onClick={() => deleteHandler(deck.id)}>
                     <Delete />
                   </Button>
                 </div>
-                <AddNewCard closeHandler={setEditOpen} open={editOpen}/>
               </Table.Cell>
             </Table.Row>
           )
         })}
       </Table.Body>
+      <AddNewDeck closeHandler={setEditOpen} deckId={currentDeckId} isRefactor open={editOpen} />
     </Table.Root>
   )
 }
