@@ -38,9 +38,6 @@ export const DescTable = ({ className, decks, head }: DescTableProps) => {
   const [editOpen, setEditOpen] = useState<boolean>(false)
   const [currentDeckId, setCurrentDeckId] = useState<string>('')
 
-  const playHandler = () => {
-    return
-  }
   const editHandler = (deckId: string) => {
     setCurrentDeckId(deckId)
     setEditOpen(true)
@@ -84,10 +81,9 @@ export const DescTable = ({ className, decks, head }: DescTableProps) => {
                   <Button
                     as={Link}
                     className={s.actionBtn}
-                    onClick={playHandler}
-                    to={'/learn/' + deck.id}
+                    to={deck.cardsCount ? '/learn/' + deck.id : '#'}
                   >
-                    <Play />
+                    <Play fill={deck.cardsCount ? '#fff' : '#4C4C4C'} />
                   </Button>
                   <Button className={s.actionBtn} onClick={() => editHandler(deck.id)}>
                     <EditPen />

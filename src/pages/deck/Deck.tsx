@@ -85,13 +85,13 @@ export const Deck = () => {
   const cards = cardsData?.items ?? []
   const cover = deckData?.cover
 
-  if (searchString) {
-    onSetCurrentPage(1)
-  }
+  // if (searchString) {
+  //   onSetCurrentPage(1)
+  // }
   if (currentPage !== 1 && !searchString && currentPage > totalPages) {
     navigate('/404')
   }
-  if (!cardsData?.items.length && !searchString) {
+  if (deckData?.cardsCount === 0) {
     return <DeckEmpty isAuthor={isAuthor} />
   }
 

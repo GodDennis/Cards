@@ -1,6 +1,6 @@
-import { IconProps } from './LogOutOutline'
-
-export const Play = ({ fill = 'white' }: IconProps) => {
+import { ComponentProps } from 'react'
+type PlayPypes = ComponentProps<'svg'>
+export const Play = ({ fill = 'white', ...rest }: PlayPypes) => {
   return (
     <svg
       fill={fill}
@@ -8,6 +8,7 @@ export const Play = ({ fill = 'white' }: IconProps) => {
       viewBox={'0 0 16 16'}
       width={'16'}
       xmlns={'http://www.w3.org/2000/svg'}
+      {...rest}
     >
       <g clipPath={'url(#clip0_5928_6698)'}>
         <path
