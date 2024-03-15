@@ -10,6 +10,7 @@ import { AddNewCard } from '@/layouts/modals/addNewCard'
 import { DeleteModal } from '@/layouts/modals/deleteModal'
 import { CardWithGrade } from '@/services/api-types'
 import { useDeleteCardMutation } from '@/services/cards-api'
+import { useDeleteDeckMutation } from '@/services/desk-api'
 import { getTimeString } from '@/utils/decksDto'
 import clsx from 'clsx'
 
@@ -33,9 +34,7 @@ export const MyDeckTable = ({ cards, className, head, withSettings = false }: De
   // Костыль, тк при нормальной реализации через map в модалку всегда приходит id последнего элемента. Предположительно из-за порталов в модалке
   const [cardId, setCardId] = useState<string>('')
   const [deleteCardHandler] = useDeleteCardMutation()
-  const editHandler = () => {
-    return
-  }
+
   const onDeleteBtnClick = (cardId: string) => {
     setCardId(cardId)
     setOpenDelete(true)
@@ -93,7 +92,7 @@ export const MyDeckTable = ({ cards, className, head, withSettings = false }: De
       </Table.Body>
       <DeleteModal
         closeHandler={setOpenDelete}
-        elementType={'card'}
+        elementType={'Card'}
         open={openDelete}
         removeHandler={removeHandler}
         title={'Delete card'}

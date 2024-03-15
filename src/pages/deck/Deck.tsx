@@ -1,5 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import edit from '@/assets/Images/edit-2-outline.svg'
 import play from '@/assets/Images/play-circle-outline.svg'
@@ -15,9 +16,10 @@ import { HeadCellProps } from '@/components/ui/table/THeader'
 import { Typography } from '@/components/ui/typography'
 import { AddNewCard } from '@/layouts/modals/addNewCard'
 import { AddNewDeck } from '@/layouts/modals/addNewDeck'
+import { DeleteModal } from '@/layouts/modals/deleteModal'
 import { MyDeckTable } from '@/pages/deck/myDeckTable/myDeckTable'
 import { useGetAuthQuery } from '@/services/auth-api'
-import { useGetCardsInDeckQuery, useGetDeckQuery } from '@/services/desk-api'
+import { useDeleteDeckMutation, useGetCardsInDeckQuery, useGetDeckQuery } from '@/services/desk-api'
 
 import s from './deck.module.scss'
 
@@ -33,6 +35,7 @@ const baseColumns: HeadCellProps[] = [
 export const Deck = () => {
   const [openAdd, setOpenAdd] = useState<boolean>(false)
   const [isRefactorDeckOpen, seIsRefactorDeckOpen] = useState<boolean>(false)
+  const [isRemoveDeckOpen, seIsRemoveDeckOpen] = useState<boolean>(false)
   const [isAuthor, setIsAuthor] = useState<boolean>(false)
   const [searchString, setSearchString] = useState<string>('')
   const { deckId = '' } = useParams()
@@ -40,6 +43,7 @@ export const Deck = () => {
   const { data: deckData } = useGetDeckQuery(deckId)
   const navigate = useNavigate()
   const { currentPage, onSetCurrentPage, onSetPageSize, pageSize } = usePagination()
+  const [removeDeckHandler] = useDeleteDeckMutation()
 
   const { data: cardsData, isLoading } = useGetCardsInDeckQuery({
     deckId,
@@ -73,9 +77,8 @@ export const Deck = () => {
     },
     {
       onClick: () => {
-        return
+        seIsRemoveDeckOpen(true)
       },
-      redirect: '#',
       src: trash,
       title: 'Delete',
     },
@@ -103,6 +106,13 @@ export const Deck = () => {
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     onSetCurrentPage(1)
     setSearchString(e.currentTarget.value)
+  }
+
+  const onRemoveDeck = () => {
+    removeDeckHandler(deckId)
+      .unwrap()
+      .then(() => navigate('/'))
+      .catch(e => toast.error(e.data.errorMessages[0].message))
   }
 
   return (
@@ -158,6 +168,13 @@ export const Deck = () => {
         deckId={deckId}
         isRefactor
         open={isRefactorDeckOpen}
+      />
+      <DeleteModal
+        closeHandler={seIsRemoveDeckOpen}
+        elementType={'Deck'}
+        open={isRemoveDeckOpen}
+        removeHandler={onRemoveDeck}
+        title={'Remove Deck'}
       />
     </div>
   )
