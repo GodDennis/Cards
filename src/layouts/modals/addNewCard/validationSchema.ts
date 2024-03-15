@@ -8,9 +8,4 @@ export const addNewCardSchema = z.object({
   question,
 })
 
-export const updateCardSchema = z.object({
-  answer: z.string().min(3).optional(),
-  question: z.string().min(3).optional(),
-})
-
 export type AddNewCardForm = z.infer<typeof addNewCardSchema>

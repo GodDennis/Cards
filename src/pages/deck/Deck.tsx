@@ -31,7 +31,6 @@ const baseColumns: HeadCellProps[] = [
 
 export const Deck = () => {
   const [openAdd, setOpenAdd] = useState<boolean>(false)
-  const [isRefactorOpen, setIsRefactorOpen] = useState<boolean>(false)
   const [isAuthor, setIsAuthor] = useState<boolean>(false)
   const [searchString, setSearchString] = useState<string>('')
   const { deckId = '' } = useParams()
@@ -65,7 +64,7 @@ export const Deck = () => {
     },
     {
       onClick: () => {
-        setIsRefactorOpen(true)
+        return
       },
       src: edit,
       title: 'Edit',
@@ -132,7 +131,6 @@ export const Deck = () => {
           </Button>
         )}
         <AddNewCard closeHandler={setOpenAdd} open={openAdd} />
-        <AddNewCard closeHandler={setIsRefactorOpen} isRefactor open={isRefactorOpen} />
       </div>
       <div className={s.deskActions}>
         <Input

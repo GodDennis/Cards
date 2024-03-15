@@ -36,12 +36,29 @@ const cardsApi = baseApi.injectEndpoints({
       }),
     }),
     updateCard: builder.mutation<CardWithoutGrade, { body: UpdateCardBody; cardId: string }>({
-      invalidatesTags: ['Card'],
-      query: ({ body, cardId }) => ({
-        body,
-        method: 'PATCH',
-        url: `/v1/cards/${cardId}`,
-      }),
+      invalidatesTags: ['Cards'],
+      query: ({ body, cardId }) => {
+        const formData = new FormData()
+
+        if (body.question) {
+          formData.append('question', body.question)
+        }
+        if (body.answer) {
+          formData.append('answer', body.answer)
+        }
+        if (body.questionImg) {
+          formData.append('questionImg', body.questionImg)
+        }
+        if (body.answerImg) {
+          formData.append('answerImg', body.answerImg)
+        }
+
+        return {
+          body: formData,
+          method: 'PATCH',
+          url: `/v1/cards/${cardId}`,
+        }
+      },
     }),
   }),
   overrideExisting: false,

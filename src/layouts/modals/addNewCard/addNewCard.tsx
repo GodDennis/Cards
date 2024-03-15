@@ -10,6 +10,7 @@ import { ModalFooter } from '@/components/ui/modal/modal-footer'
 import { Typography } from '@/components/ui/typography'
 import { Image } from '@/icons/Image'
 import { CreateCardBody } from '@/services/api-types'
+import { useUpdateCardMutation } from '@/services/cards-api'
 import { useCreateCardMutation } from '@/services/desk-api'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
@@ -17,18 +18,25 @@ import clsx from 'clsx'
 import s from './addNewCard.module.scss'
 
 import { convertToBase64, setFileIfValid } from './utils/utils'
-import { AddNewCardForm, addNewCardSchema, updateCardSchema } from './validationSchema'
+import { AddNewCardForm, addNewCardSchema } from './validationSchema'
 
 type AddNewCardProps = {
+  cardId?: string
   closeHandler: (isOpen: boolean) => void
   isRefactor?: boolean
   open?: boolean
 }
-export const AddNewCard = ({ closeHandler, isRefactor = false, open = false }: AddNewCardProps) => {
+export const AddNewCard = ({
+  cardId,
+  closeHandler,
+  isRefactor = false,
+  open = false,
+}: AddNewCardProps) => {
   const { deckId = '' } = useParams()
   const [questionImg, setQuestionImg] = useState<File | null>(null)
   const [answerImg, setAnswerImg] = useState<File | null>(null)
   const [createCard, { isError }] = useCreateCardMutation()
+  const [updateCard] = useUpdateCardMutation()
   const {
     formState: { errors },
     handleSubmit,
@@ -39,7 +47,7 @@ export const AddNewCard = ({ closeHandler, isRefactor = false, open = false }: A
       answer: '',
       question: '',
     },
-    resolver: zodResolver(isRefactor ? updateCardSchema : addNewCardSchema),
+    resolver: zodResolver(addNewCardSchema),
   })
 
   const onQuectionImgChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -61,6 +69,14 @@ export const AddNewCard = ({ closeHandler, isRefactor = false, open = false }: A
     closeHandler(false)
   }
 
+  const runRightMethod = (body: CreateCardBody) => {
+    if (isRefactor && cardId) {
+      return updateCard({ body, cardId })
+    } else {
+      return createCard({ body, deckId })
+    }
+  }
+
   const onSubmit = (data: AddNewCardForm) => {
     const body: CreateCardBody = { ...data }
 
@@ -71,7 +87,7 @@ export const AddNewCard = ({ closeHandler, isRefactor = false, open = false }: A
       body.answerImg = answerImg
     }
 
-    createCard({ body, deckId })
+    runRightMethod(body)
       .unwrap()
       .then(() => {
         onClose()

@@ -6,6 +6,7 @@ import { Table } from '@/components/ui/table'
 import { THeader } from '@/components/ui/table/THeader'
 import { Delete } from '@/icons/Delete'
 import { EditPen } from '@/icons/EditPen'
+import { AddNewCard } from '@/layouts/modals/addNewCard'
 import { DeleteModal } from '@/layouts/modals/deleteCard'
 import { CardWithGrade } from '@/services/api-types'
 import { useDeleteCardMutation } from '@/services/cards-api'
@@ -27,20 +28,26 @@ type DescTableProps = {
 }
 
 export const MyDeckTable = ({ cards, className, head, withSettings = false }: DescTableProps) => {
-  const [openDelete, setOpenDelete] = useState(false)
+  const [openDelete, setOpenDelete] = useState<boolean>(false)
+  const [isRefactorOpen, setIsRefactorOpen] = useState<boolean>(false)
   // Костыль, тк при нормальной реализации через map в модалку всегда приходит id последнего элемента. Предположительно из-за порталов в модалке
-  const [deleteCardId, setDeleteCardId] = useState<string>('')
+  const [cardId, setCardId] = useState<string>('')
   const [deleteCardHandler] = useDeleteCardMutation()
   const editHandler = () => {
     return
   }
   const onDeleteBtnClick = (cardId: string) => {
-    setDeleteCardId(cardId)
+    setCardId(cardId)
     setOpenDelete(true)
   }
 
+  const onRefactorClick = (cardId: string) => {
+    setCardId(cardId)
+    setIsRefactorOpen(true)
+  }
+
   const removeHandler = () => {
-    deleteCardHandler(deleteCardId)
+    deleteCardHandler(cardId)
   }
 
   return (
@@ -71,7 +78,7 @@ export const MyDeckTable = ({ cards, className, head, withSettings = false }: De
               {withSettings && (
                 <Table.Cell>
                   <div className={clsx(s.flexContainer, s.buttonsBlock)}>
-                    <Button className={s.actionBtn} onClick={() => alert(card.id)}>
+                    <Button className={s.actionBtn} onClick={() => onRefactorClick(card.id)}>
                       <EditPen />
                     </Button>
                     <Button className={s.actionBtn} onClick={() => onDeleteBtnClick(card.id)}>
@@ -90,6 +97,12 @@ export const MyDeckTable = ({ cards, className, head, withSettings = false }: De
         open={openDelete}
         removeHandler={removeHandler}
         title={'Delete card'}
+      />
+      <AddNewCard
+        cardId={cardId}
+        closeHandler={setIsRefactorOpen}
+        isRefactor
+        open={isRefactorOpen}
       />
     </Table.Root>
   )

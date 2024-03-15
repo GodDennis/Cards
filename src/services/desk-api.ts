@@ -94,11 +94,13 @@ export const deskApi = baseApi.injectEndpoints({
     }),
     updateDeck: builder.mutation<DeckType, { body: Partial<CreateDeckArgs>; id: string }>({
       invalidatesTags: ['Decks'],
-      query: ({ body, id }) => ({
-        body,
-        method: 'PATCH',
-        url: `/v1/decks/${id}`,
-      }),
+      query: ({ body, id }) => {
+        return {
+          body,
+          method: 'PATCH',
+          url: `/v1/decks/${id}`,
+        }
+      },
     }),
   }),
   overrideExisting: false,
@@ -111,7 +113,7 @@ export const {
   useGetCardsInDeckQuery,
   useGetDeckQuery,
   useGetDecksQuery,
-  useLazyGetDeckQuery,
   useGetMinMaxQuery,
+  useLazyGetDeckQuery,
   useUpdateDeckMutation,
 } = deskApi
