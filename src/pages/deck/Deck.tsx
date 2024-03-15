@@ -88,9 +88,6 @@ export const Deck = () => {
   const cards = cardsData?.items ?? []
   const cover = deckData?.cover
 
-  // if (searchString) {
-  //   onSetCurrentPage(1)
-  // }
   //!!!багу
   if (currentPage !== 1 && !searchString && currentPage > totalPages) {
     navigate('/404')
