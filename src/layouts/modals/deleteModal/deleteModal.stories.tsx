@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
-import { DeleteModal } from '@/layouts/modals/deleteCard/deleteModal'
+import { DeleteModal } from '@/layouts/modals/deleteModal/deleteModal'
 
 const meta = {
   argTypes: {},

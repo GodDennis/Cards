@@ -8,7 +8,7 @@ import { Rating } from '@/components/ui/rating'
 import s from './myDeckTable.module.scss'
 import { getTimeString } from '@/utils/decksDto'
 import { useState } from 'react'
-import { DeleteCard } from '@/layouts/modals/deleteCard'
+import { DeleteCard } from '@/layouts/modals/deleteModal'
 
 type HeadCellProps = {
   [key: string]: string
@@ -44,7 +44,7 @@ export function getImageOrText(data: string) {
 export const MyDeckTable = ({ className, decks, head, withSettings = true }: DescTableProps) => {
   const [openDelete, setOpenDelete] = useState(false)
 
-  const editHandler = () => {}
+  const editHandler = () => { }
   const deleteHandler = () => {
     setOpenDelete(true)
   }
