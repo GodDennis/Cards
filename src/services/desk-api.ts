@@ -15,7 +15,7 @@ import { baseApi } from './base-api'
 export const deskApi = baseApi.injectEndpoints({
   endpoints: builder => ({
     createCard: builder.mutation<CardWithoutGrade, { body: CreateCardBody; deckId: string }>({
-      invalidatesTags: ['Cards'],
+      invalidatesTags: ['Cards', 'Deck'],
       query: ({ body, deckId }) => {
         const formData = new FormData()
 

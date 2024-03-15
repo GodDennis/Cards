@@ -88,6 +88,7 @@ export const Deck = () => {
   // if (searchString) {
   //   onSetCurrentPage(1)
   // }
+  //!!!багу
   if (currentPage !== 1 && !searchString && currentPage > totalPages) {
     navigate('/404')
   }
