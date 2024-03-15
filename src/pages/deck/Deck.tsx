@@ -14,13 +14,13 @@ import { Pagination } from '@/components/ui/pagination'
 import { HeadCellProps } from '@/components/ui/table/THeader'
 import { Typography } from '@/components/ui/typography'
 import { AddNewCard } from '@/layouts/modals/addNewCard'
-import { MyDeckTable } from '@/pages/deck/myDeckTable/myDeckTable'
 import { useGetAuthQuery } from '@/services/auth-api'
 import { useGetCardsInDeckQuery, useGetDeckQuery } from '@/services/desk-api'
 
 import s from './deck.module.scss'
 
 import { DeckEmpty } from './deckEmpty/DeckEmpty'
+import { MyDeckTable } from './myDeckTable/myDeckTable'
 
 const baseColumns: HeadCellProps[] = [
   { key: 'question', title: 'Question' },
