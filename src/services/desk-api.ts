@@ -15,7 +15,7 @@ import { baseApi } from './base-api'
 export const deskApi = baseApi.injectEndpoints({
   endpoints: builder => ({
     createCard: builder.mutation<CardWithoutGrade, { body: CreateCardBody; deckId: string }>({
-      invalidatesTags: ['Cards'],
+      invalidatesTags: ['Cards', 'Deck'],
       query: ({ body, deckId }) => {
         const formData = new FormData()
 
@@ -93,8 +93,18 @@ export const deskApi = baseApi.injectEndpoints({
       }),
     }),
     updateDeck: builder.mutation<DeckType, { body: Partial<CreateDeckArgs>; id: string }>({
-      invalidatesTags: ['Decks'],
+      invalidatesTags: ['Decks', 'Deck'],
       query: ({ body, id }) => {
+        const formData = new FormData()
+
+        if (body.cover) {
+          formData.append('cover', body.cover)
+        }
+        if (body.name) {
+          formData.append('name', body.name)
+        }
+        formData.append('isPrivate', String(body.isPrivate))
+
         return {
           body,
           method: 'PATCH',

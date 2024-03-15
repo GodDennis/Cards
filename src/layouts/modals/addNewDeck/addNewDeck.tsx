@@ -8,7 +8,8 @@ import { ControlledInput } from '@/components/ui/input/ControlledInput'
 import { Modal } from '@/components/ui/modal'
 import { ModalFooter } from '@/components/ui/modal/modal-footer'
 import { Image } from '@/icons/Image'
-import { useCreateDeckMutation } from '@/services/desk-api'
+import { CreateDeckArgs } from '@/services/api-types'
+import { useCreateDeckMutation, useUpdateDeckMutation } from '@/services/desk-api'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 import { z } from 'zod'
@@ -17,6 +18,8 @@ import s from './addNewDeck.module.scss'
 
 type AddNewDeckProps = {
   closeHandler: (isOpen: boolean) => void
+  deckId?: string
+  isRefactor?: boolean
   open?: boolean
 }
 
@@ -30,9 +33,15 @@ const formSchema = z.object({
   name: nameValidation,
 })
 
-export const AddNewDeck = ({ closeHandler, open = false }: AddNewDeckProps) => {
+export const AddNewDeck = ({
+  closeHandler,
+  deckId,
+  isRefactor = false,
+  open = false,
+}: AddNewDeckProps) => {
   const [cover, setCover] = useState<File | null>(null)
   const [createDeck] = useCreateDeckMutation()
+  const [updateDeck] = useUpdateDeckMutation()
 
   const {
     control,
@@ -57,10 +66,18 @@ export const AddNewDeck = ({ closeHandler, open = false }: AddNewDeckProps) => {
     setCover(null)
   }
 
+  const runRightMethod = (body: CreateDeckArgs) => {
+    if (isRefactor && deckId) {
+      return updateDeck({ body, id: deckId })
+    } else {
+      return createDeck(body)
+    }
+  }
+
   const onSubmit = (values: FormValues) => {
     const formValues = { ...values, cover }
 
-    createDeck(formValues)
+    runRightMethod(formValues)
       .unwrap()
       .then(() => {
         onClose()
@@ -71,7 +88,7 @@ export const AddNewDeck = ({ closeHandler, open = false }: AddNewDeckProps) => {
   }
 
   return (
-    <Modal closeHandler={onClose} open={open} title={'Add New Deck'}>
+    <Modal closeHandler={onClose} open={open} title={isRefactor ? 'Update Deck' : 'Add New Deck'}>
       <form name={'addDeckForm'} onSubmit={handleSubmit(onSubmit)}>
         <div className={s.content}>
           <ControlledInput
@@ -106,7 +123,7 @@ export const AddNewDeck = ({ closeHandler, open = false }: AddNewDeckProps) => {
           <Button onClick={onClose} variant={'secondary'}>
             Cancel
           </Button>
-          <Button variant={'primary'}>Add New Pack</Button>
+          <Button variant={'primary'}>{isRefactor ? 'Update Deck' : 'Add New Pack'}</Button>
         </ModalFooter>
       </form>
     </Modal>

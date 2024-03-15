@@ -29,7 +29,7 @@ export const DeckEmpty = ({ isAuthor }: DeckEmptyType) => {
           </Typography>
         </div>
         <Typography as={'p'} className={s.description} variant={'body1'}>
-          This pack is empty. Click add new card to fill this pack
+          This pack is empty. {isAuthor && 'Click add new card to fill this pack'}
         </Typography>
         <div className={s.buttonContainer}>
           {isAuthor ? (
