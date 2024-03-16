@@ -16,7 +16,7 @@ type ModalProps = {
   withCloseBtn?: boolean
 } & ComponentProps<'div'>
 
-export const Modal = forwardRef<ComponentRef<'div'>, ModalProps>(props => {
+export const Modal = forwardRef<ComponentRef<'div'>, ModalProps>((props, ref) => {
   const {
     children,
     className,
