@@ -3,19 +3,28 @@ import { ToastContainer } from 'react-toastify'
 
 import s from './layout.module.scss'
 
+import Loader from './components/Loader/Loader'
 import { Header } from './components/ui/header'
 import { useGetAuthQuery } from './services/auth-api'
 
 export const Layout = () => {
-  const { data, isError, isFetching } = useGetAuthQuery()
-  const isAuthenticated = !isError && !isFetching
+  const { data, isError, isLoading } = useGetAuthQuery()
+  const isAuthenticated = !isError && !isLoading
 
   return (
     <div className={s.layoutContainer}>
-      <Header auth={data} isAuthenticated={isAuthenticated} />
-      <main className={s.main}>
-        <Outlet context={isError} />
-      </main>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          {' '}
+          <Header auth={data} isAuthenticated={isAuthenticated} />
+          <main className={s.main}>
+            <Outlet context={isAuthenticated} />
+          </main>
+        </>
+      )}
+
       <ToastContainer
         autoClose={5000}
         closeOnClick

@@ -1,18 +1,21 @@
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query'
 
-import { router } from '@/router'
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-const baseQuery = fetchBaseQuery({
-  baseUrl: 'https://api.flashcards.andrii.es',
-  credentials: 'include',
-})
+import { publicRouts, router } from '../router'
 
 export const baseQueryWithReauth: BaseQueryFn<
   FetchArgs | string,
   unknown,
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
+  const skipRoutes = publicRouts.map(el => el.path)
+
+  const baseQuery = fetchBaseQuery({
+    baseUrl: 'https://api.flashcards.andrii.es',
+    credentials: 'include',
+  })
+
   let result = await baseQuery(args, api, extraOptions)
 
   if (result.error && result.error.status === 401) {
@@ -25,7 +28,13 @@ export const baseQueryWithReauth: BaseQueryFn<
     if (refreshResult.meta?.response?.status === 204) {
       result = await baseQuery(args, api, extraOptions)
     } else {
-      router.navigate('/login')
+      const currentPath = window.location.pathname
+
+      const skip = skipRoutes.filter(route => route && currentPath.includes(route))
+
+      if (skip.length) {
+        router.navigate('/login')
+      }
     }
   }
 
