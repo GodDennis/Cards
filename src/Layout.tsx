@@ -3,8 +3,8 @@ import { ToastContainer } from 'react-toastify'
 
 import s from './layout.module.scss'
 
-import Loader from './components/Loader/Loader'
 import { Header } from './components/ui/header'
+import { Loader } from './components/ui/loader/Loader'
 import { useGetAuthQuery } from './services/auth-api'
 
 export const Layout = () => {
