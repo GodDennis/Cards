@@ -1,10 +1,11 @@
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { ControlledInput } from '@/components/ui/input/ControlledInput'
 import { Typography } from '@/components/ui/typography'
+import { useForgotPasswordMutation } from '@/services/auth-api'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import s from './fogotPassword.module.scss'
@@ -12,6 +13,8 @@ import s from './fogotPassword.module.scss'
 import { EmailFormValue, emailFormSchema } from '../helpers/loginValidationSchema'
 
 export const ForgotPassword = () => {
+  const navigate = useNavigate()
+  const [forgot, {}] = useForgotPasswordMutation()
   const {
     control,
     formState: { errors },
@@ -21,11 +24,19 @@ export const ForgotPassword = () => {
   })
 
   const onSubmit = (value: EmailFormValue) => {
-    return value
+    forgot({
+      email: value.email,
+      html: '<h1>Hi, ##name##</h1><p>Click <a href="http://localhost:5173/recover-password/##token##">here</a> to recover your password</p>',
+      subject: 'string',
+    })
+      .unwrap()
+      .then(() => {
+        navigate(`/checkEmail/${value.email}`)
+      })
   }
 
   return (
-    <Card>
+    <Card className={s.container}>
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
         <Typography as={'h1'} className={s.title} variant={'h1'}>
           Forgot your password?

@@ -8,7 +8,10 @@ import {
 } from 'react-router-dom'
 
 import { Layout } from './Layout'
+import { VerifyEmail } from './components/auth/VerificationEmail'
 import { CheckEmail } from './components/auth/checkEmail'
+import { CreateNewPassword } from './components/auth/create-new-password'
+import { ForgotPassword } from './components/auth/forgot-password'
 import { Page404 } from './components/auth/page404'
 import { SignIn } from './components/auth/signIn'
 import { SignUp } from './components/auth/signUp'
@@ -16,7 +19,7 @@ import { Deck } from './pages/deck'
 import { DecksPage } from './pages/deckPage'
 import { QuestionCard } from './pages/questionCard'
 
-const publicRouts: RouteObject[] = [
+export const publicRouts: RouteObject[] = [
   {
     element: <SignIn />,
     path: '/login',
@@ -28,6 +31,18 @@ const publicRouts: RouteObject[] = [
   {
     element: <CheckEmail />,
     path: '/checkEmail/:email',
+  },
+  {
+    element: <ForgotPassword />,
+    path: '/forgot-password',
+  },
+  {
+    element: <CreateNewPassword />,
+    path: 'recover-password/:token',
+  },
+  {
+    element: <VerifyEmail />,
+    path: '/verify-email/:code',
   },
   {
     element: <Page404 />,
@@ -61,16 +76,24 @@ export const router = createBrowserRouter([
         children: privatRouts,
         element: <PrivateRoutes />,
       },
-      ...publicRouts,
+      {
+        children: publicRouts,
+        element: <PublicRoutes />,
+      },
     ],
     element: <Layout />,
   },
 ])
 
 function PrivateRoutes() {
-  const isError = useOutletContext()
+  const isAuthenticated = useOutletContext()
 
-  return !isError ? <Outlet /> : <Navigate to={'/login'} />
+  return isAuthenticated ? <Outlet /> : <Navigate to={'/login'} />
+}
+function PublicRoutes() {
+  const isAuthenticated = useOutletContext()
+
+  return isAuthenticated ? <Navigate to={'/'} /> : <Outlet />
 }
 
 export const Router = () => {

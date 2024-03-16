@@ -30,8 +30,8 @@ export const SignUp = () => {
   const onSubmit = (values: RegisterFormValues) => {
     signUp({
       email: values.email,
-      html: '<b>Hello, ##name##!</b><br/>Please confirm your email by clicking on the link below:<br/><a href="http://localhost:3000/confirm-email/##token##">Confirm email</a>. If it doesn\'t work, copy and paste the following link in your browser:<br/>http://localhost:3000/confirm-email/##token##',
-      name: 'Unnamed',
+      html: '<b>Hello, ##name##!</b><br/>Please confirm your email by clicking on the link below:<br/><a href="http://localhost:5173/verify-email/##token##">Confirm email</a>. If it doesn\'t work, copy and paste the following link in your browser:<br/>http://localhost:5173/verify-email/##token##',
+      name: values.email,
       password: values.password,
       sendConfirmationEmail: true,
       subject: 'FlashCards',
@@ -42,7 +42,7 @@ export const SignUp = () => {
       })
       .catch(e => {
         if (e.status === 400) {
-          toast.error('This email already exists!', {})
+          toast.error('This email already exists!')
         } else {
           toast.error('Some error has occurred')
         }

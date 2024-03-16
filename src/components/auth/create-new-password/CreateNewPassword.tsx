@@ -1,9 +1,11 @@
 import { useForm } from 'react-hook-form'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { ControlledInput } from '@/components/ui/input/ControlledInput'
 import { Typography } from '@/components/ui/typography'
+import { useResetPasswordMutation } from '@/services/auth-api'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import s from './createNewPassword.module.scss'
@@ -11,6 +13,9 @@ import s from './createNewPassword.module.scss'
 import { PasswordFormValue, passwordFormSchems } from '../helpers/loginValidationSchema'
 
 export const CreateNewPassword = () => {
+  const { token } = useParams<{ token: string }>()
+  const navigate = useNavigate()
+  const [reset] = useResetPasswordMutation()
   const {
     control,
     formState: { errors },
@@ -20,11 +25,16 @@ export const CreateNewPassword = () => {
   })
 
   const onSubmit = (value: PasswordFormValue) => {
-    return value
+    token &&
+      reset({ password: value.password, token })
+        .unwrap()
+        .then(() => {
+          navigate('/login')
+        })
   }
 
   return (
-    <Card>
+    <Card className={s.container}>
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
         <Typography as={'h1'} className={s.title} variant={'h1'}>
           Create new password
@@ -34,7 +44,7 @@ export const CreateNewPassword = () => {
             className={s.input}
             control={control}
             error={errors.password?.message}
-            label={'Email'}
+            label={'Password'}
             name={'password'}
             type={'password'}
             variant={'password'}
@@ -43,9 +53,9 @@ export const CreateNewPassword = () => {
             Create new password and we will send you further instructions to email
           </Typography>
         </div>
-        <Button className={s.button} fullWidth>
+        <Button className={s.button} fullWidth type={'submit'}>
           <Typography as={'span'} variant={'subtitle2'}>
-            Send Instructions
+            Submit
           </Typography>
         </Button>
       </form>

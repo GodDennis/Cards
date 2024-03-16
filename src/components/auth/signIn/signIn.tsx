@@ -28,9 +28,7 @@ export const SignIn = () => {
   const onSubmit = (values: LoginFormValues) => {
     login(values)
       .unwrap()
-      .then(() => {
-        navigate('/')
-      })
+      .then(() => {})
       .catch(e => {
         if (e.status === 401) {
           toast.error('Incorrect login or password')
@@ -69,7 +67,12 @@ export const SignIn = () => {
               name={'rememberMe'}
               text={'Remember Me'}
             />
-            <Typography as={'a'} className={s.forgotPassword} href={'#'} variant={'body2'}>
+            <Typography
+              as={Link}
+              className={s.forgotPassword}
+              to={'/forgot-password'}
+              variant={'body2'}
+            >
               Forgot Password?
             </Typography>
           </div>

@@ -2,6 +2,13 @@ import { baseApi } from './base-api'
 
 const authApi = baseApi.injectEndpoints({
   endpoints: builder => ({
+    forgotPassword: builder.mutation<void, ForgotPasswordArgs>({
+      query: body => ({
+        body,
+        method: 'POST',
+        url: `/v1/auth/recover-password`,
+      }),
+    }),
     getAuth: builder.query<any, void>({
       providesTags: ['Auth'],
       query: () => ({
@@ -25,6 +32,15 @@ const authApi = baseApi.injectEndpoints({
         url: `/v1/auth/logout`,
       }),
     }),
+    resetPassword: builder.mutation<void, ResetPassword>({
+      query: args => ({
+        body: {
+          password: args.password,
+        },
+        method: 'POST',
+        url: `/v1/auth/reset-password/${args.token}`,
+      }),
+    }),
     signUp: builder.mutation<any, SignUpArgs>({
       query: body => ({
         body,
@@ -32,8 +48,20 @@ const authApi = baseApi.injectEndpoints({
         url: `/v1/auth/sign-up`,
       }),
     }),
+    verifyEmail: builder.mutation<void, { code: string }>({
+      query: body => ({
+        body,
+        method: 'POST',
+        url: `/v1/auth/verify-email`,
+      }),
+    }),
   }),
 })
+
+type ResetPassword = {
+  password: string
+  token: string
+}
 
 type SignUpArgs = {
   email: string
@@ -44,4 +72,18 @@ type SignUpArgs = {
   subject: string
 }
 
-export const { useGetAuthQuery, useLoginMutation, useLogoutMutation, useSignUpMutation } = authApi
+type ForgotPasswordArgs = {
+  email: string
+  html: string
+  subject: string
+}
+
+export const {
+  useForgotPasswordMutation,
+  useGetAuthQuery,
+  useLoginMutation,
+  useLogoutMutation,
+  useResetPasswordMutation,
+  useSignUpMutation,
+  useVerifyEmailMutation,
+} = authApi
