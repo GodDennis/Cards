@@ -43,6 +43,7 @@ export const AddNewDeck = ({
   const [createDeck] = useCreateDeckMutation()
   const [updateDeck] = useUpdateDeckMutation()
 
+  console.log(cover)
   const {
     control,
     formState: { errors },

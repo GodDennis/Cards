@@ -1,11 +1,16 @@
+import { Link } from 'react-router-dom'
+
 import s from './Logo.module.scss'
 
 import logo from '../../../assets/Images/Logo.svg'
+import { Typography } from '../typography'
 
 export const Logo = () => {
   return (
     <div>
-      <img alt={''} className={`${s.logo}`} src={logo} />
+      <Typography as={Link} to={'/'}>
+        <img alt={''} className={`${s.logo}`} src={logo} />
+      </Typography>
     </div>
   )
 }

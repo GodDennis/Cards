@@ -48,6 +48,27 @@ const authApi = baseApi.injectEndpoints({
         url: `/v1/auth/sign-up`,
       }),
     }),
+    updateUser: builder.mutation<any, { avatar?: File; name?: string }>({
+      invalidatesTags: ['Auth'],
+
+      query: body => {
+        const formData = new FormData()
+
+        console.log(body)
+        if (body.avatar) {
+          formData.append('avatar', body.avatar)
+        }
+        if (body.name) {
+          formData.append('name', body.name)
+        }
+
+        return {
+          body: formData,
+          method: 'PATCH',
+          url: `/v1/auth/me`,
+        }
+      },
+    }),
     verifyEmail: builder.mutation<void, { code: string }>({
       query: body => ({
         body,
@@ -85,5 +106,6 @@ export const {
   useLogoutMutation,
   useResetPasswordMutation,
   useSignUpMutation,
+  useUpdateUserMutation,
   useVerifyEmailMutation,
 } = authApi
