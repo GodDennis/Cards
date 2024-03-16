@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button'
 import { DropDownMenu } from '@/components/ui/drop-down-menu'
 import { DropDownList } from '@/components/ui/drop-down-menu/Drop-down-list'
 import { Input } from '@/components/ui/input'
+import { Loader } from '@/components/ui/loader/Loader'
 import { Pagination } from '@/components/ui/pagination'
 import { HeadCellProps } from '@/components/ui/table/THeader'
 import { Typography } from '@/components/ui/typography'
@@ -39,13 +40,13 @@ export const Deck = () => {
   const [isAuthor, setIsAuthor] = useState<boolean>(false)
   const [searchString, setSearchString] = useState<string>('')
   const { deckId = '' } = useParams()
-  const { data: userData } = useGetAuthQuery()
-  const { data: deckData } = useGetDeckQuery(deckId)
+  const { data: userData, isLoading: isUserDataLoading } = useGetAuthQuery()
+  const { data: deckData, isLoading: isDeckDataLoading } = useGetDeckQuery(deckId)
   const navigate = useNavigate()
   const { currentPage, onSetCurrentPage, onSetPageSize, pageSize } = usePagination()
   const [removeDeckHandler] = useDeleteDeckMutation()
 
-  const { data: cardsData, isLoading } = useGetCardsInDeckQuery({
+  const { data: cardsData, isLoading: isCardsDataLoading } = useGetCardsInDeckQuery({
     deckId,
     params: {
       currentPage: String(currentPage),
@@ -88,11 +89,22 @@ export const Deck = () => {
   const cards = cardsData?.items ?? []
   const cover = deckData?.cover
 
+  if (isUserDataLoading || isDeckDataLoading) {
+    return (
+      <div className={s.loaderPageContainer}>
+        <Loader className={s.pageLoader} />
+      </div>
+    )
+  }
+
+  // if (searchString) {
+  //   onSetCurrentPage(1)
+  // }
   //!!!багу
   if (currentPage !== 1 && !searchString && currentPage > totalPages) {
     navigate('/404')
   }
-  if (deckData?.cardsCount === 0) {
+  if (deckData?.cardsCount === 0 && isAuthor !== null) {
     return <DeckEmpty isAuthor={isAuthor} />
   }
 
@@ -151,7 +163,12 @@ export const Deck = () => {
           variant={'search'}
         />
       </div>
-      <MyDeckTable cards={cards} className={s.table} head={columns} withSettings={isAuthor} />
+      <MyDeckTable
+        cards={cards}
+        className={s.table}
+        head={columns}
+        withSettings={isAuthor !== null && isAuthor}
+      />
       <Pagination
         currentPage={currentPage}
         pageSize={pageSize}

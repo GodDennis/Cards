@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import { BackwardLink } from '@/components/ui/backward-link'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
+import { Loader } from '@/components/ui/loader/Loader'
 import { RadioGroup } from '@/components/ui/radio-group'
 import { Typography } from '@/components/ui/typography'
 import { useGetRandomCardQuery, useSaveGradeMutation } from '@/services/cards-api'
@@ -42,11 +43,10 @@ export const QuestionCard = () => {
 
   const [saveGrade, { data: cardMutationData, isLoading: isUpdatng }] = useSaveGradeMutation()
 
-  const {
-    data: cardQueryData,
-    isError,
-    isLoading,
-  } = useGetRandomCardQuery({ deckId }, { skip: !!cardMutationData })
+  const { data: cardQueryData, isLoading: isFirstLoading } = useGetRandomCardQuery(
+    { deckId },
+    { skip: !!cardMutationData }
+  )
 
   const { data: deckData } = useGetDeckQuery(deckId)
 
@@ -64,64 +64,80 @@ export const QuestionCard = () => {
     }
   }
 
+  if (isFirstLoading) {
+    return (
+      <div className={s.loaderPageContainer}>
+        <Loader className={s.pageLoader} />
+      </div>
+    )
+  }
+
   return (
     <div className={s.pageContentWrapper}>
       <BackwardLink className={s.backLink} to={'/'} variant={'body2'}>
         Back to Decks List
       </BackwardLink>
       <Card className={s.questionCard}>
-        <Typography as={'h1'} className={s.title} variant={'h1'}>
-          {`Learn “${deckName}”`}
-        </Typography>
-        <div>
-          <span className={s.questionStringkWrapper}>
-            <Typography as={'span'} variant={'subtitle1'}>
-              {`Question: `}
-            </Typography>
-            <Typography as={'span'} variant={'body1'}>
-              {question}
-            </Typography>
-          </span>
-          {questionImg && <img className={clsx(s.image, s.questionImg)} src={questionImg} />}
-          <Typography
-            as={'span'}
-            className={clsx(s.quectionNote, !questionImg && s.withoutImg)}
-            variant={'body2'}
-          >
-            Количество попыток ответов на вопрос: 10
-          </Typography>
-          {!withAnswer && (
-            <Button className={s.showAnswerBtn} fullWidth onClick={() => setWithAnswer(true)}>
-              <Typography>Show Answer</Typography>
-            </Button>
-          )}
-        </div>
-
-        {withAnswer && (
-          <div>
-            <span className={s.answerStringkWrapper}>
-              <Typography as={'span'} variant={'subtitle1'}>
-                {`Answer: `}
-              </Typography>
-              <Typography as={'span'} variant={'body1'}>
-                {answer}
-              </Typography>
-            </span>
-            {answerImg && <img className={clsx(s.image, s.answerImg)} src={answerImg} />}
-            <Typography as={'h2'} className={s.radioTitle} variant={'subtitle1'}>
-              Rate yourself:
-            </Typography>
-            <RadioGroup
-              changeHandler={setCurrentOption}
-              className={s.radio}
-              name={'grade'}
-              options={radioOptions}
-              value={currentOption}
-            />
-            <Button fullWidth onClick={nextQuestionHandler}>
-              <Typography>Next Question</Typography>
-            </Button>
+        {isUpdatng ? (
+          <div className={s.cardLoaderContainer}>
+            <Loader />
           </div>
+        ) : (
+          <>
+            <Typography as={'h1'} className={s.title} variant={'h1'}>
+              {`Learn “${deckName}”`}
+            </Typography>
+            <div>
+              <span className={s.questionStringkWrapper}>
+                <Typography as={'span'} variant={'subtitle1'}>
+                  {`Question: `}
+                </Typography>
+                <Typography as={'span'} variant={'body1'}>
+                  {question}
+                </Typography>
+              </span>
+              {questionImg && <img className={clsx(s.image, s.questionImg)} src={questionImg} />}
+              <Typography
+                as={'span'}
+                className={clsx(s.quectionNote, !questionImg && s.withoutImg)}
+                variant={'body2'}
+              >
+                Количество попыток ответов на вопрос: 10
+              </Typography>
+              {!withAnswer && (
+                <Button className={s.showAnswerBtn} fullWidth onClick={() => setWithAnswer(true)}>
+                  <Typography>Show Answer</Typography>
+                </Button>
+              )}
+            </div>
+
+            {withAnswer && (
+              <div>
+                <span className={s.answerStringkWrapper}>
+                  <Typography as={'span'} variant={'subtitle1'}>
+                    {`Answer: `}
+                  </Typography>
+                  <Typography as={'span'} variant={'body1'}>
+                    {answer}
+                  </Typography>
+                </span>
+                {answerImg && <img className={clsx(s.image, s.answerImg)} src={answerImg} />}
+                <Typography as={'h2'} className={s.radioTitle} variant={'subtitle1'}>
+                  Rate yourself:
+                </Typography>
+                <RadioGroup
+                  changeHandler={setCurrentOption}
+                  className={s.radio}
+                  name={'grade'}
+                  options={radioOptions}
+                  value={currentOption}
+                />
+                <Button fullWidth onClick={nextQuestionHandler}>
+                  <Typography>Next Question</Typography>
+                </Button>
+              </div>
+            )}
+          </>
         )}
       </Card>
     </div>
