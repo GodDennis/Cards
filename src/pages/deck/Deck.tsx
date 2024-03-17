@@ -37,16 +37,16 @@ export const Deck = () => {
   const [openAdd, setOpenAdd] = useState<boolean>(false)
   const [isRefactorDeckOpen, seIsRefactorDeckOpen] = useState<boolean>(false)
   const [isRemoveDeckOpen, seIsRemoveDeckOpen] = useState<boolean>(false)
-  const [isAuthor, setIsAuthor] = useState<boolean>(false)
+  const [isAuthor, setIsAuthor] = useState<boolean | null>(null)
   const [searchString, setSearchString] = useState<string>('')
-  const { deckId = '' } = useParams()
-  const { data: userData, isLoading: isUserDataLoading } = useGetAuthQuery()
-  const { data: deckData, isLoading: isDeckDataLoading } = useGetDeckQuery(deckId)
+  const { deckId = '', pageCount = '' } = useParams()
+  const { data: userData, isFetching: isUserDataLoading } = useGetAuthQuery()
+  const { data: deckData, isFetching: isDeckDataLoading } = useGetDeckQuery(deckId)
   const navigate = useNavigate()
   const { currentPage, onSetCurrentPage, onSetPageSize, pageSize } = usePagination()
   const [removeDeckHandler] = useDeleteDeckMutation()
 
-  const { data: cardsData, isLoading: isCardsDataLoading } = useGetCardsInDeckQuery({
+  const { data: cardsData, isFetching: isCardsDataLoading } = useGetCardsInDeckQuery({
     deckId,
     params: {
       currentPage: String(currentPage),
@@ -56,12 +56,20 @@ export const Deck = () => {
   })
 
   useEffect(() => {
+    if (cardsData?.pagination.currentPage && +pageCount !== cardsData?.pagination.currentPage) {
+      navigate(`/deck/${deckId}/${cardsData?.pagination.currentPage}`)
+    }
+  }, [cardsData?.pagination.currentPage, deckId, pageCount])
+
+  useEffect(() => {
     if (userData && deckData && userData.id === deckData.userId) {
       setIsAuthor(true)
     } else {
       setIsAuthor(false)
     }
   }, [userData, deckData])
+
+  // const isAuth = userData?.id === deckData?.userId
 
   const list = [
     {
@@ -86,7 +94,7 @@ export const Deck = () => {
   ]
   let columns = baseColumns
   const totalPages = cardsData?.pagination.totalPages ?? 0
-  const cards = cardsData?.items ?? []
+  const cards = cardsData?.items
   const cover = deckData?.cover
 
   if (isUserDataLoading || isDeckDataLoading) {
@@ -97,17 +105,12 @@ export const Deck = () => {
     )
   }
 
-  // if (searchString) {
-  //   onSetCurrentPage(1)
-  // }
-  //!!!багу
-  if (currentPage !== 1 && !searchString && currentPage > totalPages) {
-    navigate('/404')
-  }
   if (deckData?.cardsCount === 0 && isAuthor !== null) {
     return <DeckEmpty isAuthor={isAuthor} />
   }
-
+  if (currentPage !== 1 && !searchString && currentPage > totalPages) {
+    navigate('/404')
+  }
   if (isAuthor) {
     columns = [...baseColumns, { key: '', title: '' }]
   }
@@ -124,72 +127,69 @@ export const Deck = () => {
       .catch(e => toast.error(e.data.errorMessages[0].message))
   }
 
-  return (
-    <div className={s.container}>
-      <div>
-        <BackwardLink className={s.linkBack} to={'/'} variant={'body2'}>
-          Back to Decks List
-        </BackwardLink>
-      </div>
-      <div className={s.sectionHeader}>
-        <div className={s.headerWithDropDown}>
-          <div className={s.headerContainer}>
-            <Typography as={'h1'} className={s.header} variant={'h1'}>
-              {isAuthor ? 'My Deck' : 'Friend’s Deck'}
-            </Typography>
-            {isAuthor && (
-              <DropDownMenu className={s.menu}>
-                <DropDownList options={list} />
-              </DropDownMenu>
-            )}
-          </div>
-          {cover && <img alt={'deck image'} className={s.deckImage} src={cover} />}
+  if (isAuthor !== null && cards) {
+    return (
+      <div className={s.container}>
+        <div>
+          <BackwardLink className={s.linkBack} to={'/'} variant={'body2'}>
+            Back to Decks List
+          </BackwardLink>
         </div>
-        {isAuthor ? (
-          <Button onClick={() => setOpenAdd(true)}>Add New Card</Button>
-        ) : (
-          <Button as={Link} to={`/learn/${deckId}`}>
-            Learn to Pack
-          </Button>
-        )}
-        <AddNewCard closeHandler={setOpenAdd} open={openAdd} />
-      </div>
-      <div className={s.deskActions}>
-        <Input
-          className={s.search}
-          onChange={onInputChange}
-          placeholder={'Input search'}
-          value={searchString}
-          variant={'search'}
+        <div className={s.sectionHeader}>
+          <div className={s.headerWithDropDown}>
+            <div className={s.headerContainer}>
+              <Typography as={'h1'} className={s.header} variant={'h1'}>
+                {isAuthor ? 'My Deck' : 'Friend’s Deck'}
+              </Typography>
+              {isAuthor && (
+                <DropDownMenu className={s.menu}>
+                  <DropDownList options={list} />
+                </DropDownMenu>
+              )}
+            </div>
+            {cover && <img alt={'deck image'} className={s.deckImage} src={cover} />}
+          </div>
+          {isAuthor ? (
+            <Button onClick={() => setOpenAdd(true)}>Add New Card</Button>
+          ) : (
+            <Button as={Link} to={`/learn/${deckId}`}>
+              Learn to Pack
+            </Button>
+          )}
+          <AddNewCard closeHandler={setOpenAdd} open={openAdd} />
+        </div>
+        <div className={s.deskActions}>
+          <Input
+            className={s.search}
+            onChange={onInputChange}
+            placeholder={'Input search'}
+            value={searchString}
+            variant={'search'}
+          />
+        </div>
+        <MyDeckTable cards={cards} className={s.table} head={columns} withSettings={isAuthor} />
+        <Pagination
+          currentPage={currentPage}
+          pageSize={pageSize}
+          path={`deck/${deckId}`}
+          setCurrentPage={onSetCurrentPage}
+          setPageSize={onSetPageSize}
+          totalPages={totalPages}
+        />
+        <AddNewDeck
+          closeHandler={seIsRefactorDeckOpen}
+          deckId={deckId}
+          isRefactor
+          open={isRefactorDeckOpen}
+        />
+        <DeleteModal
+          closeHandler={seIsRemoveDeckOpen}
+          elementType={'Deck'}
+          open={isRemoveDeckOpen}
+          removeHandler={onRemoveDeck}
+          title={'Remove Deck'}
         />
       </div>
-      <MyDeckTable
-        cards={cards}
-        className={s.table}
-        head={columns}
-        withSettings={isAuthor !== null && isAuthor}
-      />
-      <Pagination
-        currentPage={currentPage}
-        pageSize={pageSize}
-        path={`deck/${deckId}`}
-        setCurrentPage={onSetCurrentPage}
-        setPageSize={onSetPageSize}
-        totalPages={totalPages}
-      />
-      <AddNewDeck
-        closeHandler={seIsRefactorDeckOpen}
-        deckId={deckId}
-        isRefactor
-        open={isRefactorDeckOpen}
-      />
-      <DeleteModal
-        closeHandler={seIsRemoveDeckOpen}
-        elementType={'Deck'}
-        open={isRemoveDeckOpen}
-        removeHandler={onRemoveDeck}
-        title={'Remove Deck'}
-      />
-    </div>
-  )
+    )
+  }
 }

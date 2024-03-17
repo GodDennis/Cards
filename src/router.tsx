@@ -67,6 +67,14 @@ const privatRouts: RouteObject[] = [
     element: <Deck />,
     path: '/deck/:deckId/:pageCount',
   },
+  {
+    element: <Page404 />,
+    path: '/404',
+  },
+  {
+    element: <Navigate to={'/404'} />,
+    path: '/*',
+  },
 ]
 
 export const router = createBrowserRouter([
