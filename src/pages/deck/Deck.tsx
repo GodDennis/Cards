@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
@@ -20,6 +20,7 @@ import { AddNewCard } from '@/layouts/modals/addNewCard'
 import { AddNewDeck } from '@/layouts/modals/addNewDeck'
 import { DeleteModal } from '@/layouts/modals/deleteModal'
 import { MyDeckTable } from '@/pages/deck/myDeckTable/myDeckTable'
+import { AppError } from '@/services/api-types'
 import { useGetAuthQuery } from '@/services/auth-api'
 import { useDeleteDeckMutation, useGetCardsInDeckQuery, useGetDeckQuery } from '@/services/desk-api'
 
@@ -39,7 +40,6 @@ export const Deck = () => {
   const [isRefactorDeckOpen, seIsRefactorDeckOpen] = useState<boolean>(false)
   const [isRemoveDeckOpen, seIsRemoveDeckOpen] = useState<boolean>(false)
   const [isAuthor, setIsAuthor] = useState<boolean | null>(null)
-  // const [searchString, setSearchString] = useState<string>('')
   const [searchString, setSearchString] = useDebounceValue<string>('', 500)
   const { deckId = '' } = useParams()
   const { data: userData, isFetching: isUserDataLoading } = useGetAuthQuery()
@@ -48,7 +48,11 @@ export const Deck = () => {
   const { currentPage, onSetCurrentPage, onSetPageSize, pageSize } = usePagination()
   const [removeDeckHandler] = useDeleteDeckMutation()
 
-  const { data: cardsData, isFetching: isCardsDataLoading } = useGetCardsInDeckQuery({
+  const {
+    data: cardsData,
+    error: queryError,
+    isError: isQueryError,
+  } = useGetCardsInDeckQuery({
     deckId,
     params: {
       currentPage: String(currentPage),
@@ -104,7 +108,11 @@ export const Deck = () => {
     removeDeckHandler(deckId)
       .unwrap()
       .then(() => navigate('/'))
-      .catch(e => toast.error(e.data.errorMessages[0].message))
+      .catch((e: AppError) => toast.error(e.data.errorMessages[0].message))
+  }
+
+  if (isQueryError) {
+    toast.error((queryError as AppError).data.errorMessages[0].message)
   }
 
   if (isUserDataLoading || isDeckDataLoading || isAuthor === null) {

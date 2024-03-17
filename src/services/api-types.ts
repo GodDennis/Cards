@@ -97,4 +97,14 @@ export type GetMinMax = {
 
 export type CardWithoutGrade = Omit<CardWithGrade, 'grade'>
 
-// export type Grade = '1' | '2' | '3' | '4' | '5'
+export type ErrorMessage = {
+  field: string
+  message: string
+}
+
+export type AppError = {
+  data: {
+    errorMessages: ErrorMessage[]
+  }
+  status: number
+}
