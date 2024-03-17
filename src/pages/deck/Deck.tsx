@@ -93,6 +93,18 @@ export const Deck = () => {
   const cards = cardsData?.items
   const cover = deckData?.cover
 
+  const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    onSetCurrentPage(1)
+    setSearchString(e.currentTarget.value)
+  }
+
+  const onRemoveDeck = () => {
+    removeDeckHandler(deckId)
+      .unwrap()
+      .then(() => navigate('/'))
+      .catch(e => toast.error(e.data.errorMessages[0].message))
+  }
+
   if (isUserDataLoading || isDeckDataLoading || isAuthor === null) {
     return (
       <div className={s.loaderPageContainer}>
@@ -109,21 +121,6 @@ export const Deck = () => {
   if (isAuthor) {
     columns = [...baseColumns, { key: '', title: '' }]
   }
-
-  const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onSetCurrentPage(1)
-    setSearchString(e.currentTarget.value)
-  }
-
-  const onRemoveDeck = () => {
-    removeDeckHandler(deckId)
-      .unwrap()
-      .then(() => navigate('/'))
-      .catch(e => toast.error(e.data.errorMessages[0].message))
-  }
-
-  console.log(cardsData)
-  console.log(cards?.length)
 
   if (isAuthor !== null && cards) {
     return (
