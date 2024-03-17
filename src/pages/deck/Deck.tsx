@@ -67,8 +67,6 @@ export const Deck = () => {
     }
   }, [userData, deckData])
 
-  // const isAuth = userData?.id === deckData?.userId
-
   const list = [
     {
       redirect: `/learn/${deckId}`,
@@ -95,14 +93,13 @@ export const Deck = () => {
   const cards = cardsData?.items
   const cover = deckData?.cover
 
-  if (isUserDataLoading || isDeckDataLoading) {
+  if (isUserDataLoading || isDeckDataLoading || isAuthor === null) {
     return (
       <div className={s.loaderPageContainer}>
         <Loader className={s.pageLoader} />
       </div>
     )
   }
-
   if (deckData?.cardsCount === 0 && isAuthor !== null) {
     return <DeckEmpty isAuthor={isAuthor} />
   }
