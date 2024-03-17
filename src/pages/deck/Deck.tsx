@@ -62,10 +62,8 @@ export const Deck = () => {
   }, [cardsData?.pagination.currentPage, deckId, pageCount])
 
   useEffect(() => {
-    if (userData && deckData && userData.id === deckData.userId) {
-      setIsAuthor(true)
-    } else {
-      setIsAuthor(false)
+    if (userData && deckData) {
+      userData.id === deckData.userId ? setIsAuthor(true) : setIsAuthor(false)
     }
   }, [userData, deckData])
 
