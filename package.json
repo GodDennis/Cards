@@ -29,6 +29,7 @@
     "@types/react-router-dom": "^5.3.3",
     "clsx": "^2.1.0",
     "localforage": "^1.10.0",
+    "lodash.debounce": "^4.0.8",
     "match-sorter": "^6.3.4",
     "radix-ui": "^1.0.1",
     "react": "^18.2.0",
@@ -38,6 +39,7 @@
     "react-router-dom": "^6.22.0",
     "react-toastify": "^10.0.4",
     "sort-by": "^1.2.0",
+    "usehooks-ts": "^3.0.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {
@@ -52,6 +54,7 @@
     "@storybook/react": "^7.6.12",
     "@storybook/react-vite": "^7.6.12",
     "@storybook/test": "^7.6.12",
+    "@types/lodash.debounce": "^4.0.9",
     "@types/node": "^20.11.16",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
