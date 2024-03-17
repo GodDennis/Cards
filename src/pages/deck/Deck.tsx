@@ -39,7 +39,7 @@ export const Deck = () => {
   const [isRemoveDeckOpen, seIsRemoveDeckOpen] = useState<boolean>(false)
   const [isAuthor, setIsAuthor] = useState<boolean | null>(null)
   const [searchString, setSearchString] = useState<string>('')
-  const { deckId = '', pageCount = '' } = useParams()
+  const { deckId = '' } = useParams()
   const { data: userData, isFetching: isUserDataLoading } = useGetAuthQuery()
   const { data: deckData, isFetching: isDeckDataLoading } = useGetDeckQuery(deckId)
   const navigate = useNavigate()
@@ -55,11 +55,11 @@ export const Deck = () => {
     },
   })
 
-  useEffect(() => {
-    if (cardsData?.pagination.currentPage && +pageCount !== cardsData?.pagination.currentPage) {
-      navigate(`/deck/${deckId}/${cardsData?.pagination.currentPage}`)
-    }
-  }, [cardsData?.pagination.currentPage, deckId, pageCount])
+  // useEffect(() => {
+  //   if (cardsData?.pagination.currentPage && +pageCount !== cardsData?.pagination.currentPage) {
+  //     navigate(`/deck/${deckId}/${cardsData?.pagination.currentPage}`)
+  //   }
+  // }, [cardsData?.pagination.currentPage, deckId, pageCount])
 
   useEffect(() => {
     if (userData && deckData) {
@@ -122,6 +122,9 @@ export const Deck = () => {
       .catch(e => toast.error(e.data.errorMessages[0].message))
   }
 
+  console.log(cardsData)
+  console.log(cards?.length)
+
   if (isAuthor !== null && cards) {
     return (
       <div className={s.container}>
@@ -162,15 +165,25 @@ export const Deck = () => {
             variant={'search'}
           />
         </div>
-        <MyDeckTable cards={cards} className={s.table} head={columns} withSettings={isAuthor} />
-        <Pagination
-          currentPage={currentPage}
-          pageSize={pageSize}
-          path={`deck/${deckId}`}
-          setCurrentPage={onSetCurrentPage}
-          setPageSize={onSetPageSize}
-          totalPages={totalPages}
-        />
+        {cards.length > 0 ? (
+          <>
+            <MyDeckTable cards={cards} className={s.table} head={columns} withSettings={isAuthor} />
+            <Pagination
+              currentPage={currentPage}
+              pageSize={pageSize}
+              path={`deck/${deckId}`}
+              setCurrentPage={onSetCurrentPage}
+              setPageSize={onSetPageSize}
+              totalPages={totalPages}
+            />
+          </>
+        ) : (
+          <Typography
+            as={'div'}
+            className={s.searchNotification}
+            variant={'body1'}
+          >{`No elements found with parameter "${searchString}"`}</Typography>
+        )}
         <AddNewDeck
           closeHandler={seIsRefactorDeckOpen}
           deckId={deckId}
