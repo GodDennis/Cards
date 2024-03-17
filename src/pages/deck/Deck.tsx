@@ -5,6 +5,7 @@ import { toast } from 'react-toastify'
 import edit from '@/assets/Images/edit-2-outline.svg'
 import play from '@/assets/Images/play-circle-outline.svg'
 import trash from '@/assets/Images/trash-outline.svg'
+import { useDebounceValue } from '@/castomHooks/useDebounceValue'
 import { usePagination } from '@/castomHooks/usePagination'
 import { BackwardLink } from '@/components/ui/backward-link'
 import { Button } from '@/components/ui/button'
@@ -38,7 +39,8 @@ export const Deck = () => {
   const [isRefactorDeckOpen, seIsRefactorDeckOpen] = useState<boolean>(false)
   const [isRemoveDeckOpen, seIsRemoveDeckOpen] = useState<boolean>(false)
   const [isAuthor, setIsAuthor] = useState<boolean | null>(null)
-  const [searchString, setSearchString] = useState<string>('')
+  // const [searchString, setSearchString] = useState<string>('')
+  const [searchString, setSearchString] = useDebounceValue<string>('', 500)
   const { deckId = '' } = useParams()
   const { data: userData, isFetching: isUserDataLoading } = useGetAuthQuery()
   const { data: deckData, isFetching: isDeckDataLoading } = useGetDeckQuery(deckId)
@@ -93,9 +95,9 @@ export const Deck = () => {
   const cards = cardsData?.items
   const cover = deckData?.cover
 
-  const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onInputChange = (value: string) => {
     onSetCurrentPage(1)
-    setSearchString(e.currentTarget.value)
+    setSearchString(value)
   }
 
   const onRemoveDeck = () => {
@@ -156,9 +158,10 @@ export const Deck = () => {
         <div className={s.deskActions}>
           <Input
             className={s.search}
-            onChange={onInputChange}
+            defaultValue={''}
+            maxLength={29}
+            onChange={e => onInputChange(e.currentTarget.value)}
             placeholder={'Input search'}
-            value={searchString}
             variant={'search'}
           />
         </div>
