@@ -33,26 +33,23 @@ export const Input = forwardRef<ElementRef<'input'>, InputProps>((props, ref) =>
       {label}
       <div className={s.inputContainer}>
         <input
-          // eslint-disable-next-line prettier/prettier
-          className={`${s.input} ${s[variant]} ${error ? s.error : ''} ${disabled ? s.disabled : ''
-            // eslint-disable-next-line prettier/prettier
-            } ${className}`}
-          {...rest}
+          className={`${s.input} ${s[variant]} ${error ? s.error : ''} ${
+            disabled ? s.disabled : ''
+          } ${className}`}
           ref={ref}
           // eslint-disable-next-line no-nested-ternary
           type={showPassword ? 'text' : variant === 'password' ? 'password' : 'text'}
           value={value}
+          {...rest}
         />
         {error && <div className={s.errorMessage}>{error}</div>}
         {variant === 'password' && (
           <span className={s.passwordIcon} onClick={() => setShowPassword(!showPassword)}>
-            {' '}
             {showPassword ? <EyeOffOutline fill={'white'} /> : <EyeOutline fill={'white'} />}
           </span>
         )}
         {variant === 'search' && (
           <span className={s.searchIcon}>
-            {' '}
             <SearchOutline fill={'white'} />
           </span>
         )}

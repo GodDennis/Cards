@@ -14,7 +14,7 @@ export const ControlledInput = <T extends FieldValues>({
   ...rest
 }: ControlledInputProps<T>) => {
   const {
-    field: { onChange, value },
+    field: { onChange, ref, value },
   } = useController({
     control,
     disabled: rest.disabled,
@@ -22,5 +22,5 @@ export const ControlledInput = <T extends FieldValues>({
     shouldUnregister,
   })
 
-  return <Input {...rest} onChange={onChange} value={value} />
+  return <Input {...rest} onChange={onChange} ref={ref} value={value} />
 }

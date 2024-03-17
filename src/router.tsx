@@ -15,6 +15,7 @@ import { ForgotPassword } from './components/auth/forgot-password'
 import { Page404 } from './components/auth/page404'
 import { SignIn } from './components/auth/signIn'
 import { SignUp } from './components/auth/signUp'
+import { EditProfile } from './components/features/editProfile/EditProfile'
 import { Deck } from './pages/deck'
 import { DecksPage } from './pages/deckPage'
 import { QuestionCard } from './pages/questionCard'
@@ -66,6 +67,10 @@ const privatRouts: RouteObject[] = [
   {
     element: <Deck />,
     path: '/deck/:deckId/:pageCount',
+  },
+  {
+    element: <EditProfile />,
+    path: '/profile',
   },
   {
     element: <Page404 />,
