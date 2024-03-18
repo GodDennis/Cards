@@ -54,7 +54,6 @@ const authApi = baseApi.injectEndpoints({
       query: body => {
         const formData = new FormData()
 
-        console.log(body)
         if (body.avatar) {
           formData.append('avatar', body.avatar)
         }
