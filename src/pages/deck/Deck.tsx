@@ -23,6 +23,7 @@ import { MyDeckTable } from '@/pages/deck/myDeckTable/myDeckTable'
 import { AppError } from '@/services/api-types'
 import { useGetAuthQuery } from '@/services/auth-api'
 import { useDeleteDeckMutation, useGetCardsInDeckQuery, useGetDeckQuery } from '@/services/desk-api'
+import { toastAppError } from '@/utils/toastAppError'
 
 import s from './deck.module.scss'
 
@@ -40,14 +41,16 @@ export const Deck = () => {
   const [isRefactorDeckOpen, seIsRefactorDeckOpen] = useState<boolean>(false)
   const [isRemoveDeckOpen, seIsRemoveDeckOpen] = useState<boolean>(false)
   const [isAuthor, setIsAuthor] = useState<boolean | null>(null)
+
   const [searchString, setSearchString] = useDebounceValue<string>('', 500)
+  const { currentPage, onSetCurrentPage, onSetPageSize, pageSize } = usePagination()
+
   const { deckId = '' } = useParams()
+  const navigate = useNavigate()
+
   const { data: userData, isFetching: isUserDataLoading } = useGetAuthQuery()
   const { data: deckData, isFetching: isDeckDataLoading } = useGetDeckQuery(deckId)
-  const navigate = useNavigate()
-  const { currentPage, onSetCurrentPage, onSetPageSize, pageSize } = usePagination()
   const [removeDeckHandler] = useDeleteDeckMutation()
-
   const {
     data: cardsData,
     error: queryError,
@@ -107,8 +110,11 @@ export const Deck = () => {
   const onRemoveDeck = () => {
     removeDeckHandler(deckId)
       .unwrap()
-      .then(() => navigate('/'))
-      .catch((e: AppError) => toast.error(e.data.errorMessages[0].message))
+      .then(() => {
+        navigate('/')
+        toast.success('Deck successfully removed')
+      })
+      .catch(e => toastAppError(e))
   }
 
   if (isQueryError) {

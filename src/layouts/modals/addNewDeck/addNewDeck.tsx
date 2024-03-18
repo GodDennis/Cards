@@ -8,8 +8,9 @@ import { ControlledInput } from '@/components/ui/input/ControlledInput'
 import { Modal } from '@/components/ui/modal'
 import { ModalFooter } from '@/components/ui/modal/modal-footer'
 import { Image } from '@/icons/Image'
-import { AppError, CreateDeckArgs } from '@/services/api-types'
+import { CreateDeckArgs } from '@/services/api-types'
 import { useCreateDeckMutation, useUpdateDeckMutation } from '@/services/desk-api'
+import { toastAppError } from '@/utils/toastAppError'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 import { z } from 'zod'
@@ -19,6 +20,7 @@ import s from './addNewDeck.module.scss'
 type AddNewDeckProps = {
   closeHandler: (isOpen: boolean) => void
   deckId?: string
+  //provide deckId in isRefactor mode
   isRefactor?: boolean
   open?: boolean
 }
@@ -40,24 +42,8 @@ export const AddNewDeck = ({
   open = false,
 }: AddNewDeckProps) => {
   const [cover, setCover] = useState<File | null>(null)
-  const [
-    createDeck,
-    {
-      error: createError,
-      isError: isCreateError,
-      isLoading: isCreateLoading,
-      isSuccess: isCreateSuccess,
-    },
-  ] = useCreateDeckMutation()
-  const [
-    updateDeck,
-    {
-      error: updateError,
-      isError: isUpdateError,
-      isLoading: isUpdateLoading,
-      isSuccess: isUpdateSuccess,
-    },
-  ] = useUpdateDeckMutation()
+  const [createDeck] = useCreateDeckMutation()
+  const [updateDeck] = useUpdateDeckMutation()
 
   const {
     control,
@@ -82,32 +68,29 @@ export const AddNewDeck = ({
     setCover(null)
   }
 
-  const runRightMethod = (body: CreateDeckArgs) => {
+  const runRightMutationMethod = (body: CreateDeckArgs) => {
     if (isRefactor) {
       if (deckId) {
-        return updateDeck({ body, id: deckId }).then(() =>
-          toast.success('Deck successfully updated')
-        )
+        return updateDeck({ body, id: deckId })
+          .unwrap()
+          .then(() => toast.success('Deck successfully updated'))
+          .catch(e => toastAppError(e))
       } else {
-        toast.error('deckId is not provided')
+        toast.error('Error: deckId is not provided')
       }
     } else {
-      return createDeck(body).then(() => toast.success('Deck successfully created'))
+      return createDeck(body)
+        .unwrap()
+        .then(() => toast.success('Deck successfully created'))
+        .catch(e => toastAppError(e))
     }
   }
 
   const onSubmit = (values: FormValues) => {
     const formValues = { ...values, cover }
 
-    runRightMethod(formValues)
+    runRightMutationMethod(formValues)
     onClose()
-  }
-
-  if (isCreateError) {
-    toast.error((createError as AppError).data.errorMessages[0].message)
-  }
-  if (isUpdateError) {
-    toast.error((updateError as AppError).data.errorMessages[0].message)
   }
 
   return (

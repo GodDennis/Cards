@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Modal } from '@/components/ui/modal'
 import { ModalFooter } from '@/components/ui/modal/modal-footer'
-import { Deck } from '@/components/ui/table/table.stories'
 import { Typography } from '@/components/ui/typography'
 
 import s from './deleteModal.module.scss'

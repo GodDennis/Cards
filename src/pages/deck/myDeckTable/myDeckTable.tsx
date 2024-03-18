@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 
 import { Button } from '@/components/ui/button'
 import { Rating } from '@/components/ui/rating'
@@ -10,8 +11,8 @@ import { AddNewCard } from '@/layouts/modals/addNewCard'
 import { DeleteModal } from '@/layouts/modals/deleteModal'
 import { CardWithGrade } from '@/services/api-types'
 import { useDeleteCardMutation } from '@/services/cards-api'
-import { useDeleteDeckMutation } from '@/services/desk-api'
 import { getTimeString } from '@/utils/decksDto'
+import { toastAppError } from '@/utils/toastAppError'
 import clsx from 'clsx'
 
 import s from './myDeckTable.module.scss'
@@ -47,6 +48,9 @@ export const MyDeckTable = ({ cards, className, head, withSettings = false }: De
 
   const removeHandler = () => {
     deleteCardHandler(cardId)
+      .unwrap()
+      .then(() => toast.success('Card successfully removed'))
+      .catch(e => toastAppError(e))
   }
 
   return (

@@ -12,6 +12,7 @@ import { Image } from '@/icons/Image'
 import { CreateCardBody } from '@/services/api-types'
 import { useUpdateCardMutation } from '@/services/cards-api'
 import { useCreateCardMutation } from '@/services/desk-api'
+import { toastAppError } from '@/utils/toastAppError'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 
@@ -23,6 +24,7 @@ import { AddNewCardForm, addNewCardSchema } from './validationSchema'
 type AddNewCardProps = {
   cardId?: string
   closeHandler: (isOpen: boolean) => void
+  //provide cardId in isRefactor mode
   isRefactor?: boolean
   open?: boolean
 }
@@ -35,7 +37,7 @@ export const AddNewCard = ({
   const { deckId = '' } = useParams()
   const [questionImg, setQuestionImg] = useState<File | null>(null)
   const [answerImg, setAnswerImg] = useState<File | null>(null)
-  const [createCard, { isError }] = useCreateCardMutation()
+  const [createCard] = useCreateCardMutation()
   const [updateCard] = useUpdateCardMutation()
   const {
     formState: { errors },
@@ -69,11 +71,21 @@ export const AddNewCard = ({
     closeHandler(false)
   }
 
-  const runRightMethod = (body: CreateCardBody) => {
-    if (isRefactor && cardId) {
-      return updateCard({ body, cardId })
+  const runRightMutationMethod = (body: CreateCardBody) => {
+    if (isRefactor) {
+      if (cardId) {
+        return updateCard({ body, cardId })
+          .unwrap()
+          .then(() => toast.success('Card successfully updated'))
+          .catch(e => toastAppError(e))
+      } else {
+        toast.error('Error: cardId is not provided')
+      }
     } else {
       return createCard({ body, deckId })
+        .unwrap()
+        .then(() => toast.success('Card successfully created'))
+        .catch(e => toastAppError(e))
     }
   }
 
@@ -87,14 +99,8 @@ export const AddNewCard = ({
       body.answerImg = answerImg
     }
 
-    runRightMethod(body)
-      .unwrap()
-      .then(() => {
-        onClose()
-      })
-      .catch(e => {
-        toast.error(e.data.errorMessages[0].message)
-      })
+    runRightMutationMethod(body)
+    onClose()
   }
 
   return (
