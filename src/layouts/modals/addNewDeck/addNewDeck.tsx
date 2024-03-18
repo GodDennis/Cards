@@ -8,7 +8,7 @@ import { ControlledInput } from '@/components/ui/input/ControlledInput'
 import { Modal } from '@/components/ui/modal'
 import { ModalFooter } from '@/components/ui/modal/modal-footer'
 import { Image } from '@/icons/Image'
-import { CreateDeckArgs } from '@/services/api-types'
+import { AppError, CreateDeckArgs } from '@/services/api-types'
 import { useCreateDeckMutation, useUpdateDeckMutation } from '@/services/desk-api'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
@@ -40,8 +40,24 @@ export const AddNewDeck = ({
   open = false,
 }: AddNewDeckProps) => {
   const [cover, setCover] = useState<File | null>(null)
-  const [createDeck] = useCreateDeckMutation()
-  const [updateDeck] = useUpdateDeckMutation()
+  const [
+    createDeck,
+    {
+      error: createError,
+      isError: isCreateError,
+      isLoading: isCreateLoading,
+      isSuccess: isCreateSuccess,
+    },
+  ] = useCreateDeckMutation()
+  const [
+    updateDeck,
+    {
+      error: updateError,
+      isError: isUpdateError,
+      isLoading: isUpdateLoading,
+      isSuccess: isUpdateSuccess,
+    },
+  ] = useUpdateDeckMutation()
 
   const {
     control,
@@ -67,10 +83,16 @@ export const AddNewDeck = ({
   }
 
   const runRightMethod = (body: CreateDeckArgs) => {
-    if (isRefactor && deckId) {
-      return updateDeck({ body, id: deckId })
+    if (isRefactor) {
+      if (deckId) {
+        return updateDeck({ body, id: deckId }).then(() =>
+          toast.success('Deck successfully updated')
+        )
+      } else {
+        toast.error('deckId is not provided')
+      }
     } else {
-      return createDeck(body)
+      return createDeck(body).then(() => toast.success('Deck successfully created'))
     }
   }
 
@@ -78,13 +100,14 @@ export const AddNewDeck = ({
     const formValues = { ...values, cover }
 
     runRightMethod(formValues)
-      .unwrap()
-      .then(() => {
-        onClose()
-      })
-      .catch(e => {
-        toast.error(e.data.errorMessages[0].message)
-      })
+    onClose()
+  }
+
+  if (isCreateError) {
+    toast.error((createError as AppError).data.errorMessages[0].message)
+  }
+  if (isUpdateError) {
+    toast.error((updateError as AppError).data.errorMessages[0].message)
   }
 
   return (
