@@ -106,7 +106,7 @@ export const deskApi = baseApi.injectEndpoints({
         formData.append('isPrivate', String(body.isPrivate))
 
         return {
-          body,
+          body: formData,
           method: 'PATCH',
           url: `/v1/decks/${id}`,
         }
