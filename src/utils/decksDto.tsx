@@ -4,6 +4,7 @@ import { GetDecksResponse } from '@/services/api-types'
 export const decksDto = (items: GetDecksResponse): Deck[] => {
   return items?.items?.map(item => ({
     cardsCount: item?.cardsCount,
+    cover: item?.cover,
     createdBy: item?.author.name,
     id: item?.id,
     lastUpdated: new Date(item?.updated).toLocaleDateString('ru-RU'),

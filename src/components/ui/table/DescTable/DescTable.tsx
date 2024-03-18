@@ -21,6 +21,7 @@ type HeadCellProps = {
 }
 type Deck = {
   cardsCount: number
+  cover: string
   createdBy: string
   id: string
   lastUpdated: string
@@ -56,7 +57,9 @@ export const DescTable = ({ className, decks, head }: DescTableProps) => {
             <Table.Row key={deck.id}>
               <Table.Cell>
                 <div className={s.flexContainer}>
-                  {image && <img alt={'Desc Preview'} className={s.deckPreview} src={image} />}
+                  {deck.cover && (
+                    <img alt={'Desc Preview'} className={s.deckPreview} src={deck.cover} />
+                  )}
                   <Typography
                     as={Link}
                     className={s.link}
