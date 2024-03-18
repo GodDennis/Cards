@@ -11,6 +11,7 @@ import { HeadCellProps } from '@/components/ui/table/THeader'
 import { Typography } from '@/components/ui/typography'
 import { AddNewDeck } from '@/layouts/modals/addNewDeck'
 import { GetDecksResponse } from '@/services/api-types'
+import { useGetAuthQuery } from '@/services/auth-api'
 import { useGetDecksQuery } from '@/services/desk-api'
 import { decksDto } from '@/utils/decksDto'
 
@@ -20,6 +21,7 @@ export const DecksPage = () => {
   const { currentPage, onSetCurrentPage, onSetPageSize, pageSize } = usePagination()
   const [isAddDeckOpen, setIsAddDeckOpen] = useState<boolean>(false)
 
+  const { data: userData } = useGetAuthQuery()
   const { data } = useGetDecksQuery({ currentPage: currentPage, itemsPerPage: pageSize })
 
   const tabs = [
@@ -61,6 +63,7 @@ export const DecksPage = () => {
           <Button variant={'secondary'}>Clear Filter</Button>
         </div>
         <DescTable
+          authId={userData.id}
           className={s.table}
           decks={decksDto(data ?? ({} as GetDecksResponse))}
           head={columns}

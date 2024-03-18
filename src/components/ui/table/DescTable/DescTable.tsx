@@ -21,8 +21,9 @@ type HeadCellProps = {
   [key: string]: string
 }
 type Deck = {
+  authorId: string
   cardsCount: number
-  cover: string
+  cover: null | string
   createdBy: string
   id: string
   lastUpdated: string
@@ -30,13 +31,13 @@ type Deck = {
 }
 
 type DescTableProps = {
+  authId: string
   className?: string
   decks: Deck[]
   head: HeadCellProps[]
-  isAuth?: boolean
 }
 
-export const DescTable = ({ className, decks, head, isAuth = false }: DescTableProps) => {
+export const DescTable = ({ authId, className, decks, head }: DescTableProps) => {
   const [deleteDeck] = useDeleteDeckMutation()
   const [editOpen, setEditOpen] = useState<boolean>(false)
   const [currentDeckId, setCurrentDeckId] = useState<string>('')
@@ -60,7 +61,7 @@ export const DescTable = ({ className, decks, head, isAuth = false }: DescTableP
         {decks?.map(deck => {
           return (
             <Table.Row key={deck.id}>
-              <Table.Cell>
+              <Table.Cell className={s.nameCell}>
                 <div className={s.flexContainer}>
                   {deck.cover && (
                     <img alt={'Desc Preview'} className={s.deckPreview} src={deck.cover} />
@@ -75,16 +76,16 @@ export const DescTable = ({ className, decks, head, isAuth = false }: DescTableP
                   </Typography>
                 </div>
               </Table.Cell>
-              <Table.Cell>
+              <Table.Cell className={s.countCell}>
                 <Typography variant={'body2'}>{deck.cardsCount}</Typography>
               </Table.Cell>
-              <Table.Cell>
+              <Table.Cell className={s.dateCell}>
                 <Typography variant={'body2'}>{deck.lastUpdated}</Typography>
               </Table.Cell>
               <Table.Cell>
                 <Typography variant={'body2'}>{deck.createdBy}</Typography>
               </Table.Cell>
-              <Table.Cell>
+              <Table.Cell className={s.btnsCell}>
                 <div className={clsx(s.flexContainer, s.buttonsBlock)}>
                   <Button
                     as={Link}
@@ -93,12 +94,16 @@ export const DescTable = ({ className, decks, head, isAuth = false }: DescTableP
                   >
                     <Play fill={deck.cardsCount ? '#fff' : '#4C4C4C'} />
                   </Button>
-                  <Button className={s.actionBtn} onClick={() => editHandler(deck.id)}>
-                    <EditPen />
-                  </Button>
-                  <Button className={s.actionBtn} onClick={() => deleteHandler(deck.id)}>
-                    <Delete />
-                  </Button>
+                  {authId === deck.authorId && (
+                    <>
+                      <Button className={s.actionBtn} onClick={() => editHandler(deck.id)}>
+                        <EditPen />
+                      </Button>
+                      <Button className={s.actionBtn} onClick={() => deleteHandler(deck.id)}>
+                        <Delete />
+                      </Button>
+                    </>
+                  )}
                 </div>
               </Table.Cell>
             </Table.Row>

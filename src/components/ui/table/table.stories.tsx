@@ -176,7 +176,9 @@ export const res = {
 }
 
 export type Deck = {
+  authorId: string
   cardsCount: number
+  cover: null | string
   createdBy: string
   id: string
   lastUpdated: string
@@ -185,6 +187,7 @@ export type Deck = {
 
 export const Table: Story = {
   args: {
+    authId: '',
     decks: decksDto(res),
     head: columns,
   },

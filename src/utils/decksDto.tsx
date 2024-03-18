@@ -3,6 +3,7 @@ import { GetDecksResponse } from '@/services/api-types'
 
 export const decksDto = (items: GetDecksResponse): Deck[] => {
   return items?.items?.map(item => ({
+    authorId: item.author.id,
     cardsCount: item?.cardsCount,
     cover: item?.cover,
     createdBy: item?.author.name,
