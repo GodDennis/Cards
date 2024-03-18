@@ -1,8 +1,8 @@
 .superContainer {
-  margin: 33px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 33px;
 }
 
 .container {
@@ -31,4 +31,8 @@
 
   height: 65px;
   margin-bottom: 36px;
+}
+
+.searchNotification {
+  color: var(--color-dark-100);
 }
