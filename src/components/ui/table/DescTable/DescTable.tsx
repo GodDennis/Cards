@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
-import image from '@/assets/Images/ivan.jpeg'
 import { Delete } from '@/icons/Delete'
 import { EditPen } from '@/icons/EditPen'
 import { Play } from '@/icons/Play'
 import { AddNewDeck } from '@/layouts/modals/addNewDeck'
 import { useDeleteDeckMutation } from '@/services/desk-api'
+import { toastBaseError } from '@/utils/toastBaseError'
 import clsx from 'clsx'
 
 import s from './descTable.module.scss'
@@ -32,9 +33,10 @@ type DescTableProps = {
   className?: string
   decks: Deck[]
   head: HeadCellProps[]
+  isAuth?: boolean
 }
 
-export const DescTable = ({ className, decks, head }: DescTableProps) => {
+export const DescTable = ({ className, decks, head, isAuth = false }: DescTableProps) => {
   const [deleteDeck] = useDeleteDeckMutation()
   const [editOpen, setEditOpen] = useState<boolean>(false)
   const [currentDeckId, setCurrentDeckId] = useState<string>('')
@@ -46,6 +48,9 @@ export const DescTable = ({ className, decks, head }: DescTableProps) => {
 
   const deleteHandler = (id: string) => {
     deleteDeck(id)
+      .unwrap()
+      .then(() => toast.success('Deck successfully removed'))
+      .catch(e => toastBaseError(e))
   }
 
   return (

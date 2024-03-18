@@ -108,3 +108,13 @@ export type AppError = {
   }
   status: number
 }
+
+export type BaseError = {
+  data: {
+    message: string
+    path: string
+    statusCode: number
+    timestamp: Date
+  }
+  status: number
+}

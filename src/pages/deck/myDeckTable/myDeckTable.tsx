@@ -12,7 +12,7 @@ import { DeleteModal } from '@/layouts/modals/deleteModal'
 import { CardWithGrade } from '@/services/api-types'
 import { useDeleteCardMutation } from '@/services/cards-api'
 import { getTimeString } from '@/utils/decksDto'
-import { toastAppError } from '@/utils/toastAppError'
+import { toastBaseError } from '@/utils/toastBaseError'
 import clsx from 'clsx'
 
 import s from './myDeckTable.module.scss'
@@ -50,7 +50,7 @@ export const MyDeckTable = ({ cards, className, head, withSettings = false }: De
     deleteCardHandler(cardId)
       .unwrap()
       .then(() => toast.success('Card successfully removed'))
-      .catch(e => toastAppError(e))
+      .catch(e => toastBaseError(e))
   }
 
   return (
