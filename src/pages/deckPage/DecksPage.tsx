@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { useDebounceValue } from '@/castomHooks/useDebounceValue'
+import { useInput } from '@/castomHooks/useInput'
 import { usePagination } from '@/castomHooks/usePagination'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -19,12 +19,12 @@ import { decksDto } from '@/utils/decksDto'
 import s from './deckPage.module.scss'
 
 export const DecksPage = () => {
-  const searchDefaultValue = ''
   const { currentPage, onSetCurrentPage, onSetPageSize, pageSize } = usePagination()
+  const { debouncedSearchStr, onInputChange, searchParams } = useInput()
+
   const [isAddDeckOpen, setIsAddDeckOpen] = useState<boolean>(false)
   const [tabValue, setTabValue] = useState<string>('allCards')
   const [[minValue, maxValue], setMinMaxValue] = useState<number[]>([])
-  const [debouncedSearchStr, setDebouncedSearchStr] = useDebounceValue(searchDefaultValue, 500)
 
   const { data: minMaxData } = useGetMinMaxQuery()
   const { data: userData } = useGetAuthQuery()
@@ -57,9 +57,10 @@ export const DecksPage = () => {
         <div className={s.deskActions}>
           <Input
             className={s.search}
-            defaultValue={searchDefaultValue}
-            onChange={e => setDebouncedSearchStr(e.currentTarget.value)}
+            defaultValue={''}
+            onChange={onInputChange}
             placeholder={'Input search'}
+            value={searchParams.get('val') ?? ''}
             variant={'search'}
           />
 

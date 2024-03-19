@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Select } from '@/components/ui/select'
 import { ArrowBack } from '@/icons/ArrowBack'
 import { ArrowForward } from '@/icons/ArrowForward'
+import clsx from 'clsx'
 
 import s from './pagination.module.scss'
 
@@ -24,7 +25,6 @@ export const Pagination = (props: Props) => {
       setCurrentPage(pageNumber)
     }
   }
-
   const options = [
     { label: '10', value: '10' },
     { label: '20', value: '20' },
@@ -56,33 +56,27 @@ export const Pagination = (props: Props) => {
     for (let i = startPage; i <= endPage; i++) {
       pageNumbers.push(
         <li
-          className={i === currentPage ? s.active : ''}
+          className={clsx(i === currentPage ? s.active : '', s.link)}
           key={i}
           onClick={() => handlePageChange(i)}
         >
-          <Link className={s.link} to={`/${path}/${i}`}>
-            {i}
-          </Link>
+          {i}
         </li>
       )
     }
 
     if (startPage > 1) {
       pageNumbers.unshift(
-        <li key={'1'} onClick={() => handlePageChange(1)}>
-          <Link className={s.link} to={`/${path}/1`}>
-            1
-          </Link>
+        <li className={s.link} key={'1'} onClick={() => handlePageChange(1)}>
+          1
         </li>
       )
     }
 
     if (endPage < totalPages) {
       pageNumbers.push(
-        <li key={totalPages} onClick={() => handlePageChange(totalPages)}>
-          <Link className={s.link} to={`/${path}/${totalPages}?`}>
-            {totalPages}
-          </Link>
+        <li className={s.link} key={totalPages} onClick={() => handlePageChange(totalPages)}>
+          {totalPages}
         </li>
       )
     }
