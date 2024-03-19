@@ -13,7 +13,7 @@ import { Typography } from '@/components/ui/typography'
 import { AddNewDeck } from '@/layouts/modals/addNewDeck'
 import { GetDecksResponse } from '@/services/api-types'
 import { useGetAuthQuery } from '@/services/auth-api'
-import { useGetDecksQuery } from '@/services/desk-api'
+import { useGetDecksQuery, useGetMinMaxQuery } from '@/services/desk-api'
 import { decksDto } from '@/utils/decksDto'
 
 import s from './deckPage.module.scss'
@@ -23,13 +23,17 @@ export const DecksPage = () => {
   const { currentPage, onSetCurrentPage, onSetPageSize, pageSize } = usePagination()
   const [isAddDeckOpen, setIsAddDeckOpen] = useState<boolean>(false)
   const [tabValue, setTabValue] = useState<string>('allCards')
+  const [[minValue, maxValue], setMinMaxValue] = useState<number[]>([])
   const [debouncedSearchStr, setDebouncedSearchStr] = useDebounceValue(searchDefaultValue, 500)
 
+  const { data: minMaxData } = useGetMinMaxQuery()
   const { data: userData } = useGetAuthQuery()
   const { data } = useGetDecksQuery({
     authorId: tabValue === 'myCards' ? userData.id : '',
     currentPage: currentPage,
     itemsPerPage: pageSize,
+    maxCardsCount: maxValue,
+    minCardsCount: minValue,
     name: debouncedSearchStr,
   })
   const isSearchSuccessful = data?.items && data?.items.length > 0
@@ -69,7 +73,13 @@ export const DecksPage = () => {
             <Typography className={s.sliderLabel} variant={'body2'}>
               Number of cards
             </Typography>
-            <Slider />
+            {minMaxData && (
+              <Slider
+                maxValue={minMaxData?.max}
+                minValue={minMaxData?.min}
+                onChange={setMinMaxValue}
+              />
+            )}
           </div>
           <Button variant={'secondary'}>Clear Filter</Button>
         </div>

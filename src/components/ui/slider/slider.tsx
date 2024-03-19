@@ -7,10 +7,11 @@ import s from './slider.module.scss'
 type Props = {
   maxValue?: number
   minValue?: number
+  onChange?: (values: number[]) => void
 }
 
 export const Slider = (props: Props) => {
-  const { maxValue = 10, minValue = 0 } = props
+  const { maxValue = 10, minValue = 0, onChange } = props
 
   const [value1, setValue1] = useState<number>(minValue)
   const [value2, setValue2] = useState<number>(maxValue)
@@ -18,6 +19,7 @@ export const Slider = (props: Props) => {
   const handleValueChange = (value: number[]) => {
     setValue1(value[0])
     setValue2(value[1])
+    onChange?.([value1, value2])
   }
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {

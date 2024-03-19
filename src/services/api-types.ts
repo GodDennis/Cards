@@ -79,7 +79,7 @@ export type GetDecksArgs = {
   currentPage?: number
   itemsPerPage?: number
   maxCardsCount?: number
-  minCardsCont?: number
+  minCardsCount?: number
   name?: string
   userId?: string
 }

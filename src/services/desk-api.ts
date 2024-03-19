@@ -89,7 +89,7 @@ export const deskApi = baseApi.injectEndpoints({
     getMinMax: builder.query<GetMinMax, void>({
       query: () => ({
         method: 'GET',
-        url: `/v1/decks/min-max-cards`,
+        url: `/v2/decks/min-max-cards`,
       }),
     }),
     updateDeck: builder.mutation<DeckType, { body: Partial<CreateDeckArgs>; id: string }>({
