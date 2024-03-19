@@ -59,21 +59,21 @@ export const MyDeckTable = ({ cards, className, head, withSettings = false }: De
         {cards.map(card => {
           return (
             <Table.Row key={card.id}>
-              <Table.Cell>
+              <Table.Cell className={s.questionCell}>
                 {card.questionImg ? (
                   <img alt={'Question image'} className={s.deckPreview} src={card.questionImg} />
                 ) : (
                   card.question
                 )}
               </Table.Cell>
-              <Table.Cell>
+              <Table.Cell className={s.nswerCell}>
                 {card.answerImg ? (
                   <img alt={'Answer image'} className={s.deckPreview} src={card.answerImg} />
                 ) : (
                   card.answer
                 )}
               </Table.Cell>
-              <Table.Cell>{getTimeString(card.updated)}</Table.Cell>
+              <Table.Cell className={s.timeCell}>{getTimeString(card.updated)}</Table.Cell>
               <Table.Cell className={s.gradeCell}>
                 <Rating value={+card.grade} />
               </Table.Cell>
