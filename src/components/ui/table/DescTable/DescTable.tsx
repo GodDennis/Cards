@@ -69,7 +69,7 @@ export const DescTable = ({ authId, className, decks, head }: DescTableProps) =>
                   <Typography
                     as={Link}
                     className={s.link}
-                    to={`/deck/${deck.id}/1`}
+                    to={`/deck/${deck.id}?page=1`}
                     variant={'body2'}
                   >
                     {deck.name}

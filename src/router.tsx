@@ -66,7 +66,7 @@ const privatRouts: RouteObject[] = [
   },
   {
     element: <Deck />,
-    path: '/deck/:deckId/:pageCount',
+    path: '/deck/:deckId',
   },
   {
     element: <EditProfile />,

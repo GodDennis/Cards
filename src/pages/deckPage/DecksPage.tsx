@@ -58,7 +58,6 @@ export const DecksPage = () => {
           <Input
             className={s.search}
             defaultValue={''}
-            // onChange={e => setDebouncedSearchStr(e.currentTarget.value)}
             onChange={onInputChange}
             placeholder={'Input search'}
             value={searchParams.get('val') ?? ''}
