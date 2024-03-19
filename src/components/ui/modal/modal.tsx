@@ -10,6 +10,7 @@ import { Typography } from '../typography'
 
 type ModalProps = {
   closeHandler: (isOpen: boolean) => void
+  contentContainerClassName?: string
   open?: boolean
   overlayClassName?: string
   title: string
@@ -21,6 +22,7 @@ export const Modal = forwardRef<ComponentRef<'div'>, ModalProps>((props, ref) =>
     children,
     className,
     closeHandler,
+    contentContainerClassName,
     open = false,
     overlayClassName,
     title,
@@ -31,8 +33,8 @@ export const Modal = forwardRef<ComponentRef<'div'>, ModalProps>((props, ref) =>
   }
 
   const classNames = {
-    contentWtapper: clsx(s.contentWtapper, className),
-    dialogContent: s.dialogContent,
+    contentWrapper: clsx(s.contentWrapper, contentContainerClassName),
+    dialogContent: clsx(s.dialogContent, className),
     dialogOverlay: clsx(s.dialogOverlay, overlayClassName),
     dialogTitle: s.dialogTitle,
     header: s.header,
@@ -62,7 +64,7 @@ export const Modal = forwardRef<ComponentRef<'div'>, ModalProps>((props, ref) =>
               </Dialog.Close>
             )}
           </header>
-          <div className={classNames.contentWtapper}>{children}</div>
+          <div className={classNames.contentWrapper}>{children}</div>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>

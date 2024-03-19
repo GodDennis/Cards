@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import { BackwardLink } from '@/components/ui/backward-link'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
+import { ImgWithModal } from '@/components/ui/img-with-modal/ImgWithModal'
 import { Loader } from '@/components/ui/loader/Loader'
 import { RadioGroup } from '@/components/ui/radio-group'
 import { Typography } from '@/components/ui/typography'
@@ -96,7 +97,13 @@ export const QuestionCard = () => {
                   {question}
                 </Typography>
               </span>
-              {questionImg && <img className={clsx(s.image, s.questionImg)} src={questionImg} />}
+              {questionImg && (
+                <ImgWithModal
+                  alt={question || 'Question Image'}
+                  className={clsx(s.image, s.questionImg)}
+                  src={questionImg}
+                />
+              )}
               <Typography
                 as={'span'}
                 className={clsx(s.quectionNote, !questionImg && s.withoutImg)}
@@ -121,7 +128,13 @@ export const QuestionCard = () => {
                     {answer}
                   </Typography>
                 </span>
-                {answerImg && <img className={clsx(s.image, s.answerImg)} src={answerImg} />}
+                {answerImg && (
+                  <ImgWithModal
+                    alt={answer || 'Answer Image'}
+                    className={clsx(s.image, s.answerImg)}
+                    src={answerImg}
+                  />
+                )}
                 <Typography as={'h2'} className={s.radioTitle} variant={'subtitle1'}>
                   Rate yourself:
                 </Typography>

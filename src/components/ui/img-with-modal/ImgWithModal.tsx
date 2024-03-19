@@ -1,15 +1,20 @@
 import { ComponentProps, useState } from 'react'
 
+import clsx from 'clsx'
+
+import s from './imgWithModal.module.scss'
+
 import { Modal } from '../modal'
 
 type Props = ComponentProps<'img'> & {
+  innerImgClassName?: string
   modalClassName?: string
   onClick?: () => void
   onModalClose?: () => void
 }
 
 export const ImgWithModal = (props: Props) => {
-  const { modalClassName, onClick, onModalClose, ...rest } = props
+  const { className, innerImgClassName, modalClassName, onClick, onModalClose, ...rest } = props
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
@@ -25,15 +30,16 @@ export const ImgWithModal = (props: Props) => {
 
   return (
     <>
-      <img {...rest} onClick={clickHandler} />
+      <img {...rest} className={className} onClick={clickHandler} />
       <Modal
-        className={modalClassName}
+        className={clsx(s.imgModal, modalClassName)}
         closeHandler={closeHandler}
+        contentContainerClassName={s.contetContainer}
         open={isModalOpen}
         title={rest.alt || 'Image'}
         withCloseBtn
       >
-        <img {...rest} />
+        <img {...rest} className={clsx(s.innerImg, innerImgClassName)} />
       </Modal>
     </>
   )
