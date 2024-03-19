@@ -64,12 +64,6 @@ export const Deck = () => {
     },
   })
 
-  // useEffect(() => {
-  //   if (cardsData?.pagination.currentPage && +pageCount !== cardsData?.pagination.currentPage) {
-  //     navigate(`/deck/${deckId}/${cardsData?.pagination.currentPage}`)
-  //   }
-  // }, [cardsData?.pagination.currentPage, deckId, pageCount])
-
   useEffect(() => {
     if (userData && deckData) {
       userData.id === deckData.userId ? setIsAuthor(true) : setIsAuthor(false)
