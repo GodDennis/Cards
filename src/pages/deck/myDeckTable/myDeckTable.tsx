@@ -32,7 +32,6 @@ type DescTableProps = {
 export const MyDeckTable = ({ cards, className, head, withSettings = false }: DescTableProps) => {
   const [openDelete, setOpenDelete] = useState<boolean>(false)
   const [isRefactorOpen, setIsRefactorOpen] = useState<boolean>(false)
-  // Костыль, тк при нормальной реализации через map в модалку всегда приходит id последнего элемента. Предположительно из-за порталов в модалке
   const [cardId, setCardId] = useState<string>('')
   const [deleteCardHandler] = useDeleteCardMutation()
 
