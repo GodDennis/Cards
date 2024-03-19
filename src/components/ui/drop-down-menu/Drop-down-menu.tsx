@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, useCallback } from 'react'
 
 import { ContextMenu } from '@/icons/contextMenu'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
@@ -23,15 +23,21 @@ type DropDownMenuProps = {
   align?: 'center' | 'end' | 'start'
   children?: ReactNode
   className?: string
+  onOpenChange?: () => void
+  open?: boolean
   trigger?: ReactNode
 }
 
 export const DropDownMenu = (props: DropDownMenuProps) => {
-  const { align = 'end', children, className, trigger } = props
+  const { align = 'end', children, className, onOpenChange, open, trigger } = props
+
+  const onClickTrigger = useCallback(() => {
+    onOpenChange?.()
+  }, [])
 
   return (
-    <DropdownMenu.Root>
-      <DropdownMenu.Trigger asChild>
+    <DropdownMenu.Root open={open}>
+      <DropdownMenu.Trigger asChild onClick={onClickTrigger}>
         <button aria-label={'Customise options'} className={s.iconButton}>
           {trigger ? trigger : <ContextMenu />}
         </button>

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import logOut from '@/assets/Images/log-out.svg'
@@ -18,11 +19,17 @@ type Props = {
 
 export const Header = ({ auth, isAuthenticated }: Props) => {
   const [logout] = useLogoutMutation()
+  const [isOpen, setIsOpen] = useState(false)
+
+  const onOpenChange = () => {
+    setIsOpen(prev => !prev)
+  }
 
   const options = [
-    { redirect: '/profile', src: person, title: 'My Profile' },
+    { onClick: onOpenChange, redirect: '/profile', src: person, title: 'My Profile' },
     {
       onClick: () => {
+        onOpenChange()
         logout()
       },
       redirect: '/login',
@@ -45,6 +52,8 @@ export const Header = ({ auth, isAuthenticated }: Props) => {
               avatar={auth?.avatar}
               email={auth?.email}
               id={auth?.id}
+              onOpenChange={onOpenChange}
+              open={isOpen}
               options={options}
               userName={auth?.name}
             />

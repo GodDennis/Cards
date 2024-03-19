@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
+
 import { Page404 } from '@/components/auth/page404/page404'
 
 const meta = {
