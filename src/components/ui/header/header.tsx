@@ -51,6 +51,9 @@ export const Header = ({ auth, isAuthenticated }: Props) => {
               avatar={auth?.avatar}
               email={auth?.email}
               id={auth?.id}
+              onClose={() => {
+                setIsOpen(false)
+              }}
               onOpenChange={onOpenChange}
               open={isOpen}
               options={options}
