@@ -10,7 +10,6 @@ import s from './pagination.module.scss'
 type Props = {
   currentPage: number
   pageSize?: number
-  path: string
   setCurrentPage: (value: number) => void
   setPageSize: (value: number) => void
   totalCount?: number
@@ -18,7 +17,7 @@ type Props = {
 }
 
 export const Pagination = (props: Props) => {
-  const { currentPage, pageSize, path, setCurrentPage, setPageSize, totalPages } = props
+  const { currentPage, pageSize, setCurrentPage, setPageSize, totalPages } = props
 
   const handlePageChange = (pageNumber: number) => {
     if (pageNumber >= 1 && pageNumber <= totalPages) {
@@ -95,32 +94,22 @@ export const Pagination = (props: Props) => {
   return (
     <div className={s.pagination}>
       <ul>
-        <li onClick={() => handlePageChange(currentPage - 1)}>
-          <Link
-            className={s.link}
-            to={`/${path}/${currentPage > 1 ? currentPage - 1 : currentPage}`}
-          >
-            <ArrowBack fill={currentPage === 1 ? 'var(--color-dark-100)' : 'white'} />
-          </Link>
+        <li onClick={() => handlePageChange(currentPage > 1 ? currentPage - 1 : currentPage)}>
+          <ArrowBack fill={currentPage === 1 ? 'var(--color-dark-100)' : 'white'} />
         </li>
         {renderPageNumbers()}
-        <li onClick={() => handlePageChange(currentPage + 1)}>
-          <Link
-            className={s.link}
-            to={`/${path}/${currentPage === totalPages ? currentPage : currentPage + 1}`}
-          >
-            <ArrowForward fill={currentPage === totalPages ? 'var(--color-dark-100)' : 'white'} />
-          </Link>
+        <li
+          onClick={() =>
+            handlePageChange(currentPage === totalPages ? currentPage : currentPage + 1)
+          }
+        >
+          <ArrowForward fill={currentPage === totalPages ? 'var(--color-dark-100)' : 'white'} />
         </li>
       </ul>
 
       <div className={s.countPicker}>
         Показать
-        <Select
-          defaultValue={pageSize?.toString()}
-          onValueChange={changePageSize}
-          options={options}
-        />
+        <Select onValueChange={changePageSize} options={options} value={pageSize?.toString()} />
         на странице
       </div>
     </div>

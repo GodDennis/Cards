@@ -1,11 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import edit from '@/assets/Images/edit-2-outline.svg'
 import play from '@/assets/Images/play-circle-outline.svg'
 import trash from '@/assets/Images/trash-outline.svg'
-import { useDebounceCallback } from '@/castomHooks/useDebounceCallback'
 import { useDebounceValue } from '@/castomHooks/useDebounceValue'
 import { usePagination } from '@/castomHooks/usePagination'
 import { BackwardLink } from '@/components/ui/backward-link'
@@ -38,6 +37,7 @@ const baseColumns: HeadCellProps[] = [
 ]
 
 export const Deck = () => {
+  console.log('render')
   const [isAddOpen, setIsAddOpen] = useState<boolean>(false)
   const [isRefactorDeckOpen, seIsRefactorDeckOpen] = useState<boolean>(false)
   const [isRemoveDeckOpen, seIsRemoveDeckOpen] = useState<boolean>(false)
@@ -45,7 +45,7 @@ export const Deck = () => {
   const [sortTableData, setSortTableData] = useState<SortTableData | null>(null)
 
   const [searchString, setSearchString] = useDebounceValue<string>('', 500)
-  const { currentPage, onSetCurrentPage, onSetPageSize, pageSize } = usePagination()
+  const { onSetCurrentPage, onSetPageSize, searchParams } = usePagination()
 
   const { deckId = '' } = useParams()
   const navigate = useNavigate()
@@ -63,8 +63,8 @@ export const Deck = () => {
   } = useGetCardsInDeckQuery({
     deckId,
     params: {
-      currentPage: String(currentPage),
-      itemsPerPage: String(pageSize),
+      currentPage: searchParams.get('page') ?? '1',
+      itemsPerPage: searchParams.get('size') ?? '10',
       orderBy: sortQueryString,
       question: searchString,
     },
@@ -111,14 +111,14 @@ export const Deck = () => {
     removeDeckHandler(deckId)
       .unwrap()
       .then(() => {
-        navigate('/')
+        navigate('/decks')
         toast.success('Deck successfully removed')
       })
       .catch(e => toastAppError(e))
   }
 
   if (isQueryError) {
-    toast.error((queryError as AppError).data.errorMessages[0].message)
+    toast.error((queryError as AppError).data.errorMessages?.[0]?.message)
   }
 
   if (isUserDataLoading || isDeckDataLoading || isAuthor === null) {
@@ -131,7 +131,11 @@ export const Deck = () => {
   if (deckData?.cardsCount === 0 && isAuthor !== null) {
     return <DeckEmpty isAuthor={isAuthor} />
   }
-  if (currentPage !== 1 && !searchString && currentPage > totalPages) {
+  if (
+    Number(searchParams.get('page')) !== 1 &&
+    !searchString &&
+    Number(searchParams.get('page')) > totalPages
+  ) {
     navigate('/404')
   }
   if (isAuthor) {
@@ -190,9 +194,8 @@ export const Deck = () => {
               withSettings={isAuthor}
             />
             <Pagination
-              currentPage={currentPage}
-              pageSize={pageSize}
-              path={`deck/${deckId}`}
+              currentPage={Number(searchParams.get('page') ?? 1)}
+              pageSize={Number(searchParams.get('page') ?? 10)}
               setCurrentPage={onSetCurrentPage}
               setPageSize={onSetPageSize}
               totalPages={totalPages}

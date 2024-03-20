@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { Delete } from '@/icons/Delete'
@@ -75,7 +75,7 @@ export const DescTable = ({
                   <Typography
                     as={Link}
                     className={s.link}
-                    to={`/deck/${deck.id}?page=1`}
+                    to={`/deck/${deck.id}`}
                     variant={'body2'}
                   >
                     {deck.name}

@@ -19,7 +19,7 @@ import { decksDto } from '@/utils/decksDto'
 import s from './deckPage.module.scss'
 
 export const DecksPage = () => {
-  const { currentPage, onSetCurrentPage, onSetPageSize, pageSize } = usePagination()
+  const { onSetCurrentPage, onSetPageSize } = usePagination()
   const { debouncedSearchStr, onInputChange, searchParams } = useInput()
 
   const [isAddDeckOpen, setIsAddDeckOpen] = useState<boolean>(false)
@@ -34,8 +34,8 @@ export const DecksPage = () => {
     sortTableData !== null ? `${sortTableData.filterKey}-${sortTableData.filterDirection}` : null
   const { data } = useGetDecksQuery({
     authorId: tabValue === 'myCards' ? userData.id : '',
-    currentPage: currentPage,
-    itemsPerPage: pageSize,
+    currentPage: Number(searchParams.get('page') ?? 1),
+    itemsPerPage: Number(searchParams.get('size') ?? 10),
     maxCardsCount: maxValue,
     minCardsCount: minValue,
     name: debouncedSearchStr,
@@ -62,7 +62,6 @@ export const DecksPage = () => {
         <div className={s.deskActions}>
           <Input
             className={s.search}
-            // defaultValue={''}
             onChange={onInputChange}
             placeholder={'Input search'}
             value={searchParams.get('val') ?? ''}
@@ -100,8 +99,8 @@ export const DecksPage = () => {
               sortHandler={setSortTableData}
             />
             <Pagination
-              currentPage={currentPage}
-              pageSize={pageSize}
+              currentPage={Number(searchParams.get('page') ?? 1)}
+              pageSize={Number(searchParams.get('size') ?? 10)}
               path={'decks'}
               setCurrentPage={onSetCurrentPage}
               setPageSize={onSetPageSize}

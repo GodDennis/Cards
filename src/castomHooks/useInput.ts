@@ -5,7 +5,7 @@ import { useDebounceValue } from './useDebounceValue'
 
 export const useInput = () => {
   const [searchParams, setSearchParams] = useSearchParams()
-  const [value, setValue] = useState<string>()
+  const [value, setValue] = useState<string>('')
   const [debouncedSearchStr, setDebouncedSearchStr] = useDebounceValue('', 500)
 
   const URLParams = Object.fromEntries(searchParams)

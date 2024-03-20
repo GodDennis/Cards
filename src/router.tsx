@@ -57,7 +57,7 @@ const privatRouts: RouteObject[] = [
     path: '/decks',
   },
   {
-    element: <Navigate to={'/decks?page=1'} />,
+    element: <Navigate to={'/decks'} />,
     path: '/',
   },
   {
