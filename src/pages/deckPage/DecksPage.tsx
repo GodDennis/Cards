@@ -63,7 +63,6 @@ export const DecksPage = () => {
         <div className={s.deskActions}>
           <Input
             className={s.search}
-            // defaultValue={''}
             onChange={onInputChange}
             placeholder={'Input search'}
             value={searchParams.get('val') ?? ''}
