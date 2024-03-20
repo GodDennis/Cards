@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 
 import s from './layout.module.scss'
@@ -10,9 +10,6 @@ import { useGetAuthQuery } from './services/auth-api'
 export const Layout = () => {
   const { data, isError, isLoading } = useGetAuthQuery()
   const isAuthenticated = !isError && !isLoading
-  const location = useLocation()
-
-  console.log(location)
 
   return (
     <div className={s.layoutContainer}>

@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { Delete } from '@/icons/Delete'
@@ -47,7 +47,6 @@ export const DescTable = ({
   const [deleteDeck] = useDeleteDeckMutation()
   const [editOpen, setEditOpen] = useState<boolean>(false)
   const [currentDeckId, setCurrentDeckId] = useState<string>('')
-
   const editHandler = (deckId: string) => {
     setCurrentDeckId(deckId)
     setEditOpen(true)
@@ -72,6 +71,7 @@ export const DescTable = ({
                   {deck.cover && (
                     <img alt={'Desc Preview'} className={s.deckPreview} src={deck.cover} />
                   )}
+
                   <Typography
                     as={Link}
                     className={s.link}

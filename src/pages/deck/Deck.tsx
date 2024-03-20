@@ -37,7 +37,6 @@ const baseColumns: HeadCellProps[] = [
 ]
 
 export const Deck = () => {
-  console.log('render')
   const [isAddOpen, setIsAddOpen] = useState<boolean>(false)
   const [isRefactorDeckOpen, seIsRefactorDeckOpen] = useState<boolean>(false)
   const [isRemoveDeckOpen, seIsRemoveDeckOpen] = useState<boolean>(false)
@@ -97,6 +96,7 @@ export const Deck = () => {
       title: 'Delete',
     },
   ]
+
   let columns = baseColumns
   const totalPages = cardsData?.pagination.totalPages ?? 0
   const cards = cardsData?.items
@@ -146,7 +146,7 @@ export const Deck = () => {
     return (
       <div className={s.container}>
         <div>
-          <BackwardLink className={s.linkBack} to={'/'} variant={'body2'}>
+          <BackwardLink className={s.linkBack} to={'/decks'} variant={'body2'}>
             Back to Decks List
           </BackwardLink>
         </div>
