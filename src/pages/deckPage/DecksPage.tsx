@@ -41,7 +41,8 @@ export const DecksPage = () => {
     name: debouncedSearchStr,
     orderBy: sortQueryString,
   })
-  const isSearchSuccessful = data?.items && data?.items.length > 0
+  const isSearch = !!debouncedSearchStr
+  const isDataNotEmpty = data?.items && data?.items.length > 0
 
   const tabs = [
     { name: 'My Cards', value: 'myCards' },
@@ -90,7 +91,7 @@ export const DecksPage = () => {
           </div>
           <Button variant={'secondary'}>Clear Filter</Button>
         </div>
-        {isSearchSuccessful ? (
+        {isDataNotEmpty ? (
           <>
             <DescTable
               authId={userData.id}
@@ -110,11 +111,9 @@ export const DecksPage = () => {
             />
           </>
         ) : (
-          <Typography
-            as={'div'}
-            className={s.searchNotification}
-            variant={'body1'}
-          >{`No decks found with name "${debouncedSearchStr}"`}</Typography>
+          <Typography as={'div'} className={s.searchNotification} variant={'body1'}>
+            {isSearch ? `No decks found with name "${debouncedSearchStr}"` : 'No decks found'}
+          </Typography>
         )}
       </div>
       <AddNewDeck closeHandler={setIsAddDeckOpen} open={isAddDeckOpen} />
