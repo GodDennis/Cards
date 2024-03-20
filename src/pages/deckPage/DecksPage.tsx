@@ -24,7 +24,7 @@ export const DecksPage = () => {
 
   const [isAddDeckOpen, setIsAddDeckOpen] = useState<boolean>(false)
   const [tabValue, setTabValue] = useState<string>('allCards')
-  const [[minValue, maxValue], setMinMaxValue] = useState<number[]>([])
+  const [minMaxValue, setMinMaxValue] = useState<number[]>([])
   const [sortTableData, setSortTableData] = useState<SortTableData | null>(null)
 
   const { data: minMaxData } = useGetMinMaxQuery()
@@ -36,12 +36,13 @@ export const DecksPage = () => {
     authorId: tabValue === 'myCards' ? userData.id : '',
     currentPage: Number(searchParams.get('page') ?? 1),
     itemsPerPage: Number(searchParams.get('size') ?? 10),
-    maxCardsCount: maxValue,
-    minCardsCount: minValue,
+    maxCardsCount: minMaxValue[1],
+    minCardsCount: minMaxValue[0],
     name: debouncedSearchStr,
     orderBy: sortQueryString,
   })
-  const isSearchSuccessful = data?.items && data?.items.length > 0
+  const isSearch = !!debouncedSearchStr
+  const isDataNotEmpty = data?.items && data?.items.length > 0
 
   const tabs = [
     { name: 'My Cards', value: 'myCards' },
@@ -83,12 +84,13 @@ export const DecksPage = () => {
                 maxValue={minMaxData?.max}
                 minValue={minMaxData?.min}
                 onChange={setMinMaxValue}
+                value={minMaxValue}
               />
             )}
           </div>
           <Button variant={'secondary'}>Clear Filter</Button>
         </div>
-        {isSearchSuccessful ? (
+        {isDataNotEmpty ? (
           <>
             <DescTable
               authId={userData.id}
@@ -101,18 +103,15 @@ export const DecksPage = () => {
             <Pagination
               currentPage={Number(searchParams.get('page') ?? 1)}
               pageSize={Number(searchParams.get('size') ?? 10)}
-              path={'decks'}
               setCurrentPage={onSetCurrentPage}
               setPageSize={onSetPageSize}
               totalPages={data?.pagination.totalPages || 1}
             />
           </>
         ) : (
-          <Typography
-            as={'div'}
-            className={s.searchNotification}
-            variant={'body1'}
-          >{`No decks found with name "${debouncedSearchStr}"`}</Typography>
+          <Typography as={'div'} className={s.searchNotification} variant={'body1'}>
+            {isSearch ? `No decks found with name "${debouncedSearchStr}"` : 'No decks found'}
+          </Typography>
         )}
       </div>
       <AddNewDeck closeHandler={setIsAddDeckOpen} open={isAddDeckOpen} />
