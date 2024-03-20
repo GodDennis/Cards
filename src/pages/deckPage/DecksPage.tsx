@@ -24,7 +24,7 @@ export const DecksPage = () => {
 
   const [isAddDeckOpen, setIsAddDeckOpen] = useState<boolean>(false)
   const [tabValue, setTabValue] = useState<string>('allCards')
-  const [[minValue, maxValue], setMinMaxValue] = useState<number[]>([])
+  const [minMaxValue, setMinMaxValue] = useState<number[]>([])
   const [sortTableData, setSortTableData] = useState<SortTableData | null>(null)
 
   const { data: minMaxData } = useGetMinMaxQuery()
@@ -36,8 +36,8 @@ export const DecksPage = () => {
     authorId: tabValue === 'myCards' ? userData.id : '',
     currentPage: currentPage,
     itemsPerPage: pageSize,
-    maxCardsCount: maxValue,
-    minCardsCount: minValue,
+    maxCardsCount: minMaxValue[1],
+    minCardsCount: minMaxValue[0],
     name: debouncedSearchStr,
     orderBy: sortQueryString,
   })
@@ -84,6 +84,7 @@ export const DecksPage = () => {
                 maxValue={minMaxData?.max}
                 minValue={minMaxData?.min}
                 onChange={setMinMaxValue}
+                value={minMaxValue}
               />
             )}
           </div>
