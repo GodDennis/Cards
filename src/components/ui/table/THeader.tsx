@@ -16,7 +16,7 @@ export type HeadCellProps = {
 export type SortTableData = {
   filterDirection: FilterDirections
   filterKey: string
-}
+} | null
 
 type HeaderProps = {
   className?: string
@@ -30,20 +30,24 @@ export const THeader = ({ className, filterHandler, head, sortData, withFilter }
   const switchFilterDirection = (filterDirection: FilterDirections) => {
     return filterDirection === 'asc' ? 'desc' : 'asc'
   }
+
   const onFilterChange = (filterKey: string) => {
     if (!sortData) {
       filterHandler?.({ filterDirection: 'asc', filterKey })
-    }
 
-    if (sortData) {
-      if (filterKey === sortData.filterKey) {
+      return
+    }
+    if (filterKey === sortData.filterKey) {
+      if (sortData.filterDirection === 'asc') {
         filterHandler?.({
           filterDirection: switchFilterDirection(sortData.filterDirection),
           filterKey,
         })
       } else {
-        filterHandler?.({ filterDirection: 'asc', filterKey })
+        filterHandler?.(null)
       }
+    } else {
+      filterHandler?.({ filterDirection: 'asc', filterKey })
     }
   }
 
