@@ -15,11 +15,8 @@ import s from './descTable.module.scss'
 import { Table } from '..'
 import { Button } from '../../button'
 import { Typography } from '../../typography'
-import { THeader } from '../THeader'
+import { HeadCellProps, SortTableData, THeader } from '../THeader'
 
-type HeadCellProps = {
-  [key: string]: string
-}
 type Deck = {
   authorId: string
   cardsCount: number
@@ -35,9 +32,18 @@ type DescTableProps = {
   className?: string
   decks: Deck[]
   head: HeadCellProps[]
+  sortData?: SortTableData | null
+  sortHandler?: (data: SortTableData) => void
 }
 
-export const DescTable = ({ authId, className, decks, head }: DescTableProps) => {
+export const DescTable = ({
+  authId,
+  className,
+  decks,
+  head,
+  sortData,
+  sortHandler,
+}: DescTableProps) => {
   const [deleteDeck] = useDeleteDeckMutation()
   const [editOpen, setEditOpen] = useState<boolean>(false)
   const [currentDeckId, setCurrentDeckId] = useState<string>('')
@@ -56,7 +62,7 @@ export const DescTable = ({ authId, className, decks, head }: DescTableProps) =>
 
   return (
     <Table.Root className={clsx(s.root, className)}>
-      <THeader head={head} />
+      <THeader filterHandler={sortHandler} head={head} sortData={sortData} withFilter />
       <Table.Body>
         {decks?.map(deck => {
           return (

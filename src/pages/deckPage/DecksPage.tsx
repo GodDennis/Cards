@@ -8,7 +8,7 @@ import { Pagination } from '@/components/ui/pagination'
 import { Slider } from '@/components/ui/slider'
 import { TabSwitcher } from '@/components/ui/tab-switcher'
 import { DescTable } from '@/components/ui/table/DescTable/DescTable'
-import { HeadCellProps } from '@/components/ui/table/THeader'
+import { HeadCellProps, SortTableData } from '@/components/ui/table/THeader'
 import { Typography } from '@/components/ui/typography'
 import { AddNewDeck } from '@/layouts/modals/addNewDeck'
 import { GetDecksResponse } from '@/services/api-types'
@@ -25,9 +25,13 @@ export const DecksPage = () => {
   const [isAddDeckOpen, setIsAddDeckOpen] = useState<boolean>(false)
   const [tabValue, setTabValue] = useState<string>('allCards')
   const [[minValue, maxValue], setMinMaxValue] = useState<number[]>([])
+  const [sortTableData, setSortTableData] = useState<SortTableData | null>(null)
 
   const { data: minMaxData } = useGetMinMaxQuery()
   const { data: userData } = useGetAuthQuery()
+
+  const sortQueryString =
+    sortTableData !== null ? `${sortTableData.filterKey}-${sortTableData.filterDirection}` : null
   const { data } = useGetDecksQuery({
     authorId: tabValue === 'myCards' ? userData.id : '',
     currentPage: currentPage,
@@ -35,6 +39,7 @@ export const DecksPage = () => {
     maxCardsCount: maxValue,
     minCardsCount: minValue,
     name: debouncedSearchStr,
+    orderBy: sortQueryString,
   })
   const isSearchSuccessful = data?.items && data?.items.length > 0
 
@@ -57,7 +62,7 @@ export const DecksPage = () => {
         <div className={s.deskActions}>
           <Input
             className={s.search}
-            defaultValue={''}
+            // defaultValue={''}
             onChange={onInputChange}
             placeholder={'Input search'}
             value={searchParams.get('val') ?? ''}
@@ -91,6 +96,8 @@ export const DecksPage = () => {
               className={s.table}
               decks={decksDto(data ?? ({} as GetDecksResponse))}
               head={columns}
+              sortData={sortTableData}
+              sortHandler={setSortTableData}
             />
             <Pagination
               currentPage={currentPage}
@@ -116,8 +123,8 @@ export const DecksPage = () => {
 
 const columns: HeadCellProps[] = [
   { filterKey: 'name', title: 'Name' },
-  { filterKey: 'cards', title: 'Cards' },
-  { filterKey: 'lastUpdated', title: 'Last Updated' },
-  { filterKey: 'createdBy', title: 'Created by' },
+  { filterKey: 'cardsCount', title: 'Cards' },
+  { filterKey: 'updated', title: 'Last Updated' },
+  { filterKey: 'author.name', title: 'Created by' },
   { filterKey: '', title: '' },
 ]
