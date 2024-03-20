@@ -54,10 +54,10 @@ export const publicRouts: RouteObject[] = [
 const privatRouts: RouteObject[] = [
   {
     element: <DecksPage />,
-    path: '/decks/:pageCount',
+    path: '/decks',
   },
   {
-    element: <Navigate to={'/decks/1'} />,
+    element: <Navigate to={'/decks?page=1'} />,
     path: '/',
   },
   {
@@ -66,7 +66,7 @@ const privatRouts: RouteObject[] = [
   },
   {
     element: <Deck />,
-    path: '/deck/:deckId/:pageCount',
+    path: '/deck/:deckId',
   },
   {
     element: <EditProfile />,

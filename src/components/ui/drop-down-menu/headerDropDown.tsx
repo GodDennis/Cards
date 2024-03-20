@@ -7,12 +7,22 @@ export type Props = {
   avatar: string
   email: string
   id: number
+  onOpenChange: () => void
+  open: boolean
   options: dropDownMenuList[]
   userName: string
 }
-export const HeaderDropDown = ({ avatar, email, id, options, userName }: Props) => {
+export const HeaderDropDown = ({
+  avatar,
+  email,
+  id,
+  onOpenChange,
+  open,
+  options,
+  userName,
+}: Props) => {
   return (
-    <DropDownMenu trigger={<Avatar src={avatar} />}>
+    <DropDownMenu onOpenChange={onOpenChange} open={open} trigger={<Avatar src={avatar} />}>
       <UserBarDropDown avatar={avatar} email={email} id={id} userName={userName} />
       <DropDownList options={options} />
     </DropDownMenu>
