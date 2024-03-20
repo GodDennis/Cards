@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import { Button } from '@/components/ui/button'
 import { Rating } from '@/components/ui/rating'
 import { Table } from '@/components/ui/table'
-import { THeader } from '@/components/ui/table/THeader'
+import { HeadCellProps, SortTableData, THeader } from '@/components/ui/table/THeader'
 import { Delete } from '@/icons/Delete'
 import { EditPen } from '@/icons/EditPen'
 import { AddNewCard } from '@/layouts/modals/addNewCard'
@@ -17,19 +17,25 @@ import clsx from 'clsx'
 
 import s from './myDeckTable.module.scss'
 
-type HeadCellProps = {
-  [key: string]: string
-}
 type card = CardWithGrade
 
 type DescTableProps = {
   cards: card[]
   className?: string
   head: HeadCellProps[]
+  sortData?: SortTableData | null
+  sortHandler?: (data: SortTableData) => void
   withSettings?: boolean
 }
 
-export const MyDeckTable = ({ cards, className, head, withSettings = false }: DescTableProps) => {
+export const MyDeckTable = ({
+  cards,
+  className,
+  head,
+  sortData,
+  sortHandler,
+  withSettings = false,
+}: DescTableProps) => {
   const [openDelete, setOpenDelete] = useState<boolean>(false)
   const [isRefactorOpen, setIsRefactorOpen] = useState<boolean>(false)
   const [cardId, setCardId] = useState<string>('')
@@ -54,7 +60,7 @@ export const MyDeckTable = ({ cards, className, head, withSettings = false }: De
 
   return (
     <Table.Root className={clsx(s.root, className)}>
-      <THeader head={head} />
+      <THeader filterHandler={sortHandler} head={head} sortData={sortData} withFilter />
       <Table.Body>
         {cards.map(card => {
           return (

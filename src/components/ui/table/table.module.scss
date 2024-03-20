@@ -21,11 +21,19 @@
 
 .headCell {
   padding: 6px 24px;
+  padding-right: 0;
 
   font-size: 14px;
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-m);
   text-align: left;
+  text-wrap: nowrap;
+  vertical-align: middle;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
 }
 
 .cell {

@@ -1,14 +1,14 @@
 import { IconProps } from '@/icons/LogOutOutline'
 
 export const ArrowDown = (props: IconProps) => {
-  const { fill = 'white' } = props
+  const { fill = 'white', height, width } = props
 
   return (
     <svg
       fill={'none'}
-      height={'24'}
+      height={height || '24'}
       viewBox={'0 0 24 24'}
-      width={'24'}
+      width={width || '24'}
       xmlns={'http://www.w3.org/2000/svg'}
     >
       <g clipPath={'url(#clip0_5661_1754)'}>

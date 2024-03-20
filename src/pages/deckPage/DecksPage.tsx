@@ -114,9 +114,9 @@ export const DecksPage = () => {
 }
 
 const columns: HeadCellProps[] = [
-  { key: 'name', title: 'Name' },
-  { key: 'cards', title: 'Cards' },
-  { key: 'lastUpdated', title: 'Last Updated' },
-  { key: 'createdBy', title: 'Created by' },
-  { key: '', title: '' },
+  { filterKey: 'name', title: 'Name' },
+  { filterKey: 'cards', title: 'Cards' },
+  { filterKey: 'lastUpdated', title: 'Last Updated' },
+  { filterKey: 'createdBy', title: 'Created by' },
+  { filterKey: '', title: '' },
 ]

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
@@ -14,7 +14,7 @@ import { DropDownList } from '@/components/ui/drop-down-menu/Drop-down-list'
 import { Input } from '@/components/ui/input'
 import { Loader } from '@/components/ui/loader/Loader'
 import { Pagination } from '@/components/ui/pagination'
-import { HeadCellProps } from '@/components/ui/table/THeader'
+import { HeadCellProps, SortTableData } from '@/components/ui/table/THeader'
 import { Typography } from '@/components/ui/typography'
 import { AddNewCard } from '@/layouts/modals/addNewCard'
 import { AddNewDeck } from '@/layouts/modals/addNewDeck'
@@ -30,17 +30,18 @@ import s from './deck.module.scss'
 import { DeckEmpty } from './deckEmpty/DeckEmpty'
 
 const baseColumns: HeadCellProps[] = [
-  { key: 'question', title: 'Question' },
-  { key: 'answer', title: 'Answer' },
-  { key: 'lastUpdated', title: 'Last Updated' },
-  { key: 'grade', title: 'Grade' },
+  { filterKey: 'question', title: 'Question' },
+  { filterKey: 'answer', title: 'Answer' },
+  { filterKey: 'updated', title: 'Last Updated' },
+  { filterKey: 'grade', title: 'Grade' },
 ]
 
 export const Deck = () => {
-  const [openAdd, setOpenAdd] = useState<boolean>(false)
+  const [isAddOpen, setIsAddOpen] = useState<boolean>(false)
   const [isRefactorDeckOpen, seIsRefactorDeckOpen] = useState<boolean>(false)
   const [isRemoveDeckOpen, seIsRemoveDeckOpen] = useState<boolean>(false)
   const [isAuthor, setIsAuthor] = useState<boolean | null>(null)
+  const [sortTableData, setSortTableData] = useState<SortTableData | null>(null)
 
   const [searchString, setSearchString] = useDebounceValue<string>('', 500)
   const { currentPage, onSetCurrentPage, onSetPageSize, pageSize } = usePagination()
@@ -51,6 +52,9 @@ export const Deck = () => {
   const { data: userData, isFetching: isUserDataLoading } = useGetAuthQuery()
   const { data: deckData, isFetching: isDeckDataLoading } = useGetDeckQuery(deckId)
   const [removeDeckHandler] = useDeleteDeckMutation()
+
+  const sortQueryString =
+    sortTableData !== null ? `${sortTableData.filterKey}-${sortTableData.filterDirection}` : null
   const {
     data: cardsData,
     error: queryError,
@@ -60,6 +64,7 @@ export const Deck = () => {
     params: {
       currentPage: String(currentPage),
       itemsPerPage: String(pageSize),
+      orderBy: sortQueryString,
       question: searchString,
     },
   })
@@ -129,7 +134,7 @@ export const Deck = () => {
     navigate('/404')
   }
   if (isAuthor) {
-    columns = [...baseColumns, { key: '', title: '' }]
+    columns = [...baseColumns, { filterKey: '', title: '' }]
   }
 
   if (isAuthor !== null && cards) {
@@ -155,13 +160,13 @@ export const Deck = () => {
             {cover && <img alt={'deck image'} className={s.deckImage} src={cover} />}
           </div>
           {isAuthor ? (
-            <Button onClick={() => setOpenAdd(true)}>Add New Card</Button>
+            <Button onClick={() => setIsAddOpen(true)}>Add New Card</Button>
           ) : (
             <Button as={Link} to={`/learn/${deckId}`}>
               Learn to Pack
             </Button>
           )}
-          <AddNewCard closeHandler={setOpenAdd} open={openAdd} />
+          <AddNewCard closeHandler={setIsAddOpen} open={isAddOpen} />
         </div>
         <div className={s.deskActions}>
           <Input
@@ -175,7 +180,14 @@ export const Deck = () => {
         </div>
         {cards.length > 0 ? (
           <>
-            <MyDeckTable cards={cards} className={s.table} head={columns} withSettings={isAuthor} />
+            <MyDeckTable
+              cards={cards}
+              className={s.table}
+              head={columns}
+              sortData={sortTableData}
+              sortHandler={setSortTableData}
+              withSettings={isAuthor}
+            />
             <Pagination
               currentPage={currentPage}
               pageSize={pageSize}

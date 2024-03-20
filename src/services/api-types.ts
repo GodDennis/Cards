@@ -18,7 +18,7 @@ export type GetCardsInDeckParams = {
   answer?: string
   currentPage?: string
   itemsPerPage?: string
-  orderBy?: string
+  orderBy?: null | string
   question?: string
 }
 export type GetCardsInDeckResponse = {

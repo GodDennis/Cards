@@ -1,22 +1,73 @@
+import { ArrowDown } from '@/icons/ArrowDown'
+import { ArrowUp } from '@/icons/ArrowUp'
+import clsx from 'clsx'
+
 import s from './table.module.scss'
 
 import { Table } from '.'
 
+type FilterDirections = 'asc' | 'desc'
+
 export type HeadCellProps = {
-  [key: string]: string
-}
-type HeaderProps = {
-  className?: string
-  head: HeadCellProps[]
+  filterKey: string
+  title: string
 }
 
-export const THeader = ({ className, head }: HeaderProps) => {
+export type SortTableData = {
+  filterDirection: FilterDirections
+  filterKey: string
+}
+
+type HeaderProps = {
+  className?: string
+  filterHandler?: (data: SortTableData) => void
+  head: HeadCellProps[]
+  sortData?: SortTableData | null
+  withFilter?: boolean
+}
+
+export const THeader = ({ className, filterHandler, head, sortData, withFilter }: HeaderProps) => {
+  const switchFilterDirection = (filterDirection: FilterDirections) => {
+    return filterDirection === 'asc' ? 'desc' : 'asc'
+  }
+  const onFilterChange = (filterKey: string) => {
+    if (!sortData) {
+      filterHandler?.({ filterDirection: 'asc', filterKey })
+    }
+
+    if (sortData) {
+      if (filterKey === sortData.filterKey) {
+        filterHandler?.({
+          filterDirection: switchFilterDirection(sortData.filterDirection),
+          filterKey,
+        })
+      } else {
+        filterHandler?.({ filterDirection: 'asc', filterKey })
+      }
+    }
+  }
+
   return (
-    <Table.Head className={`${s.tableHead} ${className}`}>
+    <Table.Head className={clsx(s.tableHead, className)}>
       <Table.Row>
-        {head.map(column => (
-          <Table.HeadCell key={column.key}>{column.title}</Table.HeadCell>
-        ))}
+        {head.map(column => {
+          return withFilter && column.filterKey ? (
+            <Table.HeadCell key={column.filterKey} onClick={() => onFilterChange(column.filterKey)}>
+              {column.title}
+              {sortData?.filterKey === column.filterKey && (
+                <span className={s.arrowContainer}>
+                  {sortData?.filterDirection === 'asc' ? (
+                    <ArrowDown height={'12px'} width={'20px'} />
+                  ) : (
+                    <ArrowUp height={'12px'} width={'20px'} />
+                  )}
+                </span>
+              )}
+            </Table.HeadCell>
+          ) : (
+            <Table.HeadCell key={column.filterKey}>{column.title}</Table.HeadCell>
+          )
+        })}
       </Table.Row>
     </Table.Head>
   )
