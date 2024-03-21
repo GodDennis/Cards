@@ -10,11 +10,12 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import s from './fogotPassword.module.scss'
 
+import { errorHelper } from '../helpers/errorHelper'
 import { EmailFormValue, emailFormSchema } from '../helpers/loginValidationSchema'
 
 export const ForgotPassword = () => {
   const navigate = useNavigate()
-  const [forgot, {}] = useForgotPasswordMutation()
+  const [forgot] = useForgotPasswordMutation()
   const {
     control,
     formState: { errors },
@@ -33,6 +34,7 @@ export const ForgotPassword = () => {
       .then(() => {
         navigate(`/checkEmail/${value.email}`)
       })
+      .catch(e => errorHelper(e))
   }
 
   return (

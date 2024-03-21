@@ -10,6 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import s from './createNewPassword.module.scss'
 
+import { errorHelper } from '../helpers/errorHelper'
 import { PasswordFormValue, passwordFormSchems } from '../helpers/loginValidationSchema'
 
 export const CreateNewPassword = () => {
@@ -31,6 +32,7 @@ export const CreateNewPassword = () => {
         .then(() => {
           navigate('/login')
         })
+        .catch(e => errorHelper(e))
   }
 
   return (

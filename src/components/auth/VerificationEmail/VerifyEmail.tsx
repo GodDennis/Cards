@@ -11,6 +11,8 @@ import { useVerifyEmailMutation } from '@/services/auth-api'
 
 import s from './verifyEmail.module.scss'
 
+import { errorHelper } from '../helpers/errorHelper'
+
 export const VerifyEmail = () => {
   const { code } = useParams<{ code: string }>()
   const [verify, { isLoading }] = useVerifyEmailMutation()
@@ -23,6 +25,8 @@ export const VerifyEmail = () => {
         .catch(e => {
           if (e.status === 400) {
             toast.error('Email has already been verified')
+          } else {
+            errorHelper(e)
           }
         })
   }, [])

@@ -15,6 +15,8 @@ import 'react-toastify/dist/ReactToastify.css'
 
 import s from '@/components/auth/signIn/signIn.module.scss'
 
+import { errorHelper } from '../helpers/errorHelper'
+
 export const SignUp = () => {
   const [signUp] = useSignUpMutation()
 
@@ -44,7 +46,7 @@ export const SignUp = () => {
         if (e.status === 400) {
           toast.error('This email already exists!')
         } else {
-          toast.error('Some error has occurred')
+          errorHelper(e)
         }
       })
     reset()

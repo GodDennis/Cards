@@ -13,6 +13,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import s from './signIn.module.scss'
 
+import { errorHelper } from '../helpers/errorHelper'
+
 export const SignIn = () => {
   const {
     control,
@@ -28,10 +30,11 @@ export const SignIn = () => {
   const onSubmit = (values: LoginFormValues) => {
     login(values)
       .unwrap()
-      .then(() => {})
       .catch(e => {
         if (e.status === 401) {
           toast.error('Incorrect login or password')
+        } else {
+          errorHelper(e)
         }
       })
   }
