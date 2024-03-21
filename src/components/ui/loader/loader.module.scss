@@ -1,5 +1,5 @@
 .loader {
-  position: relative;
+  position: absolute;
 
   display: inline-block;
 
@@ -38,4 +38,11 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+.loaderWrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-25px, -25px);
 }

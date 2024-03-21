@@ -4,6 +4,7 @@ import { useInput } from '@/castomHooks/useInput'
 import { usePagination } from '@/castomHooks/usePagination'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Loader } from '@/components/ui/loader/Loader'
 import { Pagination } from '@/components/ui/pagination'
 import { Slider } from '@/components/ui/slider'
 import { TabSwitcher } from '@/components/ui/tab-switcher'
@@ -28,8 +29,8 @@ export const DecksPage = () => {
   const [minMaxValue, setMinMaxValue] = useState<number[]>([])
   const [sortTableData, setSortTableData] = useState<SortTableData | null>(null)
 
-  const { data: minMaxData } = useGetMinMaxQuery()
-  const { data: userData } = useGetAuthQuery()
+  const { data: minMaxData, isLoading: isMinMaxLoading } = useGetMinMaxQuery()
+  const { data: userData, isLoading: isGetAuthLoading } = useGetAuthQuery()
 
   const sortQueryString =
     sortTableData !== null ? `${sortTableData.filterKey}-${sortTableData.filterDirection}` : null
@@ -37,6 +38,7 @@ export const DecksPage = () => {
     data,
     error: getDecksError,
     isError: isGetDecksError,
+    isLoading: isGetDecksLoading,
   } = useGetDecksQuery({
     authorId: tabValue === 'myCards' ? userData.id : '',
     currentPage: Number(searchParams.get('page') ?? 1),
@@ -59,6 +61,9 @@ export const DecksPage = () => {
   }
 
   handleQueryError(isGetDecksError, getDecksError)
+  if (isMinMaxLoading || isGetAuthLoading || isGetDecksLoading) {
+    return <Loader />
+  }
 
   return (
     <div className={s.superContainer}>

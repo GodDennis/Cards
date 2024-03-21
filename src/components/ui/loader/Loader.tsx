@@ -7,5 +7,9 @@ import s from './loader.module.scss'
 type LoaderProps = ComponentProps<'div'>
 
 export const Loader = ({ className, ...rest }: LoaderProps) => {
-  return <div className={clsx(s.loader, className)} {...rest}></div>
+  return (
+    <div className={clsx(s.loaderWrapper, className)} {...rest}>
+      <div className={clsx(s.loader)} />
+    </div>
+  )
 }

@@ -120,11 +120,7 @@ export const Deck = () => {
   handleQueryError(isQueryError, queryError)
 
   if (isUserDataLoading || isDeckDataLoading || isAuthor === null) {
-    return (
-      <div className={s.loaderPageContainer}>
-        <Loader className={s.pageLoader} />
-      </div>
-    )
+    return <Loader />
   }
   if (deckData?.cardsCount === 0 && isAuthor !== null) {
     return <DeckEmpty isAuthor={isAuthor} name={deckData.name} />
