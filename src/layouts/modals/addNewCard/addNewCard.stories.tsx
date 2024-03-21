@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
+
 import { useState } from 'react'
+
 import { Button } from '@/components/ui/button'
 import { AddNewCard } from '@/layouts/modals/addNewCard/addNewCard'
 
@@ -15,10 +17,11 @@ type Story = StoryObj<typeof meta>
 
 const AddNewCardUsage = () => {
   const [open, setOpen] = useState(false)
+
   return (
     <>
       <Button onClick={() => setOpen(true)}>Open Modal</Button>
-      {open && <AddNewCard open={open} closeHandler={setOpen} />}
+      {open && <AddNewCard closeHandler={setOpen} open={open} />}
     </>
   )
 }

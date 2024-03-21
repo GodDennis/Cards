@@ -37,18 +37,16 @@ export const Select = (props: SelectProps) => {
     onValueChange,
     options = defaultOptions,
     //eslint-disable-next-line perfectionist/sort-objects
-    defaultValue = options[0].value,
+    defaultValue,
     placeholder,
     value,
     ...rest
   } = props
 
   const [open, setOpen] = useState(false)
-  const [currentValue, setCurrentValue] = useState<string | undefined>(undefined)
 
   const handleValueChange = (value: string) => {
     onValueChange?.(value)
-    setCurrentValue(value)
   }
 
   const handleOpenChange = () => {
@@ -62,11 +60,10 @@ export const Select = (props: SelectProps) => {
         {label}
       </Typography>
       <SelectRadix.Root
-        defaultValue={defaultValue}
         disabled={disabled}
         onOpenChange={handleOpenChange}
         onValueChange={handleValueChange}
-        value={currentValue}
+        value={value}
         {...rest}
       >
         <SelectRadix.Trigger className={`${className} ${s.SelectTrigger}`}>

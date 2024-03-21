@@ -35,7 +35,7 @@ export const DeckEmpty = ({ isAuthor }: DeckEmptyType) => {
           {isAuthor ? (
             <Button onClick={() => setOpenAdd(true)}>Add New Card</Button>
           ) : (
-            <Button as={Link} to={`/`}>
+            <Button as={Link} to={`/decks`}>
               Back to home page
             </Button>
           )}

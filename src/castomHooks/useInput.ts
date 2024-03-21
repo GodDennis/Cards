@@ -22,7 +22,7 @@ export const useInput = () => {
   useEffect(() => {
     setSearchParams(URLParams)
     setDebouncedSearchStr(searchParams.get('val') ?? '')
-  }, [value])
+  }, [searchParams.get('val')])
 
   return {
     debouncedSearchStr,

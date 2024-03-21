@@ -29,7 +29,6 @@ export const baseQueryWithReauth: BaseQueryFn<
       result = await baseQuery(args, api, extraOptions)
     } else {
       const currentPath = window.location.pathname
-
       const skip = skipRoutes.filter(route => route && currentPath.includes(route))
 
       if (skip.length) {

@@ -1,7 +1,8 @@
-import { configureStore } from '@reduxjs/toolkit'
-import { baseApi } from '@/services/base-api'
-import { Provider } from 'react-redux'
 import { ReactNode } from 'react'
+import { Provider } from 'react-redux'
+
+import { baseApi } from '@/services/base-api'
+import { configureStore } from '@reduxjs/toolkit'
 
 const sbStore = configureStore({
   middleware: getDefaultMiddleware => getDefaultMiddleware().concat(baseApi.middleware),

@@ -1,7 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react'
+
 import { useState } from 'react'
+
 import { Button } from '@/components/ui/button'
-import { AddNewDeck } from '@/layouts/modals/addNewDeck/AddNewDeck'
+
+import { AddNewDeck } from '.'
 
 const meta = {
   argTypes: {},
@@ -15,10 +18,11 @@ type Story = StoryObj<typeof meta>
 
 const AddNewDeckUsage = () => {
   const [open, setOpen] = useState(false)
+
   return (
     <>
       <Button onClick={() => setOpen(true)}>Open Modal</Button>
-      {open && <AddNewDeck open={open} closeHandler={setOpen} />}
+      {open && <AddNewDeck closeHandler={setOpen} open={open} />}
     </>
   )
 }

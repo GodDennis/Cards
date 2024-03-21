@@ -47,7 +47,6 @@ export const DescTable = ({
   const [deleteDeck] = useDeleteDeckMutation()
   const [editOpen, setEditOpen] = useState<boolean>(false)
   const [currentDeckId, setCurrentDeckId] = useState<string>('')
-
   const editHandler = (deckId: string) => {
     setCurrentDeckId(deckId)
     setEditOpen(true)
@@ -72,10 +71,11 @@ export const DescTable = ({
                   {deck.cover && (
                     <img alt={'Desc Preview'} className={s.deckPreview} src={deck.cover} />
                   )}
+
                   <Typography
                     as={Link}
                     className={s.link}
-                    to={`/deck/${deck.id}?page=1`}
+                    to={`/deck/${deck.id}`}
                     variant={'body2'}
                   >
                     {deck.name}

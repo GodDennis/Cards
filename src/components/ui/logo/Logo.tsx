@@ -8,7 +8,7 @@ import { Typography } from '../typography'
 export const Logo = () => {
   return (
     <div>
-      <Typography as={Link} to={'/'}>
+      <Typography as={Link} to={'/decks'}>
         <img alt={''} className={`${s.logo}`} src={logo} />
       </Typography>
     </div>
