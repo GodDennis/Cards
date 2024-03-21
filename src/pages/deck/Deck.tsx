@@ -129,7 +129,7 @@ export const Deck = () => {
     )
   }
   if (deckData?.cardsCount === 0 && isAuthor !== null) {
-    return <DeckEmpty isAuthor={isAuthor} />
+    return <DeckEmpty isAuthor={isAuthor} name={deckData.name} />
   }
   if (
     Number(searchParams.get('page')) !== 1 &&
@@ -154,7 +154,7 @@ export const Deck = () => {
           <div className={s.headerWithDropDown}>
             <div className={s.headerContainer}>
               <Typography as={'h1'} className={s.header} variant={'h1'}>
-                {isAuthor ? 'My Deck' : 'Friend’s Deck'}
+                {deckData?.name}
               </Typography>
               {isAuthor && (
                 <DropDownMenu className={s.menu}>
