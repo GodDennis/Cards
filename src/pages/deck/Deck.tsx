@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-import { useDebounceValue } from '@/castomHooks/useDebounceValue'
+import { useInput } from '@/castomHooks/useInput'
 import { usePagination } from '@/castomHooks/usePagination'
 import { BackwardLink } from '@/components/ui/backward-link'
 import { Button } from '@/components/ui/button'
@@ -43,8 +43,8 @@ export const Deck = () => {
   const [isAuthor, setIsAuthor] = useState<boolean | null>(null)
   const [sortTableData, setSortTableData] = useState<SortTableData | null>(null)
 
-  const [searchString, setSearchString] = useDebounceValue<string>('', 500)
   const { onSetCurrentPage, onSetPageSize, searchParams } = usePagination()
+  const { debouncedSearchStr, onInputChange } = useInput()
 
   const { deckId = '' } = useParams()
   const navigate = useNavigate()
@@ -65,7 +65,7 @@ export const Deck = () => {
       currentPage: searchParams.get('page') ?? '1',
       itemsPerPage: searchParams.get('size') ?? '10',
       orderBy: sortQueryString,
-      question: searchString,
+      question: debouncedSearchStr,
     },
   })
 
@@ -102,11 +102,6 @@ export const Deck = () => {
   const cards = cardsData?.items
   const cover = deckData?.cover
 
-  const onInputChange = (value: string) => {
-    onSetCurrentPage(1)
-    setSearchString(value)
-  }
-
   const onRemoveDeck = () => {
     removeDeckHandler(deckId)
       .unwrap()
@@ -127,7 +122,7 @@ export const Deck = () => {
   }
   if (
     Number(searchParams.get('page')) !== 1 &&
-    !searchString &&
+    !debouncedSearchStr &&
     Number(searchParams.get('page')) > totalPages
   ) {
     navigate('/404')
@@ -172,8 +167,9 @@ export const Deck = () => {
             className={s.search}
             defaultValue={''}
             maxLength={29}
-            onChange={e => onInputChange(e.currentTarget.value)}
+            onChange={onInputChange}
             placeholder={'Input search'}
+            value={searchParams.get('search') ?? ''}
             variant={'search'}
           />
         </div>
@@ -200,7 +196,7 @@ export const Deck = () => {
             as={'div'}
             className={s.searchNotification}
             variant={'body1'}
-          >{`No elements found with parameter "${searchString}"`}</Typography>
+          >{`No elements found with parameter "${debouncedSearchStr}"`}</Typography>
         )}
         <AddNewDeck
           closeHandler={seIsRefactorDeckOpen}
