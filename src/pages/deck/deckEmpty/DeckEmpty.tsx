@@ -10,9 +10,10 @@ import s from './deckEmpty.module.scss'
 
 type DeckEmptyType = {
   isAuthor: boolean
+  name: string
 }
 
-export const DeckEmpty = ({ isAuthor }: DeckEmptyType) => {
+export const DeckEmpty = ({ isAuthor, name }: DeckEmptyType) => {
   const [openAdd, setOpenAdd] = useState<boolean>(false)
 
   return (
@@ -25,7 +26,7 @@ export const DeckEmpty = ({ isAuthor }: DeckEmptyType) => {
       <div className={s.sectionHeader}>
         <div className={s.headerContainer}>
           <Typography as={'h1'} className={s.header} variant={'h1'}>
-            {isAuthor ? 'My Deck' : 'Friend’s Deck'}
+            {name}
           </Typography>
         </div>
         <Typography as={'p'} className={s.description} variant={'body1'}>
