@@ -1,6 +1,8 @@
 import { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 import { useInput } from '@/castomHooks/useInput'
+import { useMinMax } from '@/castomHooks/useMinMax'
 import { usePagination } from '@/castomHooks/usePagination'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -21,12 +23,13 @@ import { handleQueryError } from '@/utils/handleQueryError'
 import s from './deckPage.module.scss'
 
 export const DecksPage = () => {
+  const [searchParams, setSearchParams] = useSearchParams()
   const { onSetCurrentPage, onSetPageSize } = usePagination()
-  const { debouncedSearchStr, onInputChange, searchParams } = useInput()
+  const { debouncedSearchStr, onInputChange } = useInput()
+  const { debouncedMax, debouncedMin, onMinMaxChange } = useMinMax()
 
   const [isAddDeckOpen, setIsAddDeckOpen] = useState<boolean>(false)
   const [tabValue, setTabValue] = useState<string>('allCards')
-  const [minMaxValue, setMinMaxValue] = useState<number[]>([])
   const [sortTableData, setSortTableData] = useState<SortTableData | null>(null)
 
   const { data: minMaxData, isLoading: isMinMaxLoading } = useGetMinMaxQuery()
@@ -39,15 +42,24 @@ export const DecksPage = () => {
     error: getDecksError,
     isError: isGetDecksError,
     isLoading: isGetDecksLoading,
-  } = useGetDecksQuery({
-    authorId: tabValue === 'myCards' ? userData.id : '',
-    currentPage: Number(searchParams.get('page') ?? 1),
-    itemsPerPage: Number(searchParams.get('size') ?? 10),
-    maxCardsCount: minMaxValue[1],
-    minCardsCount: minMaxValue[0],
-    name: debouncedSearchStr,
-    orderBy: sortQueryString,
-  })
+  } = useGetDecksQuery(
+    {
+      authorId: tabValue === 'myCards' ? userData.id : '',
+      currentPage: Number(searchParams.get('page') ?? 1),
+      itemsPerPage: Number(searchParams.get('size') ?? 10),
+      maxCardsCount: Number(debouncedMax),
+      minCardsCount: Number(debouncedMin),
+      name: debouncedSearchStr,
+      orderBy: sortQueryString,
+    },
+    {
+      skip:
+        debouncedMax === null ||
+        Number.isNaN(Number(debouncedMax)) ||
+        debouncedMin === null ||
+        Number.isNaN(Number(debouncedMin)),
+    }
+  )
   const isSearch = !!debouncedSearchStr
   const isDataNotEmpty = data?.items && data?.items.length > 0
 
@@ -95,12 +107,21 @@ export const DecksPage = () => {
               <Slider
                 maxValue={minMaxData?.max}
                 minValue={minMaxData?.min}
-                onChange={setMinMaxValue}
-                value={minMaxValue}
+                onChange={onMinMaxChange}
+                value={[
+                  searchParams.get('min') !== null && searchParams.get('min')
+                    ? Number(searchParams.get('min'))
+                    : minMaxData?.min,
+                  searchParams.get('max') !== null && searchParams.get('max')
+                    ? Number(searchParams.get('max'))
+                    : minMaxData?.max,
+                ]}
               />
             )}
           </div>
-          <Button variant={'secondary'}>Clear Filter</Button>
+          <Button onClick={() => setSearchParams({})} variant={'secondary'}>
+            Clear Filter
+          </Button>
         </div>
         {isDataNotEmpty ? (
           <>
