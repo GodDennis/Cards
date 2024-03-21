@@ -11,7 +11,7 @@ import { useVerifyEmailMutation } from '@/services/auth-api'
 
 import s from './verifyEmail.module.scss'
 
-import { errorHelper } from '../helpers/errorHelper'
+import { errorHelper } from '../../../utils/errorHelper'
 
 export const VerifyEmail = () => {
   const { code } = useParams<{ code: string }>()

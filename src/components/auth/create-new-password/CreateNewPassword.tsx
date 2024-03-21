@@ -10,7 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import s from './createNewPassword.module.scss'
 
-import { errorHelper } from '../helpers/errorHelper'
+import { errorHelper } from '../../../utils/errorHelper'
 import { PasswordFormValue, passwordFormSchems } from '../helpers/loginValidationSchema'
 
 export const CreateNewPassword = () => {

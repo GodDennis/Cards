@@ -13,7 +13,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import s from './signIn.module.scss'
 
-import { errorHelper } from '../helpers/errorHelper'
+import { errorHelper } from '../../../utils/errorHelper'
 
 export const SignIn = () => {
   const {

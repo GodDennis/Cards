@@ -10,6 +10,8 @@ import { RadioGroup } from '@/components/ui/radio-group'
 import { Typography } from '@/components/ui/typography'
 import { useGetRandomCardQuery, useSaveGradeMutation } from '@/services/cards-api'
 import { useGetDeckQuery } from '@/services/desk-api'
+import { errorHelper } from '@/utils/errorHelper'
+import { handleQueryError } from '@/utils/handleQueryError'
 import clsx from 'clsx'
 
 import s from './question-card.module.scss'
@@ -44,10 +46,12 @@ export const QuestionCard = () => {
 
   const [saveGrade, { data: cardMutationData, isLoading: isUpdatng }] = useSaveGradeMutation()
 
-  const { data: cardQueryData, isLoading: isFirstLoading } = useGetRandomCardQuery(
-    { deckId },
-    { skip: !!cardMutationData }
-  )
+  const {
+    data: cardQueryData,
+    error,
+    isError,
+    isLoading: isFirstLoading,
+  } = useGetRandomCardQuery({ deckId }, { skip: !!cardMutationData })
 
   const { data: deckData } = useGetDeckQuery(deckId)
 
@@ -61,10 +65,13 @@ export const QuestionCard = () => {
   const nextQuestionHandler = () => {
     if (cardId) {
       saveGrade({ body: { cardId, grade: +currentOption }, deckId })
+        .unwrap()
+        .catch(e => errorHelper(e))
       setWithAnswer(false)
     }
   }
 
+  handleQueryError(isError, error)
   if (isFirstLoading) {
     return (
       <div className={s.loaderPageContainer}>

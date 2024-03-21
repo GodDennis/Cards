@@ -15,7 +15,7 @@ import 'react-toastify/dist/ReactToastify.css'
 
 import s from '@/components/auth/signIn/signIn.module.scss'
 
-import { errorHelper } from '../helpers/errorHelper'
+import { errorHelper } from '../../../utils/errorHelper'
 
 export const SignUp = () => {
   const [signUp] = useSignUpMutation()

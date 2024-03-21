@@ -15,6 +15,7 @@ import { GetDecksResponse } from '@/services/api-types'
 import { useGetAuthQuery } from '@/services/auth-api'
 import { useGetDecksQuery, useGetMinMaxQuery } from '@/services/desk-api'
 import { decksDto } from '@/utils/decksDto'
+import { handleQueryError } from '@/utils/handleQueryError'
 
 import s from './deckPage.module.scss'
 
@@ -32,7 +33,11 @@ export const DecksPage = () => {
 
   const sortQueryString =
     sortTableData !== null ? `${sortTableData.filterKey}-${sortTableData.filterDirection}` : null
-  const { data } = useGetDecksQuery({
+  const {
+    data,
+    error: getDecksError,
+    isError: isGetDecksError,
+  } = useGetDecksQuery({
     authorId: tabValue === 'myCards' ? userData.id : '',
     currentPage: Number(searchParams.get('page') ?? 1),
     itemsPerPage: Number(searchParams.get('size') ?? 10),
@@ -52,6 +57,8 @@ export const DecksPage = () => {
   const swichIsAddDeckOpenHandler = () => {
     setIsAddDeckOpen(true)
   }
+
+  handleQueryError(isGetDecksError, getDecksError)
 
   return (
     <div className={s.superContainer}>

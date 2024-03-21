@@ -7,7 +7,6 @@ import play from '@/assets/Images/play-circle-outline.svg'
 import trash from '@/assets/Images/trash-outline.svg'
 import { useDebounceValue } from '@/castomHooks/useDebounceValue'
 import { usePagination } from '@/castomHooks/usePagination'
-import { errorHelper } from '@/components/auth/helpers/errorHelper'
 import { BackwardLink } from '@/components/ui/backward-link'
 import { Button } from '@/components/ui/button'
 import { DropDownMenu } from '@/components/ui/drop-down-menu'
@@ -21,9 +20,10 @@ import { AddNewCard } from '@/layouts/modals/addNewCard'
 import { AddNewDeck } from '@/layouts/modals/addNewDeck'
 import { DeleteModal } from '@/layouts/modals/deleteModal'
 import { MyDeckTable } from '@/pages/deck/myDeckTable/myDeckTable'
-import { AppError } from '@/services/api-types'
 import { useGetAuthQuery } from '@/services/auth-api'
 import { useDeleteDeckMutation, useGetCardsInDeckQuery, useGetDeckQuery } from '@/services/desk-api'
+import { errorHelper } from '@/utils/errorHelper'
+import { handleQueryError } from '@/utils/handleQueryError'
 
 import s from './deck.module.scss'
 
@@ -117,9 +117,7 @@ export const Deck = () => {
       .catch(e => errorHelper(e))
   }
 
-  if (isQueryError) {
-    toast.error((queryError as AppError).data.errorMessages?.[0]?.message)
-  }
+  handleQueryError(isQueryError, queryError)
 
   if (isUserDataLoading || isDeckDataLoading || isAuthor === null) {
     return (

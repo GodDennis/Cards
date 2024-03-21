@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
-import { errorHelper } from '@/components/auth/helpers/errorHelper'
 import { Button } from '@/components/ui/button'
 import { Rating } from '@/components/ui/rating'
 import { Table } from '@/components/ui/table'
@@ -13,6 +12,7 @@ import { DeleteModal } from '@/layouts/modals/deleteModal'
 import { CardWithGrade } from '@/services/api-types'
 import { useDeleteCardMutation } from '@/services/cards-api'
 import { getTimeString } from '@/utils/decksDto'
+import { errorHelper } from '@/utils/errorHelper'
 import clsx from 'clsx'
 
 import s from './myDeckTable.module.scss'

@@ -10,7 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import s from './fogotPassword.module.scss'
 
-import { errorHelper } from '../helpers/errorHelper'
+import { errorHelper } from '../../../utils/errorHelper'
 import { EmailFormValue, emailFormSchema } from '../helpers/loginValidationSchema'
 
 export const ForgotPassword = () => {
