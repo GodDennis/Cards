@@ -13,7 +13,12 @@ export const usePagination = () => {
   const onSetCurrentPage = (value: number) => {
     const pageQuery = { page: value.toString() }
 
-    setSearchParams({ ...URLParams, ...pageQuery })
+    if (value === 1 || undefined) {
+      delete URLParams.page
+      setSearchParams(URLParams)
+    } else {
+      setSearchParams({ ...URLParams, ...pageQuery })
+    }
   }
 
   return {
