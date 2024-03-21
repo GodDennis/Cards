@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom'
 import { useInput } from '@/castomHooks/useInput'
 import { useMinMax } from '@/castomHooks/useMinMax'
 import { usePagination } from '@/castomHooks/usePagination'
+import { useTabs } from '@/castomHooks/useTabs'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Loader } from '@/components/ui/loader/Loader'
@@ -26,10 +27,11 @@ export const DecksPage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const { onSetCurrentPage, onSetPageSize } = usePagination()
   const { debouncedSearchStr, onInputChange } = useInput()
+  const { onTabChange } = useTabs()
   const { debouncedMax, debouncedMin, onMinMaxChange } = useMinMax()
 
   const [isAddDeckOpen, setIsAddDeckOpen] = useState<boolean>(false)
-  const [tabValue, setTabValue] = useState<string>('allCards')
+  // const [tabValue, setTabValue] = useState<string>('allCards')
   const [sortTableData, setSortTableData] = useState<SortTableData | null>(null)
 
   const { data: minMaxData, isLoading: isMinMaxLoading } = useGetMinMaxQuery()
@@ -44,7 +46,7 @@ export const DecksPage = () => {
     isLoading: isGetDecksLoading,
   } = useGetDecksQuery(
     {
-      authorId: tabValue === 'myCards' ? userData.id : '',
+      authorId: searchParams.get('tab') === 'myCards' ? userData.id : '',
       currentPage: Number(searchParams.get('page') ?? 1),
       itemsPerPage: Number(searchParams.get('size') ?? 10),
       maxCardsCount: Number(debouncedMax),
@@ -97,7 +99,11 @@ export const DecksPage = () => {
             <Typography className={s.tabLabel} variant={'body2'}>
               Show decks cards
             </Typography>
-            <TabSwitcher changeHandler={setTabValue} tabs={tabs} value={tabValue}></TabSwitcher>
+            <TabSwitcher
+              changeHandler={onTabChange}
+              tabs={tabs}
+              value={searchParams.get('tab') || 'allCards'}
+            ></TabSwitcher>
           </div>
           <div className={s.flexItemsContainer}>
             <Typography className={s.sliderLabel} variant={'body2'}>
