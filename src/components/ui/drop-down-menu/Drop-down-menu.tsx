@@ -1,4 +1,4 @@
-import { ReactNode, useCallback } from 'react'
+import { ReactNode } from 'react'
 
 import { ContextMenu } from '@/icons/contextMenu'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
@@ -23,17 +23,18 @@ type DropDownMenuProps = {
   align?: 'center' | 'end' | 'start'
   children?: ReactNode
   className?: string
+  onClose: () => void
   onOpenChange?: () => void
   open?: boolean
   trigger?: ReactNode
 }
 
 export const DropDownMenu = (props: DropDownMenuProps) => {
-  const { align = 'end', children, className, onOpenChange, open, trigger } = props
+  const { align = 'end', children, className, onClose, onOpenChange, open, trigger } = props
 
-  const onClickTrigger = useCallback(() => {
+  const onClickTrigger = () => {
     onOpenChange?.()
-  }, [])
+  }
 
   return (
     <DropdownMenu.Root open={open}>
@@ -48,6 +49,7 @@ export const DropDownMenu = (props: DropDownMenuProps) => {
           align={align}
           alignOffset={-5}
           className={`${s.menu} ${className}`}
+          onPointerDownOutside={onClose}
           sideOffset={5}
         >
           {children}
