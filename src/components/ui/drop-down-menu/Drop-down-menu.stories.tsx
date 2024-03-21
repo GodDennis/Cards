@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import edit from '@/assets/Images/edit-2-outline.svg'
 import ivan from '@/assets/Images/ivan.jpeg'
-import logOut from '@/assets/Images/log-out.svg'
-import person from '@/assets/Images/person-outline.svg'
-import play from '@/assets/Images/play-circle-outline.svg'
-import trash from '@/assets/Images/trash-outline.svg'
 import { DropDownMenu } from '@/components/ui/drop-down-menu'
+import { Delete } from '@/icons/Delete'
+import { EditPen } from '@/icons/EditPen'
+import { LogOutOutline } from '@/icons/LogOutOutline'
+import { Play } from '@/icons/Play'
+import { Profile } from '@/icons/Profile'
 import { withRouter } from 'storybook-addon-react-router-v6'
 
 import { Avatar } from '../avatar/Avatar'
@@ -24,14 +24,14 @@ const meta = {
 } satisfies Meta<typeof DropDownMenu>
 
 const options = [
-  { redirect: '#', src: play, title: 'Learn' },
-  { redirect: '#', src: edit, title: 'Edit' },
-  { redirect: '#', src: trash, title: 'Delete' },
+  { icon: <Play />, redirect: '#', title: 'Learn' },
+  { icon: <EditPen />, redirect: '#', title: 'Edit' },
+  { icon: <Delete />, redirect: '#', title: 'Delete' },
 ]
 
 const userOptions = [
-  { redirect: '#', src: person, title: 'My Profile' },
-  { redirect: '#', src: logOut, title: 'Sign Out' },
+  { icon: <Profile />, redirect: '#', title: 'My Profile' },
+  { icon: <LogOutOutline />, redirect: '#', title: 'Sign Out' },
 ]
 const userBarInfo = {
   avatar: ivan,

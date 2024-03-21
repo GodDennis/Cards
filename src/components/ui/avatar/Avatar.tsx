@@ -1,19 +1,15 @@
-import { ComponentPropsWithoutRef } from 'react'
+import { ComponentPropsWithoutRef, ReactNode } from 'react'
+
+import { NullPhoto } from '@/icons/NullPhoto'
 
 import s from './avatar.module.scss'
 
-import nullphoto from '../../../assets/Images/nullPhoto.svg'
-
 type Props = {
-  src?: null | string
+  icon?: ReactNode
 } & ComponentPropsWithoutRef<'span'>
 
-export const Avatar = ({ className, src }: Props) => {
-  const avatar = src ? src : nullphoto
+export const Avatar = ({ className, icon }: Props) => {
+  const avatar = icon ? icon : <NullPhoto />
 
-  return (
-    <span className={`${s.avatar} ${className}`}>
-      <img alt={''} src={avatar} />
-    </span>
-  )
+  return <span className={`${s.avatar} ${className}`}>{avatar}</span>
 }

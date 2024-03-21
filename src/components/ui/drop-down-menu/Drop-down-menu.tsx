@@ -13,9 +13,9 @@ export type userBarProps = {
 }
 
 export type dropDownMenuList = {
+  icon: ReactNode
   onClick?: () => void
   redirect?: string
-  src?: string
   title: string
 }
 

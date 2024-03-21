@@ -2,9 +2,6 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-import edit from '@/assets/Images/edit-2-outline.svg'
-import play from '@/assets/Images/play-circle-outline.svg'
-import trash from '@/assets/Images/trash-outline.svg'
 import { useDebounceValue } from '@/castomHooks/useDebounceValue'
 import { usePagination } from '@/castomHooks/usePagination'
 import { errorHelper } from '@/components/auth/helpers/errorHelper'
@@ -17,6 +14,9 @@ import { Loader } from '@/components/ui/loader/Loader'
 import { Pagination } from '@/components/ui/pagination'
 import { HeadCellProps, SortTableData } from '@/components/ui/table/THeader'
 import { Typography } from '@/components/ui/typography'
+import { Delete } from '@/icons/Delete'
+import { EditPen } from '@/icons/EditPen'
+import { Play } from '@/icons/Play'
 import { AddNewCard } from '@/layouts/modals/addNewCard'
 import { AddNewDeck } from '@/layouts/modals/addNewDeck'
 import { DeleteModal } from '@/layouts/modals/deleteModal'
@@ -77,22 +77,22 @@ export const Deck = () => {
 
   const list = [
     {
+      icon: <Play />,
       redirect: `/learn/${deckId}`,
-      src: play,
       title: 'Learn',
     },
     {
+      icon: <EditPen />,
       onClick: () => {
         seIsRefactorDeckOpen(true)
       },
-      src: edit,
       title: 'Edit',
     },
     {
+      icon: <Delete />,
       onClick: () => {
         seIsRemoveDeckOpen(true)
       },
-      src: trash,
       title: 'Delete',
     },
   ]
