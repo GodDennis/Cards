@@ -65,7 +65,7 @@ export const DecksPage = () => {
             className={s.search}
             onChange={onInputChange}
             placeholder={'Input search'}
-            value={searchParams.get('val') ?? ''}
+            value={searchParams.get('search') ?? ''}
             variant={'search'}
           />
 
