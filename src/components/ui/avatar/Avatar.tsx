@@ -5,7 +5,7 @@ import s from './avatar.module.scss'
 import nullphoto from '../../../assets/Images/nullPhoto.svg'
 
 type Props = {
-  src?: null | string
+  src: null | string
 } & ComponentPropsWithoutRef<'span'>
 
 export const Avatar = ({ className, src }: Props) => {

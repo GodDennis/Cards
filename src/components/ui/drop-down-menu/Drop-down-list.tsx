@@ -23,7 +23,7 @@ export const DropDownList = ({ options }: Props) => {
           to={el.redirect}
           variant={'caption'}
         >
-          {el.src && <img alt={''} src={el.src} />}
+          {el.icon}
           {el.title}
         </Typography>
       </DropdownMenu.Item>
