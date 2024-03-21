@@ -24,7 +24,12 @@ export const HeaderDropDown = ({
   userName,
 }: Props) => {
   return (
-    <DropDownMenu onClose={onClose} onOpenChange={onOpenChange} open={open} trigger={<Avatar />}>
+    <DropDownMenu
+      onClose={onClose}
+      onOpenChange={onOpenChange}
+      open={open}
+      trigger={<Avatar src={avatar} />}
+    >
       <UserBarDropDown avatar={avatar} email={email} id={id} userName={userName} />
       <DropDownList options={options} />
     </DropDownMenu>
