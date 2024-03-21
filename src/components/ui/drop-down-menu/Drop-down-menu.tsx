@@ -23,7 +23,7 @@ type DropDownMenuProps = {
   align?: 'center' | 'end' | 'start'
   children?: ReactNode
   className?: string
-  onClose: () => void
+  onClose?: () => void
   onOpenChange?: () => void
   open?: boolean
   trigger?: ReactNode
