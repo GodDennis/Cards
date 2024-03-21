@@ -7,6 +7,7 @@ import play from '@/assets/Images/play-circle-outline.svg'
 import trash from '@/assets/Images/trash-outline.svg'
 import { useDebounceValue } from '@/castomHooks/useDebounceValue'
 import { usePagination } from '@/castomHooks/usePagination'
+import { errorHelper } from '@/components/auth/helpers/errorHelper'
 import { BackwardLink } from '@/components/ui/backward-link'
 import { Button } from '@/components/ui/button'
 import { DropDownMenu } from '@/components/ui/drop-down-menu'
@@ -23,7 +24,6 @@ import { MyDeckTable } from '@/pages/deck/myDeckTable/myDeckTable'
 import { AppError } from '@/services/api-types'
 import { useGetAuthQuery } from '@/services/auth-api'
 import { useDeleteDeckMutation, useGetCardsInDeckQuery, useGetDeckQuery } from '@/services/desk-api'
-import { toastAppError } from '@/utils/toastAppError'
 
 import s from './deck.module.scss'
 
@@ -114,7 +114,7 @@ export const Deck = () => {
         navigate('/decks')
         toast.success('Deck successfully removed')
       })
-      .catch(e => toastAppError(e))
+      .catch(e => errorHelper(e))
   }
 
   if (isQueryError) {
