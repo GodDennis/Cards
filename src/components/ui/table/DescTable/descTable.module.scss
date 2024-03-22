@@ -5,6 +5,13 @@
   .actionBtn {
     padding: 6px;
     background-color: inherit;
+    fill: var(--color-light-100);
+    transition: 0.2s;
+
+    &:hover {
+      fill: var(--color-accent-100);
+      transition: 0.2s;
+    }
   }
 }
 
@@ -24,10 +31,6 @@
   width: 117px;
 }
 
-.buttonsBlock {
-  // justify-content: flex-end;
-}
-
 .deckPreview {
   width: 118px;
   height: 48px;
@@ -37,9 +40,10 @@
 .link {
   color: var(--color-light-100);
   text-decoration: none;
-  transition: 0.2s;
+  transition: 0.1s;
 
   &:hover {
+    color: var(--color-accent-100);
     text-decoration: underline;
   }
 }

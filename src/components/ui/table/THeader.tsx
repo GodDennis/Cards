@@ -56,7 +56,11 @@ export const THeader = ({ className, filterHandler, head, sortData, withFilter }
       <Table.Row>
         {head.map(column => {
           return withFilter && column.filterKey ? (
-            <Table.HeadCell key={column.filterKey} onClick={() => onFilterChange(column.filterKey)}>
+            <Table.HeadCell
+              className={sortData?.filterKey === column.filterKey ? s.active : undefined}
+              key={column.filterKey}
+              onClick={() => onFilterChange(column.filterKey)}
+            >
               {column.title}
               {sortData?.filterKey === column.filterKey && (
                 <span className={s.arrowContainer}>

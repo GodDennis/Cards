@@ -5,6 +5,13 @@
   .actionBtn {
     padding: 6px;
     background-color: inherit;
+    fill: var(--color-light-100);
+    transition: 0.2s;
+
+    &:hover {
+      fill: var(--color-accent-100);
+      transition: 0.2s;
+    }
   }
 }
 

@@ -98,7 +98,7 @@ export const DescTable = ({
                     className={s.actionBtn}
                     to={deck.cardsCount ? '/learn/' + deck.id : '#'}
                   >
-                    <Play fill={deck.cardsCount ? '#fff' : '#4C4C4C'} />
+                    <Play fill={deck.cardsCount ? undefined : '#4C4C4C'} />
                   </Button>
                   {authId === deck.authorId && (
                     <>
