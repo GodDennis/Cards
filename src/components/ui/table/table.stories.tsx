@@ -17,14 +17,14 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 const columns: HeadCellProps[] = [
-  { key: 'name', title: 'Name' },
-  { key: 'cards', title: 'Cards' },
-  { key: 'lastUpdated', title: 'Last Updated' },
-  { key: 'createdBy', title: 'Created by' },
-  { key: '', title: '' },
+  { filterKey: 'name', title: 'Name' },
+  { filterKey: 'cards', title: 'Cards' },
+  { filterKey: 'lastUpdated', title: 'Last Updated' },
+  { filterKey: 'createdBy', title: 'Created by' },
+  { filterKey: '', title: '' },
 ]
 
-export const res = {
+export const Res = {
   items: [
     {
       author: {
@@ -188,7 +188,7 @@ export type Deck = {
 export const Table: Story = {
   args: {
     authId: '',
-    decks: decksDto(res),
+    decks: decksDto(Res),
     head: columns,
   },
 }

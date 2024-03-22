@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { LoginFormValues, loginSchema } from '@/components/auth/helpers/loginValidationSchema'
@@ -24,7 +24,6 @@ export const SignIn = () => {
     defaultValues: { email: '', password: '', rememberMe: false },
     resolver: zodResolver(loginSchema),
   })
-  const navigate = useNavigate()
   const [login] = useLoginMutation()
 
   const onSubmit = (values: LoginFormValues) => {

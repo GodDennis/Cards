@@ -1,14 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { EditableAvatar } from './editableAvatar'
+import { Avatar } from './Avatar'
 
 const meta = {
-  component: EditableAvatar,
+  component: Avatar,
   tags: ['autodocs'],
   title: 'Components/Avatar',
-} satisfies Meta<typeof EditableAvatar>
+} satisfies Meta<typeof Avatar>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Editable: Story = {}
+export const Ava: Story = {
+  args: {
+    src: null,
+  },
+}
