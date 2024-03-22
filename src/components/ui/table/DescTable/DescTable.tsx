@@ -27,7 +27,7 @@ type Deck = {
   name: string
 }
 
-type DescTableProps = {
+export type DescTableProps = {
   authId: string
   className?: string
   decks: Deck[]

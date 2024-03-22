@@ -1,20 +1,19 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import { Link } from 'react-router-dom'
 
-import { decksDto } from '../../../utils/decksDto'
-import { DescTable } from './DescTable/DescTable'
-import { HeadCellProps } from './THeader'
+import { Delete } from '@/icons/Delete'
+import { EditPen } from '@/icons/EditPen'
+import { Play } from '@/icons/Play'
+import { decksDto } from '@/utils/decksDto'
+import clsx from 'clsx'
+import { withRouter } from 'storybook-addon-react-router-v6'
 
-const meta = {
-  component: DescTable,
-  // parameters: {
-  //   layout: 'centered',
-  // },
-  tags: ['autodocs'],
-  title: 'Components/Table',
-} satisfies Meta<typeof DescTable>
+import s from './table.module.scss'
 
-export default meta
-type Story = StoryObj<typeof meta>
+import { Button } from '../button'
+import { Typography } from '../typography'
+import { DescTableProps } from './DescTable/DescTable'
+import { HeadCellProps, THeader } from './THeader'
+import { Table } from './TablePrimitive'
 
 const columns: HeadCellProps[] = [
   { filterKey: 'name', title: 'Name' },
@@ -24,7 +23,80 @@ const columns: HeadCellProps[] = [
   { filterKey: '', title: '' },
 ]
 
-export const Res = {
+export const TableSt = ({ decks }: Partial<DescTableProps>) => {
+  return (
+    <Table.Root className={clsx(s.root)}>
+      <THeader
+        filterHandler={() => {}}
+        head={columns}
+        sortData={{ filterDirection: 'asc', filterKey: 'name' }}
+        withFilter
+      />
+      <Table.Body>
+        {decks?.map(deck => {
+          return (
+            <Table.Row key={deck.id}>
+              <Table.Cell className={s.nameCell}>
+                <div className={s.flexContainer}>
+                  {deck.cover && (
+                    <img alt={'Desc Preview'} className={s.deckPreview} src={deck.cover} />
+                  )}
+
+                  <Typography
+                    as={Link}
+                    className={s.link}
+                    to={`/deck/${deck.id}`}
+                    variant={'body2'}
+                  >
+                    {deck.name}
+                  </Typography>
+                </div>
+              </Table.Cell>
+              <Table.Cell className={s.countCell}>
+                <Typography variant={'body2'}>{deck.cardsCount}</Typography>
+              </Table.Cell>
+              <Table.Cell className={s.dateCell}>
+                <Typography variant={'body2'}>{deck.lastUpdated}</Typography>
+              </Table.Cell>
+              <Table.Cell>
+                <Typography variant={'body2'}>{deck.createdBy}</Typography>
+              </Table.Cell>
+              <Table.Cell className={s.btnsCell}>
+                <div className={clsx(s.flexContainer, s.buttonsBlock)}>
+                  <Button
+                    as={Link}
+                    className={s.actionBtn}
+                    to={deck.cardsCount ? '/learn/' + deck.id : '#'}
+                  >
+                    <Play fill={undefined} />
+                  </Button>
+                  {true && (
+                    <>
+                      <Button className={s.actionBtn}>
+                        <EditPen />
+                      </Button>
+                      <Button className={s.actionBtn}>
+                        <Delete />
+                      </Button>
+                    </>
+                  )}
+                </div>
+              </Table.Cell>
+            </Table.Row>
+          )
+        })}
+      </Table.Body>
+    </Table.Root>
+  )
+}
+export default {
+  component: TableSt, // Сам компонент
+  decorators: [withRouter], // Название компонента
+  title: 'Components/Table',
+}
+
+// eslint-disable-next-line storybook/prefer-pascal-case
+export const res = {
   items: [
     {
       author: {
@@ -185,10 +257,4 @@ export type Deck = {
   name: string
 }
 
-export const Table: Story = {
-  args: {
-    authId: '',
-    decks: decksDto(Res),
-    head: columns,
-  },
-}
+export const Primary = () => <TableSt decks={decksDto(res)} />

@@ -7,6 +7,7 @@ export const usePagination = () => {
   const onSetPageSize = (value: number) => {
     const pageQuery = { size: value.toString() }
 
+    delete URLParams.page
     setSearchParams({ ...URLParams, ...pageQuery })
   }
 

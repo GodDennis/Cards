@@ -45,7 +45,7 @@ export const Modal = forwardRef<ComponentRef<'div'>, ModalProps>((props, ref) =>
     <Dialog.Root open={open}>
       <Dialog.Portal>
         <Dialog.Overlay className={classNames.dialogOverlay} />
-        <Dialog.Content className={classNames.dialogContent}>
+        <Dialog.Content className={classNames.dialogContent} ref={ref}>
           <header className={classNames.header}>
             <Dialog.Title className={classNames.dialogTitle}>
               <Typography as={'span'} variant={'h2'}>
