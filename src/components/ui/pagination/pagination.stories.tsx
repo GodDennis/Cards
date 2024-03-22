@@ -4,6 +4,12 @@ import { Pagination } from '@/components/ui/pagination'
 
 const meta = {
   argTypes: {},
+  args: {
+    currentPage: 1,
+    pageSize: 10,
+    totalCount: 20,
+    totalPages: 20,
+  },
   component: Pagination,
   tags: ['autodocs'],
   title: 'Components/Pagination',

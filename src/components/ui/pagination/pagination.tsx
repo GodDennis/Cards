@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom'
-
 import { Select } from '@/components/ui/select'
 import { ArrowBack } from '@/icons/ArrowBack'
 import { ArrowForward } from '@/icons/ArrowForward'

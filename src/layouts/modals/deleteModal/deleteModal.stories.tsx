@@ -27,7 +27,7 @@ const DeleteCardUsage = () => {
       {open && (
         <DeleteModal
           closeHandler={setOpen}
-          elementType={'card'}
+          elementType={'Card'}
           open={open}
           removeHandler={() => setOpen(true)}
           title={'Remove card?'}
