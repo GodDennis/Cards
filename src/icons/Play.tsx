@@ -1,6 +1,6 @@
 import { ComponentProps } from 'react'
 type PlayPypes = ComponentProps<'svg'>
-export const Play = ({ fill = 'white', ...rest }: PlayPypes) => {
+export const Play = ({ fill, ...rest }: PlayPypes) => {
   return (
     <svg
       fill={fill}

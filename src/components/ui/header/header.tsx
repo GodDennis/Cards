@@ -26,13 +26,13 @@ export const Header = ({ auth, isAuthenticated }: Props) => {
   }
   const options = [
     {
-      icon: <Profile fill={'#fff'} />,
+      icon: <Profile />,
       onClick: onOpenChange,
       redirect: '/profile',
       title: 'My Profile',
     },
     {
-      icon: <LogOutOutline fill={'#fff'} />,
+      icon: <LogOutOutline />,
       onClick: () => {
         onOpenChange()
         logout()

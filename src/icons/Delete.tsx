@@ -1,6 +1,6 @@
 import { IconProps } from './LogOutOutline'
 
-export const Delete = ({ fill = 'white' }: IconProps) => {
+export const Delete = ({ fill }: IconProps) => {
   return (
     <svg
       fill={fill}

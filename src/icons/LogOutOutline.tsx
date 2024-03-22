@@ -1,10 +1,10 @@
 import { ComponentProps } from 'react'
 
 export type IconProps = ComponentProps<'svg'>
-export const LogOutOutline = ({ fill = 'black', height, width }: IconProps) => {
+export const LogOutOutline = ({ fill, height, width }: IconProps) => {
   return (
     <svg
-      fill={'none'}
+      fill={fill}
       height={height || '16'}
       viewBox={'0 0 24 24'}
       width={width || '16'}

@@ -23,6 +23,31 @@
   }
 }
 
+.menuItem[data-highlighted] {
+  color: var(--color-accent-100);
+  text-decoration: underline;
+  outline: transparent;
+  transition: 0.2s;
+
+  &:focus-visible {
+    outline: white;
+  }
+}
+
+.menuItem svg {
+  fill: var(--color-light-100);
+}
+
+.menuItem[data-highlighted] svg {
+  fill: var(--color-accent-100);
+}
+
+.menuItemUserBar[data-highlighted] {
+  cursor: default;
+  color: unset;
+  text-decoration: none;
+}
+
 .menu {
   margin-top: 6px;
   padding: 0 12px;
@@ -66,4 +91,16 @@
 .iconButton {
   cursor: pointer;
   display: flex;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.iconButton svg {
+  fill: white;
+  stroke: white;
+  transition: 0.2s;
+
+  &:hover {
+    fill: var(--color-accent-100);
+    stroke: var(--color-accent-100);
+  }
 }

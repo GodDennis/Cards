@@ -16,7 +16,7 @@ export const UserBarDropDown = (props: Props) => {
   const { avatar, email, id, userName } = props
 
   return (
-    <DropdownMenu.Item className={`${s.item} ${s.menuItem}`} key={id}>
+    <DropdownMenu.Item className={`${s.item} ${s.menuItem} ${s.menuItemUserBar}`} key={id}>
       <Avatar src={avatar} />
       <div className={s.flexContainer}>
         <Typography as={'span'} variant={'subtitle2'}>

@@ -1,6 +1,6 @@
 import { IconProps } from './LogOutOutline'
 
-export const EditPen = ({ fill = 'white' }: IconProps) => {
+export const EditPen = ({ fill }: IconProps) => {
   return (
     <svg
       fill={fill}
