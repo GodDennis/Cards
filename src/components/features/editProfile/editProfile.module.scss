@@ -24,6 +24,10 @@
       padding: 0;
       background-color: inherit;
     }
+
+    .editNameButton svg {
+      fill: var(--color-light-100);
+    }
   }
 
   .email {

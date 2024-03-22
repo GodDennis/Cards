@@ -23,11 +23,11 @@ export const ForgotPassword = () => {
   } = useForm<EmailFormValue>({
     resolver: zodResolver(emailFormSchema),
   })
-
+  const link = `${import.meta.env.VITE_DEPLOY_URL}/recover-password/##token##`
   const onSubmit = (value: EmailFormValue) => {
     forgot({
       email: value.email,
-      html: '<h1>Hi, ##name##</h1><p>Click <a href="http://localhost:5173/recover-password/##token##">here</a> to recover your password</p>',
+      html: `<h1>Hi, ##name##</h1><p>Click <a href="${link}">here</a> to recover your password</p>`,
       subject: 'string',
     })
       .unwrap()

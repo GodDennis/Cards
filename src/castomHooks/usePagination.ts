@@ -5,10 +5,11 @@ export const usePagination = () => {
   const URLParams = Object.fromEntries(searchParams)
 
   const onSetPageSize = (value: number) => {
-    const pageQuery = { size: value.toString() }
+    // const pageQuery = { size: value.toString() }
+    searchParams.set('size', value.toString())
+    searchParams.delete('page')
 
-    delete URLParams.page
-    setSearchParams({ ...URLParams, ...pageQuery })
+    setSearchParams(searchParams)
   }
 
   const onSetCurrentPage = (value: number) => {

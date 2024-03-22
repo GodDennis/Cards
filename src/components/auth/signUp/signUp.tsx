@@ -28,11 +28,11 @@ export const SignUp = () => {
   } = useForm<RegisterFormValues>({ resolver: zodResolver(registerSchema) })
 
   const navigate = useNavigate()
-
+  const link = `${import.meta.env.VITE_DEPLOY_URL}/verify-email/##token##`
   const onSubmit = (values: RegisterFormValues) => {
     signUp({
       email: values.email,
-      html: '<b>Hello, ##name##!</b><br/>Please confirm your email by clicking on the link below:<br/><a href="http://localhost:5173/verify-email/##token##">Confirm email</a>. If it doesn\'t work, copy and paste the following link in your browser:<br/>http://localhost:5173/verify-email/##token##',
+      html: `<b>Hello, ##name##!</b><br/>Please confirm your email by clicking on the link below:<br/><a href="${link}">Confirm email</a>. If it doesn\'t work, copy and paste the following link in your browser:<br/>${link}`,
       name: values.email,
       password: values.password,
       sendConfirmationEmail: true,
